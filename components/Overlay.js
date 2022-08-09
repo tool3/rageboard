@@ -57,7 +57,7 @@ const Overlay = forwardRef(({ caption, scroll }, ref) => (
       </div>
     </div>
     <span className="caption" ref={caption}>
-      0.00
+      0.00 %
     </span>
   </div>
 ));

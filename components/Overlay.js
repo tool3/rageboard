@@ -4,16 +4,18 @@ const Overlay = forwardRef(({ caption, scroll }, ref) => (
   <div
     ref={ref}
     onScroll={(e) => {
-      console.log('scrolling', e);
       scroll.current = e.target.scrollTop / (e.target.scrollHeight - window.innerHeight);
-      caption.current.innerText = scroll.current.toFixed(2);
+      caption.current.innerText = (scroll.current * 100).toFixed(2) + '%';
     }}
     className="scroll">
     <div style={{ height: '400vh' }}>
       <div className="dot">
         <h1>Hello</h1>
-        Welcome to this web experience<br/>
-        use your mouse to scroll
+        Welcome to this web experience
+        <br />
+        scroll on laptop
+        <br />
+        swipe on mobile
       </div>
     </div>
     <div style={{ height: '200vh' }}>

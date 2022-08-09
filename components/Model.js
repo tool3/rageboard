@@ -34,7 +34,7 @@ export default function Model({ scroll, ...props }) {
       const et = state.clock.elapsedTime;
 
       if (child.name !== 'Cone') {
-        child.position.y = Math.sin((et + index * 2000) / 2) * 1;
+        child.position.y = Math.sin((et + index * 2000) / 2) * 0.5;
         child.rotation.x = Math.sin((et + index * 2000) / 3) / 100;
         child.rotation.y = Math.cos((et + index * 2000) / 2) / 100;
         child.rotation.z = Math.sin((et + index * 2000) / 3) / 100;
@@ -63,9 +63,10 @@ export default function Model({ scroll, ...props }) {
         />
         <mesh
           name="Suzanne"
-          scale={[3, 3, 3]}
+          scale={[4, 4, 4]}
           geometry={nodes.Suzanne.geometry}
           material={materials.Suzanne}
+          position={[0, -10, 0]}
           {...extras}
         />
         <mesh name="VR_Headset" geometry={nodes.VR_Headset.geometry} material={materials.M_Headset} {...extras} />

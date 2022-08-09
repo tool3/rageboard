@@ -151,7 +151,10 @@ body {
 
 @media only screen and (max-width: 600px) {
   .caption {
-    font-size: 1em;
+    font-size: 2em;
+    position: fixed;
+    left: 65px;
+    top: -45px;
   }
   .dot > h1 {
     font-size: 3em;

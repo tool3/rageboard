@@ -33,12 +33,15 @@ export default function Model({ scroll, ...props }) {
       );
       const et = state.clock.elapsedTime;
 
-      if (child.name !== 'Cone') {
+      if (child.name !== 'Cone' && child.name !== 'Suzanne') {
         child.position.y = Math.sin((et + index * 2000) / 2) * 0.5;
-        child.rotation.x = Math.sin((et + index * 2000) / 3) / 100;
-        child.rotation.y = Math.cos((et + index * 2000) / 2) / 100;
-        child.rotation.z = Math.sin((et + index * 2000) / 3) / 100;
+      } else {
+        // child.position.y = - 15
+        child.position.y = Math.sin((et + index * 2000) / 2) * 0.5 - 15;
       }
+      child.rotation.x = Math.sin((et + index * 2000) / 3) / 100;
+      child.rotation.y = Math.cos((et + index * 2000) / 2) / 100;
+      child.rotation.z = Math.sin((et + index * 2000) / 3) / 100;
     });
   });
 
@@ -57,22 +60,22 @@ export default function Model({ scroll, ...props }) {
           scale={[4, 4, 4]}
           geometry={nodes.Cone.geometry}
           material={materials.Cone}
-          position={[0, -15, 0]}
+          // position={[0, -15, 0]}
           rotateX={120}
           {...extras}
         />
         <mesh
           name="Suzanne"
-          scale={[4, 4, 4]}
+          scale={[3.5, 3.5, 3.5]}
           geometry={nodes.Suzanne.geometry}
           material={materials.Suzanne}
-          position={[0, -10, 0]}
+          // position={[0, -10, 0]}
           {...extras}
         />
         <mesh name="VR_Headset" geometry={nodes.VR_Headset.geometry} material={materials.M_Headset} {...extras} />
         <mesh name="Zeppelin" geometry={nodes.Zeppelin.geometry} material={materials.M_Zeppelin} v />
       </group>
-      <group name="Camera" position={[-1.78, 2.04, 23.58]} rotation={[1.62, 0.01, 0.11]}>
+      <group name="Camera" position={[-1.78, 2.04, 15.58]} rotation={[1.62, 0.01, 0.11]}>
         <PerspectiveCamera makeDefault far={100} near={0.1} fov={28} rotation={[-Math.PI / 2, 0, 0]}>
           <pointLight position={[35, -20, -20]} color={0xffffff} intensity={1} />
           <pointLight position={[10, 10, 0]} color={0xff00ff} intensity={2} />

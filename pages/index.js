@@ -14,6 +14,7 @@ export default function IndexPage() {
       <Head>
         <title>Tal Hayut</title>
         <meta name="description" content="web experience with next and three" />
+        <meta name="author" content="Tal Hayut" />
       </Head>
       <Canvas
         shadows

@@ -11,7 +11,7 @@ const color = new THREE.Color();
 
 export default function Model({ scroll, ...props }) {
   const group = useRef();
-  const { nodes, materials, animations } = useGLTF('/model.glb');
+  const { nodes, materials, animations } = useGLTF('/spiral_scroll.glb');
   const { actions } = useAnimations(animations, group);
   const [hovered, set] = useState();
   const extras = { receiveShadow: true, castShadow: true, 'material-envMapIntensity': 0.2 };
@@ -31,14 +31,14 @@ export default function Model({ scroll, ...props }) {
         color.set(hovered === child.name ? 'pink' : '#202020').convertSRGBToLinear(),
         hovered ? 0.1 : 0.05
       );
-      const et = state.clock.elapsedTime;
-      child.position.y = Math.sin((et + index * 2000) / 2) * 1;
-      child.rotation.x = Math.sin((et + index * 2000) / 3) / 10;
-      child.rotation.y = Math.cos((et + index * 2000) / 2) / 10;
-      child.rotation.z = Math.sin((et + index * 2000) / 3) / 10;
+      // const et = state.clock.elapsedTime;
+      // child.position.y = Math.sin((et + index * 2000) / 2) * 1;
+      // child.rotation.x = Math.sin((et + index * 2000) / 3) / 10;
+      // child.rotation.y = Math.cos((et + index * 2000) / 2) / 10;
+      // child.rotation.z = Math.sin((et + index * 2000) / 3) / 10;
     });
   });
-
+  
   return (
     <group ref={group} {...props} dispose={null}>
       <group
@@ -49,13 +49,30 @@ export default function Model({ scroll, ...props }) {
         <mesh name="Headphones" geometry={nodes.Headphones.geometry} material={materials.M_Headphone} {...extras} />
         <mesh name="Notebook" geometry={nodes.Notebook.geometry} material={materials.M_Notebook} {...extras} />
         <mesh name="Rocket003" geometry={nodes.Rocket003.geometry} material={materials.M_Rocket} {...extras} />
-        <mesh name="Roundcube001" geometry={nodes.Roundcube001.geometry} material={materials.M_Roundcube} {...extras} />
-        <mesh name="Table" geometry={nodes.Table.geometry} material={materials.M_Table} {...extras} />
+        <mesh
+          name="Cone"
+          scale={[4, 4, 4]}
+          geometry={nodes.Cone.geometry}
+          material={materials.Cone}
+          position={[0, -15, 0]}
+          rotateX={120}
+          {...extras}
+        />
+        <mesh
+          name="Suzanne"
+          scale={[3, 3, 3]}
+          geometry={nodes.Suzanne.geometry}
+          material={materials.Suzanne}
+          {...extras}
+        />
         <mesh name="VR_Headset" geometry={nodes.VR_Headset.geometry} material={materials.M_Headset} {...extras} />
         <mesh name="Zeppelin" geometry={nodes.Zeppelin.geometry} material={materials.M_Zeppelin} v />
       </group>
       <group name="Camera" position={[-1.78, 2.04, 23.58]} rotation={[1.62, 0.01, 0.11]}>
         <PerspectiveCamera makeDefault far={100} near={0.1} fov={28} rotation={[-Math.PI / 2, 0, 0]}>
+          <pointLight position={[35, -20, -20]} color={0xffffff} intensity={1}/>
+          <pointLight position={[10, 10, 0]} color={0xff00ff} intensity={2}/>
+          <pointLight position={[-10, 10, 0]} color={0x00ffff} intensity={2}/>
           <directionalLight
             castShadow
             position={[10, 20, 15]}

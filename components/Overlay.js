@@ -10,7 +10,9 @@ const Overlay = forwardRef(({ caption, scroll }, ref) => (
     className="scroll">
     <div style={{ height: '400vh' }}>
       <div className="dot">
-        <h1>Hello</h1>
+        <h1>Tal Hayut</h1>
+        Hi i'm Tal
+        <br />
         Welcome to this web experience
         <br />
         scroll on laptop
@@ -32,17 +34,19 @@ const Overlay = forwardRef(({ caption, scroll }, ref) => (
     </div>
     <div style={{ height: '200vh' }}>
       <div className="dot">
-        <h1>turbine</h1>A turbine (/ˈtɜːrbaɪn/ or /ˈtɜːrbɪn/) (from the Greek τύρβη, tyrbē, or Latin turbo, meaning
-        vortex)[1][2] is a rotary mechanical device that extracts energy from a fluid flow and converts it into useful
-        work.
+        <h1>metaverse</h1>live in VR and experience the amazing metaverse where people connect, play, and do business.
+        <br />
+        but mostly play.
       </div>
     </div>
     <div style={{ height: '200vh' }}>
       <div className="dot">
-        <h1>table</h1>A table is an item of furniture with a flat top and one or more legs, used as a surface for
-        working at, eating from or on which to place things.[1][2]
+        <h1>suzanne</h1>suzanne represents usage and love of blender, where suzanne is one of the primitive mesh types
+        you can add to any scene.
+        <br />i love suzanne.
       </div>
     </div>
+
     <div style={{ height: '200vh' }}>
       <div className="dot">
         <h1>laptop</h1>A laptop, laptop computer, or notebook computer is a small, portable personal computer (PC) with

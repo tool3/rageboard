@@ -1,8 +1,8 @@
 import React, { Suspense, useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Environment } from '@react-three/drei';
-import Model from './Model';
-import Overlay from './Overlay';
+import Model from '../components/Model';
+import Overlay from '../components/Overlay';
 
 export default function App() {
   const overlay = useRef();

@@ -32,13 +32,17 @@ export default function Model({ scroll, ...props }) {
         hovered ? 0.1 : 0.05
       );
       const et = state.clock.elapsedTime;
+      child.position.y = Math.sin((et + index * 2000) / 2) * 0.5;
 
-      if (child.name !== 'Cone' && child.name !== 'Suzanne') {
-        child.position.y = Math.sin((et + index * 2000) / 2) * 0.5;
-      } else {
-        // child.position.y = - 15
+      if (child.name == 'Cone') {
         child.position.y = Math.sin((et + index * 2000) / 2) * 0.5 - 15;
       }
+
+      if (child.name == 'Suzanne') {
+        child.position.y = Math.sin((et + index * 2000) / 2) * 0.5 - 10;
+      }
+
+      
       child.rotation.x = Math.sin((et + index * 2000) / 3) / 100;
       child.rotation.y = Math.cos((et + index * 2000) / 2) / 100;
       child.rotation.z = Math.sin((et + index * 2000) / 3) / 100;

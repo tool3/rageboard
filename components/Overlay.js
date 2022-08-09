@@ -22,42 +22,39 @@ const Overlay = forwardRef(({ caption, scroll }, ref) => (
     </div>
     <div style={{ height: '200vh' }}>
       <div className="dot">
-        <h1>headphone</h1>
-        Headphones are a pair of small loudspeaker drivers worn on or around the head over a user's ears.
-      </div>
-    </div>
-    <div style={{ height: '200vh' }}>
-      <div className="dot">
-        <h1>rocket</h1>A rocket (from Italian: rocchetto, lit. 'bobbin/spool')[nb 1][1] is a projectile that spacecraft,
-        aircraft or other vehicle use to obtain thrust from a rocket engine.
-      </div>
-    </div>
-    <div style={{ height: '200vh' }}>
-      <div className="dot">
-        <h1>metaverse</h1>live in VR and experience the amazing metaverse where people connect, play, and do business.
+        <h1>focus</h1>
+        focus on what matters.
         <br />
-        but mostly play.
+        focus on shit, shit grows
+        <br />
+        read that again.
       </div>
     </div>
     <div style={{ height: '200vh' }}>
       <div className="dot">
-        <h1>suzanne</h1>suzanne represents usage and love of blender, where suzanne is one of the primitive mesh types
-        you can add to any scene.
-        <br />i love suzanne.
+        <h1>speed</h1>
+        move fast, fail a lot.
+      </div>
+    </div>
+    <div style={{ height: '200vh' }}>
+      <div className="dot">
+        <h1>escape</h1>see things from different angles. detach and realign.
+      </div>
+    </div>
+    <div style={{ height: '200vh' }}>
+      <div className="dot">
+        <h1>play</h1>play often, laugh often.
       </div>
     </div>
 
     <div style={{ height: '200vh' }}>
       <div className="dot">
-        <h1>laptop</h1>A laptop, laptop computer, or notebook computer is a small, portable personal computer (PC) with
-        a screen and alphanumeric keyboard.
+        <h1>work</h1>devote yourself, work on something for a long time. reap results. repeat.
       </div>
     </div>
     <div style={{ height: '200vh' }}>
       <div className="dot">
-        <h1>zeppelin</h1>A Zeppelin is a type of rigid airship named after the German inventor Count Ferdinand von
-        Zeppelin (German pronunciation: [ˈt͡sɛpəliːn]) who pioneered rigid airship development at the beginning of the
-        20th century.
+        <h1>ship</h1>create things frequently, faster than you consume.
       </div>
     </div>
     <span className="caption" ref={caption}>

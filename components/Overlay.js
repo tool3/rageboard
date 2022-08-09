@@ -11,9 +11,9 @@ const Overlay = forwardRef(({ caption, scroll }, ref) => (
     className="scroll">
     <div style={{ height: '400vh' }}>
       <div className="dot">
-        <h1>headset</h1>
-        Virtual reality (VR) is a simulated experience that can be similar to or completely different from the real
-        world.
+        <h1>Hello</h1>
+        Welcome to this web experience<br/>
+        use your mouse to scroll
       </div>
     </div>
     <div style={{ height: '200vh' }}>

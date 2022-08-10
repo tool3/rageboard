@@ -16,7 +16,7 @@ export default function Model({ scroll, ...props }) {
 
   useHelper(lightRef, THREE.DirectionalLightHelper, 'red');
 
-  const { nodes, materials, animations } = useGLTF('/spiral_scroll.glb');
+  const { nodes, materials, animations } = useGLTF('/spiral_scroll_e.glb');
   const { actions } = useAnimations(animations, group);
   const [hovered, set] = useState();
 
@@ -46,7 +46,18 @@ export default function Model({ scroll, ...props }) {
         // );
         child.layers.enable(3);
         child.material.color.set('#202020');
+        // child.geometry.computeVertexNormals(true)
+        // child.geometry.shading = THREE.SmoothShading;
+
         const et = state.clock.elapsedTime;
+
+
+        if (child.name == 'Icosphere') {
+          child.rotateY(et / 10000);
+          return;
+        }
+
+
         child.position.y = Math.sin((et + index * 2000) / 2) * 0.5;
 
         if (child.name == 'Cone') {
@@ -57,9 +68,15 @@ export default function Model({ scroll, ...props }) {
           child.position.y = Math.sin((et + index * 2000) / 2) * 0.5 - 10;
         }
 
+        if (child.name == 'Diamond') {
+          child.position.y = Math.sin((et + index * 2000) / 2) * 0.5 - 10;
+        }        
+
         child.rotation.x = Math.sin((et + index * 2000) / 3) / 100;
         child.rotation.y = Math.cos((et + index * 2000) / 2) / 100;
         child.rotation.z = Math.sin((et + index * 2000) / 3) / 100;
+
+        
       }
     });
   });
@@ -72,7 +89,7 @@ export default function Model({ scroll, ...props }) {
         // {...useHover()}
         position={[0.06, 4.04, 0.35]}
         scale={[0.25, 0.25, 0.25]}>
-        <mesh name="Headphones" geometry={nodes.Headphones.geometry} material={materials.M_Headphone} {...extras} />
+        <mesh name="Diamond" scale={[3.5, 3.5, 3.5]} geometry={nodes.Diamond.geometry} material={materials.Diamond} {...extras} />
         <mesh name="Notebook" geometry={nodes.Notebook.geometry} material={materials.M_Notebook} {...extras} />
         <mesh name="Rocket003" geometry={nodes.Rocket003.geometry} material={materials.M_Rocket} {...extras} />
         <mesh
@@ -93,7 +110,7 @@ export default function Model({ scroll, ...props }) {
           {...extras}
         />
         <mesh name="VR_Headset" geometry={nodes.VR_Headset.geometry} material={materials.M_Headset} {...extras} />
-        <mesh name="Zeppelin" geometry={nodes.Zeppelin.geometry} material={materials.M_Zeppelin} v />
+        <mesh name="Icosphere" position={[-10, 80, 0]} scale={[5, 5, 5]} geometry={nodes.Icosphere.geometry} material={materials.Icosphere} v  />
 
         {/* <EffectComposer multisampling={8} autoClear={false}>
           <Outline blur visibleEdgeColor="white" edgeStrength={10} width={1000} selection={target} selectionLayer={3} />

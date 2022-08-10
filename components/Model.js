@@ -124,9 +124,9 @@ export default function Model({ scroll, ...props }) {
           v
         />
 
-        <EffectComposer autoClear={true}>
+        {/* <EffectComposer autoClear={true}>
           <DepthOfField focusDistance={0.08} focalLength={0.2} bokehScale={5} blur />
-        </EffectComposer>
+        </EffectComposer> */}
       </group>
       <group name="Camera" position={[-1.78, 2.04, 15.58]} rotation={[1.62, 0.01, 0.11]}>
         <PerspectiveCamera makeDefault far={100} near={0.1} fov={28} rotation={[-Math.PI / 2, 0, 0]}>

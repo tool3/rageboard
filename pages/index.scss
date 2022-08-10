@@ -43,7 +43,10 @@ a:hover {
 }
 
 @import url('https://rsms.me/inter/inter.css');
-
+@font-face {
+  font-family: 'Grotesque';
+  src:  url('../public/fonts/BasementGrotesque-Black_v1.202.woff') format('woff')
+}
 * {
   box-sizing: border-box;
 }
@@ -82,7 +85,7 @@ body {
   overscroll-behavior-y: none;
   background-color: #101010;
   background: radial-gradient(circle at bottom center, #212121 0%, #101010 80%);
-  font-family: 'Inter var', sans-serif;
+  font-family: 'Grotesque', 'Inter var', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 

@@ -189,6 +189,16 @@
     suspend-react "^0.0.8"
     zustand "^3.7.1"
 
+"@react-three/postprocessing@^2.6.1":
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/@react-three/postprocessing/-/postprocessing-2.6.1.tgz#25b441462a48420955276ae19369f4ce97120025"
+  integrity sha512-IX6i8JI5iY9zYSjOh9ZKr3URQ+V8NSnFEOL0xBPDP7BdyLjwXKs5fPR/ClnW4bGt/4T1TMsGmLCXJ97gtZVRZA==
+  dependencies:
+    postprocessing "^6.28.5"
+    react-merge-refs "^1.1.0"
+    screen-space-reflections "2.1.1"
+    three-stdlib "^2.8.11"
+
 "@swc/helpers@0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.4.3.tgz#16593dfc248c53b699d4b5026040f88ddb497012"
@@ -488,6 +498,11 @@ postcss@8.4.14:
     picocolors "^1.0.0"
     source-map-js "^1.0.2"
 
+postprocessing@^6.28.5:
+  version "6.28.5"
+  resolved "https://registry.yarnpkg.com/postprocessing/-/postprocessing-6.28.5.tgz#82363194d366f606cf0f25e32028fd46debca919"
+  integrity sha512-e9aH6T720AiQpStdgqrQSsHzpddFQ7Q8v204sZx4iSTnUuYvkq7mFPOyzhVDlx5NrmXXbwz2PEK2XTq+qEYSMg==
+
 potpack@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/potpack/-/potpack-1.0.2.tgz#23b99e64eb74f5741ffe7656b5b5c4ddce8dfc14"
@@ -594,6 +609,11 @@ scheduler@^0.23.0:
   dependencies:
     loose-envify "^1.1.0"
 
+screen-space-reflections@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/screen-space-reflections/-/screen-space-reflections-2.1.1.tgz#e6ca2f0af64d997ccd94737fe7d3adce0fdaa0b1"
+  integrity sha512-UwBaTb6Ss/8EfhDHEdybPhMbHXmtchOcpHHTa5guFFzjj1f0998twZRr/svOJaA/Nyi44VL2Cqf3xGhdu3hC2w==
+
 "source-map-js@>=0.6.2 <2.0.0", source-map-js@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/source-map-js/-/source-map-js-1.0.2.tgz#adbc361d9c62df380125e7f161f71c826f1e490c"
@@ -624,7 +644,7 @@ three-mesh-bvh@^0.5.7:
   resolved "https://registry.yarnpkg.com/three-mesh-bvh/-/three-mesh-bvh-0.5.15.tgz#bcf681d784d8988618344a5e11e7ded7e76ee86a"
   integrity sha512-jxE5iGjcoEMiyxUs7hMeZL6jBXBz9973ilqhXPhKlA1f7eitjIxRTtu7UWVQy+PhxXTsknmPzWmN5c+uAa/anA==
 
-three-stdlib@^2.8.12:
+three-stdlib@^2.8.11, three-stdlib@^2.8.12:
   version "2.13.0"
   resolved "https://registry.yarnpkg.com/three-stdlib/-/three-stdlib-2.13.0.tgz#48baf2f85a781437e42cd53f672ea44ccce4a801"
   integrity sha512-hFTTX6K6y8jrDREtzx1nl029rcOYJ5R8YBWg7M3s7uhcAx0fhs4d8tS+dj82vPksLDlMW8Pu/x0CVTRrqiUFDQ==

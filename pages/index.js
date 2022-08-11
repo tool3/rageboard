@@ -18,10 +18,8 @@ export default function IndexPage() {
   const [started, setStarted] = useState();
 
   function setStart(e) {
-    console.log('started', e);
     e.target.style.opacity = 0;
     setTimeout(() => (e.target.parentElement.style.display = 'none'), 220);
-
     setStarted(true);
   }
 

@@ -10,9 +10,8 @@ export default function Model({ scroll, started, ...props }) {
   const { actions } = useAnimations(animations, group);
 
   const video = document.createElement('video');
-  video.src = 'matrix.mp4';
+  video.src = 'videos/matrix_compressed.mp4';
   video.loop = true;
-  video.autoplay = true;
   video.muted = true;
   video.load();
 
@@ -22,7 +21,10 @@ export default function Model({ scroll, started, ...props }) {
   const extras = { receiveShadow: true, castShadow: true, 'material-envMapIntensity': 0.2 };
 
   useEffect(() => {
-    if (started) video.play();
+    if (started) {
+      video.play(); 
+      video.muted = false;
+    }
   });
   useEffect(() => void (actions['CameraAction.005'].play().paused = true), []);
   useEffect(() => {

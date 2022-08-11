@@ -95,6 +95,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 8em;
   a {
     font-size: 3em;
     text-transform: uppercase;
@@ -209,6 +210,10 @@ body {
   }
   .dot > h1 {
     font-size: 3em;
+  }
+
+  .menu {
+    margin-top: 0;
   }
 }
 

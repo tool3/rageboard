@@ -31,6 +31,8 @@ export default function Model({ scroll, started, router, ...props }) {
       console.log(`Path changing to ${url}`);
       console.log(scroll.current);
       const paths = {
+        // TODO handle mobile
+        // TODO and clean this place up!
         music: { path: '/#music', value: 6500 },
         motto: { path: '/#motto', value: 4100 },
         vr: { path: '/#vr', value: 8300 },

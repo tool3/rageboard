@@ -10,7 +10,6 @@ const Overlay = forwardRef(({ caption, scroll, setStarted }, ref) => {
       onScroll={(e) => {
         scroll.current = e.target.scrollTop / (e.target.scrollHeight - window.innerHeight);
         caption.current.innerText = (scroll.current * 100).toFixed(2) + '%';
-        console.log(scroll.current);
       }}
       className="scroll">
       <div className="welcome">

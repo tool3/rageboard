@@ -23,7 +23,6 @@ export default function Model({ scroll, started, router, ...props }) {
   async function slowScrollY(scroll) {
     for (let i = 0; i < scroll; i += 500) {
       document.querySelector('.scroll').scroll(0, i);
-      // await new Promise((res) => setTimeout(res, 100));
     }
   }
 
@@ -37,7 +36,7 @@ export default function Model({ scroll, started, router, ...props }) {
         vr: { path: '/#vr', value: 8300 },
         '3d': { path: '/#3d', value: 10900 },
         code: { path: '/#code', value: 13000 },
-        links: { path: '/#links', value: 15000 }
+        links: { path: '/#links', value: 16000 }
       };
       const keys = Object.keys(paths);
       for (const key of keys) {

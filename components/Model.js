@@ -54,6 +54,14 @@ export default function Model({ scroll, ...props }) {
 
         child.position.y = Math.sin((et + index * 2000) / 2) * 0.5;
 
+        if (child.name == 'Guitar') {
+          child.position.y = Math.sin((et + index * 2000) / 2) * 0.5 - 15;
+        }
+
+        if (child.name == 'Horns') {
+          child.position.y = Math.sin((et + index * 2000) / 2) * 0.5 - 15;
+        }
+
         if (child.name == 'Cone') {
           child.position.y = Math.sin((et + index * 2000) / 2) * 0.5 - 15;
         }
@@ -78,10 +86,10 @@ export default function Model({ scroll, ...props }) {
     <group ref={group} {...props} dispose={null}>
       <group position={[0.06, 4.04, 0.35]} scale={[0.25, 0.25, 0.25]}>
         <mesh
-          name="Diamond"
+          name="Horns"
           scale={[3.5, 3.5, 3.5]}
-          geometry={nodes.Diamond.geometry}
-          material={materials.Diamond}
+          geometry={nodes.Horns.geometry}
+          material={materials.Horns}
           {...extras}
         />
         <group>
@@ -98,7 +106,7 @@ export default function Model({ scroll, ...props }) {
             {...extras}
           />
         </group>
-        <mesh name="Rocket" geometry={nodes.Rocket003.geometry} material={materials.M_Rocket} {...extras} />
+        <mesh name="Guitar" scale={[4, 4, 4]} position={[0, -10, 0]} geometry={nodes.Guitar.geometry} material={materials.Guitar} {...extras} />
         <mesh
           name="Cone"
           scale={[4, 4, 4]}
@@ -155,4 +163,4 @@ export default function Model({ scroll, ...props }) {
   );
 }
 
-useGLTF.preload('/model.glb');
+useGLTF.preload('/models/spiral_scroll_d.glb');

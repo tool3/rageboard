@@ -10,19 +10,19 @@ const Overlay = forwardRef(({ caption, scroll }, ref) => (
     className="scroll">
     <div style={{ height: '400vh' }}>
       <div className="dot">
-        <h1>Tal Hayut</h1>
-        Hi i'm Tal
+        <h1>Welcome</h1>
+        I'm Tal Hayut. A software engineer.
         <br />
         Welcome to this web experience
         <br />
         scroll on laptop
         <br />
-        swipe on mobile
+        swipe up on mobile
       </div>
     </div>
     <div style={{ height: '200vh' }}>
       <div className="dot">
-        <h1>focus</h1>
+        <h1>Rock 'N Roll</h1>
         focus on what matters.
         <br />
         focus on shit, shit grows
@@ -32,29 +32,31 @@ const Overlay = forwardRef(({ caption, scroll }, ref) => (
     </div>
     <div style={{ height: '200vh' }}>
       <div className="dot">
-        <h1>speed</h1>
+        <h1>Music</h1>
         move fast, fail a lot.
       </div>
     </div>
     <div style={{ height: '200vh' }}>
       <div className="dot">
-        <h1>escape</h1>see things from different angles. detach and realign.
+        <h1>VR</h1>see things from different angles. detach and realign.
       </div>
     </div>
     <div style={{ height: '200vh' }}>
       <div className="dot">
-        <h1>play</h1>play often, laugh often.
+        <h1>3D</h1>play often, laugh often.
       </div>
     </div>
 
     <div style={{ height: '200vh' }}>
       <div className="dot">
-        <h1>work</h1>devote yourself, work on something for a long time. reap results. repeat.
+        <h1>Code</h1>devote yourself, work on something for a long time. reap results. repeat.
       </div>
     </div>
     <div style={{ height: '200vh' }}>
       <div className="dot">
-        <h1>ship</h1>create things frequently, faster than you consume.
+        <h1>End</h1>Hope you enjoyed this short experience. <br />
+        If you didn't, please make sure to leave a complaint <br />
+        at i.dont.care@blackhole.com
       </div>
     </div>
     <span className="caption" ref={caption}>

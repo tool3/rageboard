@@ -10,7 +10,7 @@ export default function Model({ scroll, started, ...props }) {
   const { actions } = useAnimations(animations, group);
 
   const video = document.createElement('video');
-  video.src = 'videos/matrix_compressed.mp4';
+  video.src = '/videos/matrix_compressed.mp4';
   video.loop = true;
   video.muted = true;
   video.load();

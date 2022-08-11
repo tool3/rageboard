@@ -61,7 +61,7 @@ const Overlay = forwardRef(({ caption, scroll }, ref) => (
       <div className="dot">
         <h1>Thanks</h1>You made it to the end. <br />
         If you didn't, that's okay. <br />
-        Checkout my github <button href="https://github.com/tool3" target={"_blank"}>here</button>
+        Checkout my github <a href="https://github.com/tool3" target={"_blank"}>here</a>
       </div>
     </div>
     <span className="caption" ref={caption}>

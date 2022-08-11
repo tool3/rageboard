@@ -21,42 +21,47 @@ const Overlay = forwardRef(({ caption, scroll }, ref) => (
       </div>
     </div>
     <div style={{ height: '200vh' }}>
-      <div className="dot">
+      <div className="dot rock">
         <h1>Rock 'N Roll</h1>
-        focus on what matters.
-        <br />
-        focus on shit, shit grows
-        <br />
-        read that again.
+        My Motto for life. Work harder. Play harder.
       </div>
     </div>
     <div style={{ height: '200vh' }}>
       <div className="dot">
         <h1>Music</h1>
-        move fast, fail a lot.
+        I play drums since I was in 7th grade. An unfortunate event prevented me from playing, so I picked up a guitar,
+        and have been playing it ever since. <br />
+        (I still play the drums too).
       </div>
     </div>
     <div style={{ height: '200vh' }}>
       <div className="dot">
-        <h1>VR</h1>see things from different angles. detach and realign.
+        <h1>VR</h1>My latest love, VR is where I can immerse myself in other worlds completely. <br />
+        It's an incredible tool for creation as well, you are right there with your sketch/model/work.
       </div>
     </div>
     <div style={{ height: '200vh' }}>
       <div className="dot">
-        <h1>3D</h1>play often, laugh often.
+        <h1>3D</h1>I love VFX and 3D. <br />
+        I like modeling in Blender and texturing in Blender/Substance Painter. <br />
+        I love seeing it come together with THREE.JS, like this experience <br />
+        <br />
       </div>
     </div>
 
     <div style={{ height: '200vh' }}>
       <div className="dot">
-        <h1>Code</h1>devote yourself, work on something for a long time. reap results. repeat.
+        <h1>Code</h1>I am a self-taught passionate fullstack developer that loves great web experiences. <br />
+        I code mainly in Node.JS/TypeScript/Javascript/React. <br />
+        But I am not limited to any stack. <br />
+        One of my greatest qualities is being able to learn anything.
       </div>
     </div>
     <div style={{ height: '200vh' }}>
       <div className="dot">
-        <h1>End</h1>Hope you enjoyed this short experience. <br />
-        If you didn't, please make sure to leave a complaint <br />
-        at i.dont.care@blackhole.com
+        <h1>Thanks</h1>You made it to the end. <br />
+        If you didn't, that's okay. <br />
+        Checkout my github <button href="https://github.com/tool3" target={"_blank"}>here</button>
       </div>
     </div>
     <span className="caption" ref={caption}>

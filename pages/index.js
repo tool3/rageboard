@@ -1,14 +1,30 @@
-import React, { Suspense, useRef } from 'react';
+import React, { Suspense, useRef, useState } from 'react';
 import Head from 'next/head';
 import { Canvas } from '@react-three/fiber';
 import { Environment } from '@react-three/drei';
 import Model from '../components/Model';
 import Overlay from '../components/Overlay';
+import { Html, useProgress } from '@react-three/drei';
+
+function Loader() {
+  const { progress } = useProgress();
+  return <Html center>{progress} % loaded</Html>;
+}
 
 export default function IndexPage() {
   const overlay = useRef();
   const caption = useRef();
   const scroll = useRef(0);
+  const [started, setStarted] = useState();
+
+  function setStart(e) {
+    console.log('started', e);
+    e.target.style.opacity = 0;
+    setTimeout(() => (e.target.parentElement.style.display = 'none'), 220);
+
+    setStarted(true);
+  }
+
   return (
     <>
       <Head>
@@ -21,12 +37,12 @@ export default function IndexPage() {
         onCreated={(state) => state.events.connect(overlay.current)}
         raycaster={{ computeOffsets: ({ clientX, clientY }) => ({ offsetX: clientX, offsetY: clientY }) }}>
         <ambientLight intensity={1} />
-        <Suspense fallback={null}>
-          <Model scroll={scroll} />
+        <Suspense fallback={<Loader />}>
+          <Model scroll={scroll} started={started} />
           <Environment preset="city" />
         </Suspense>
       </Canvas>
-      <Overlay ref={overlay} caption={caption} scroll={scroll} />
+      <Overlay ref={overlay} caption={caption} scroll={scroll} setStarted={setStart} />
     </>
   );
 }

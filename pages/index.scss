@@ -45,7 +45,7 @@ a:hover {
 @import url('https://rsms.me/inter/inter.css');
 @font-face {
   font-family: 'Grotesque';
-  src:  url('../public/fonts/BasementGrotesque-Black_v1.202.woff') format('woff')
+  src: url('../public/fonts/BasementGrotesque-Black_v1.202.woff') format('woff');
 }
 * {
   box-sizing: border-box;
@@ -90,6 +90,7 @@ body {
 }
 
 .caption {
+  // display: none;
   pointer-events: none;
   position: fixed;
   top: 0;
@@ -104,10 +105,10 @@ body {
 }
 
 .dot {
+  display: inline-block;
   pointer-events: none;
   position: sticky;
   top: 0px;
-  display: inline-block;
   max-width: 600px;
   padding: 0;
   padding: 80px;
@@ -116,9 +117,18 @@ body {
   font-size: 15px;
   letter-spacing: 1.5px;
 
+  &.github {
+    &:hover {
+      cursor: pointer;
+    }
+  }
 
   &.rock {
     max-width: 800px;
+  }
+
+  &.code {
+    word-break: break-word;
   }
 }
 
@@ -131,6 +141,36 @@ body {
   line-height: 1em;
   margin: 0;
   margin-bottom: 0.25em;
+}
+
+.welcome {
+  z-index: 1;
+  display: flex;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.9);
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s ease-in-out;
+
+  .welcome_text {
+    transition: 0.2s ease-in-out;
+    color: white;
+    font-size: 20em;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+@media only screen and (max-width: 1250px) {
+  .welcome {
+    .welcome_text {
+      font-size: 2em;
+    }
+  }
 }
 
 @media only screen and (max-width: 1000px) {

@@ -1,21 +1,30 @@
 import * as THREE from 'three';
-import React, { useEffect, useRef } from 'react';
-import { useGLTF, useAnimations, PerspectiveCamera, useHelper } from '@react-three/drei';
-import { useFrame, useLoader } from '@react-three/fiber';
-import { EffectComposer, DepthOfField } from '@react-three/postprocessing';
-import { TextureLoader } from 'three/src/loaders/TextureLoader';
-import { MeshPhongMaterial, MeshStandardMaterial } from 'three';
+import React, { useEffect, useRef, useState } from 'react';
+import { useGLTF, useAnimations, PerspectiveCamera } from '@react-three/drei';
+import { useFrame } from '@react-three/fiber';
 
-export default function Model({ scroll, ...props }) {
+export default function Model({ scroll, started, ...props }) {
   const group = useRef();
 
   const { nodes, materials, animations } = useGLTF('/models/spiral_scroll_d.glb');
   const { actions } = useAnimations(animations, group);
-  const colorMap = useLoader(TextureLoader, 'screen.png');
+
+  const video = document.createElement('video');
+  video.src = 'matrix.mp4';
+  video.loop = true;
+  video.autoplay = true;
+  video.muted = true;
+  video.load();
+
+  const [videoTexture, setVideoTexture] = useState(null);
+  const [videoImageContext, setVideoImageContext] = useState(null);
+
   const extras = { receiveShadow: true, castShadow: true, 'material-envMapIntensity': 0.2 };
 
+  useEffect(() => {
+    if (started) video.play();
+  });
   useEffect(() => void (actions['CameraAction.005'].play().paused = true), []);
-
   useEffect(() => {
     group.current.children[0].children.forEach((child) => {
       if (child instanceof THREE.Mesh) {
@@ -26,10 +35,32 @@ export default function Model({ scroll, ...props }) {
       } else {
         child.children.forEach((child) => {
           if (child.name !== 'Notebook_screen') {
-            console.log(child);
             child.layers.enable(3);
             child.material.color.set('#202020').convertSRGBToLinear();
             child.geometry.computeVertexNormals(true);
+          } else {
+            const videoImage = document.createElement('canvas');
+            videoImage.width = 1920;
+            videoImage.height = 1080;
+
+            const videoImageContext = videoImage.getContext('2d');
+            // videoImageContext.rotate(10);
+
+            videoImageContext.fillStyle = '#000000';
+            videoImageContext.fillRect(0, 0, videoImage.width, videoImage.height);
+
+            const videoTexture = new THREE.Texture(videoImage);
+            videoTexture.flipY = false;
+
+            videoTexture.minFilter = THREE.LinearFilter;
+            videoTexture.magFilter = THREE.LinearFilter;
+
+            setVideoTexture(videoTexture);
+            setVideoImageContext(videoImageContext);
+
+            const movieMaterial = new THREE.MeshBasicMaterial({ map: videoTexture });
+
+            child.material = movieMaterial;
           }
         });
       }
@@ -37,6 +68,11 @@ export default function Model({ scroll, ...props }) {
   }, []);
 
   useFrame((state) => {
+    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+      videoImageContext.drawImage(video, 0, 0);
+      if (videoTexture) videoTexture.needsUpdate = true;
+    }
+
     actions['CameraAction.005'].time = THREE.MathUtils.lerp(
       actions['CameraAction.005'].time,
       actions['CameraAction.005'].getClip().duration * scroll.current,
@@ -55,7 +91,7 @@ export default function Model({ scroll, ...props }) {
         child.position.y = Math.sin((et + index * 2000) / 2) * 0.5;
 
         if (child.name == 'Guitar') {
-          child.position.y = Math.sin((et + index * 2000) / 2) * 0.5 - 15;
+          child.position.y = Math.sin((et + index * 2000) / 2) * 0.5 - 20;
         }
 
         if (child.name == 'Horns') {
@@ -80,7 +116,6 @@ export default function Model({ scroll, ...props }) {
       }
     });
   });
-  console.log(materials);
 
   return (
     <group ref={group} {...props} dispose={null}>
@@ -106,7 +141,14 @@ export default function Model({ scroll, ...props }) {
             {...extras}
           />
         </group>
-        <mesh name="Guitar" scale={[4, 4, 4]} position={[0, -10, 0]} geometry={nodes.Guitar.geometry} material={materials.Guitar} {...extras} />
+        <mesh
+          name="Guitar"
+          scale={[4, 4, 4]}
+          position={[0, -10, 0]}
+          geometry={nodes.Guitar.geometry}
+          material={materials.Guitar}
+          {...extras}
+        />
         <mesh
           name="Cone"
           scale={[4, 4, 4]}

@@ -1,17 +1,22 @@
 import React, { forwardRef } from 'react';
-import { useState } from 'react';
+import Link from 'next/link';
 
 const Overlay = forwardRef(({ caption, scroll, setStarted }, ref) => {
+  // const [route, setRoute] = useState('/');
+
   return (
     <div
       ref={ref}
       onScroll={(e) => {
         scroll.current = e.target.scrollTop / (e.target.scrollHeight - window.innerHeight);
         caption.current.innerText = (scroll.current * 100).toFixed(2) + '%';
+        console.log(scroll.current);
       }}
       className="scroll">
       <div className="welcome">
-        <div className="welcome_text" onClick={setStarted}>START</div>
+        <div className="welcome_text" onClick={setStarted}>
+          START
+        </div>
       </div>
       <div style={{ height: '400vh' }}>
         <div className="dot">
@@ -24,6 +29,15 @@ const Overlay = forwardRef(({ caption, scroll, setStarted }, ref) => {
           <br />
           swipe on mobile.
         </div>
+
+        <div className="menu">
+          <Link href={'/#motto'}>Motto</Link>
+          <Link href={'/#music'}>Music</Link>
+          <Link href={'/#vr'}>VR</Link>
+          <Link href={'/#3d'}>3D</Link>
+          <Link href={'/#code'}>Code</Link>
+          <Link href={'/#links'}>LNKS</Link>
+        </div>
       </div>
       <div style={{ height: '200vh' }}>
         <div className="dot rock">
@@ -34,14 +48,15 @@ const Overlay = forwardRef(({ caption, scroll, setStarted }, ref) => {
       <div style={{ height: '200vh' }}>
         <div className="dot">
           <h1>Music</h1>
-          I play drums since I was in 7th grade. <br/>
-          An unfortunate accident prevented me from playing further, so I picked up a guitar, and haven't laid it down since. <br />
+          I play drums since I was in 7th grade. <br />
+          An unfortunate accident prevented me from playing further, so I picked up a guitar, and haven't laid it down
+          since. <br />
           (I still play the drums too).
         </div>
       </div>
       <div style={{ height: '200vh' }}>
         <div className="dot">
-          <h1>VR</h1>My latest love, VR is where I can immerse myself in other worlds completely. <br />
+          <h1>VR</h1>My latest interest, VR is where I can immerse myself in other worlds completely. <br />
           It's an incredible tool for creating as well, you are right there with your sketch/model/work.
         </div>
       </div>
@@ -64,7 +79,7 @@ const Overlay = forwardRef(({ caption, scroll, setStarted }, ref) => {
       </div>
       <div style={{ height: '200vh' }}>
         <div className="dot">
-          <h1>Thanks</h1>You made it to the end. <br />
+          <h1>Thank You</h1>You made it to the end. Thanks!<br />
           If you didn't, that's okay. <br />
           You won't see this anyway. <br />
           Check out my links at the bottom.
@@ -73,8 +88,12 @@ const Overlay = forwardRef(({ caption, scroll, setStarted }, ref) => {
       <span className="caption" ref={caption}>
         0.00 %
       </span>
-      <a className="link" href="https://github.com/tool3">GITHUB</a>
-      <a className="link" href="https://linkedin.com/in/talhayut">LINKEDIN</a>
+      <a className="link" href="https://github.com/tool3">
+        GITHUB
+      </a>
+      <a className="link" href="https://linkedin.com/in/talhayut">
+        LINKEDIN
+      </a>
     </div>
   );
 });

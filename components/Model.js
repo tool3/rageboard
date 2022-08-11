@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useGLTF, useAnimations, PerspectiveCamera } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 
-export default function Model({ scroll, started, ...props }) {
+export default function Model({ scroll, started, router, ...props }) {
   const group = useRef();
 
   const { nodes, materials, animations } = useGLTF('/models/spiral_scroll_d.glb');
@@ -20,9 +20,46 @@ export default function Model({ scroll, started, ...props }) {
 
   const extras = { receiveShadow: true, castShadow: true, 'material-envMapIntensity': 0.2 };
 
+  async function slowScrollY(scroll) {
+    for (let i = 0; i < scroll; i += 500) {
+      document.querySelector('.scroll').scroll(0, i);
+      // await new Promise((res) => setTimeout(res, 100));
+    }
+  }
+
+  useEffect(() => {
+    const onHashChangeStart = (url) => {
+      console.log(`Path changing to ${url}`);
+      console.log(scroll.current);
+      const paths = {
+        music: { path: '/#music', value: 6500 },
+        motto: { path: '/#motto', value: 4100 },
+        vr: { path: '/#vr', value: 8300 },
+        '3d': { path: '/#3d', value: 10900 },
+        code: { path: '/#code', value: 13000 },
+        links: { path: '/#links', value: 15000 }
+      };
+      const keys = Object.keys(paths);
+      for (const key of keys) {
+        const pathObject = paths[key];
+        if (url === pathObject.path) {
+          slowScrollY(pathObject.value);
+        }
+      }
+    };
+
+    if (router?.events) {
+      router.events.on('hashChangeStart', onHashChangeStart);
+
+      return () => {
+        router.events.off('hashChangeStart', onHashChangeStart);
+      };
+    }
+  }, [router.events]);
+
   useEffect(() => {
     if (started) {
-      video.play(); 
+      video.play();
       video.muted = false;
     }
   });

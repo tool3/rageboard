@@ -3,6 +3,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useGLTF, useAnimations, PerspectiveCamera } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
 
+function isMobile() {
+  const ua = window.navigator.userAgent;
+  const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+  const webkit = !!ua.match(/WebKit/i);
+  const iOSSafari = iOS && webkit && !ua.match(/CriOS/i);
+  return { iOS, webkit, iOSSafari };
+}
+
 export default function Model({ scroll, started, router, ...props }) {
   const group = useRef();
 
@@ -10,7 +18,9 @@ export default function Model({ scroll, started, router, ...props }) {
   const { actions } = useAnimations(animations, group);
 
   const video = document.createElement('video');
-  video.src = '/videos/matrix_compressed.mp4';
+  const { iOSSafari } = isMobile();
+  const path = '/videos/matrix_compressed.mp4';
+  video.src = iOSSafari ? `https://tal.vercel.app${path}` : path;
   video.loop = true;
   video.muted = true;
   video.load();

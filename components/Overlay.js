@@ -38,13 +38,13 @@ const Overlay = forwardRef(({ caption, scroll, setStarted }, ref) => {
           <Link href={'/#links'}>LNKS</Link>
         </div>
       </div>
-      <div style={{ height: '200vh' }}>
+      <div style={{ height: '200vh' }} className="rock">
         <div className="dot rock">
           <h1>Rock 'N Roll</h1>
           My Motto for life. Work harder. Play harder.
         </div>
       </div>
-      <div style={{ height: '200vh' }}>
+      <div style={{ height: '200vh' }} className="music">
         <div className="dot">
           <h1>Music</h1>
           I play drums since I was in 7th grade. <br />
@@ -53,13 +53,13 @@ const Overlay = forwardRef(({ caption, scroll, setStarted }, ref) => {
           (I still play the drums too).
         </div>
       </div>
-      <div style={{ height: '200vh' }}>
+      <div style={{ height: '200vh' }} className="vr">
         <div className="dot">
           <h1>VR</h1>My latest interest, VR is where I can immerse myself in other worlds completely. <br />
           It's an incredible tool for creating as well, you are right there with your sketch/model/work.
         </div>
       </div>
-      <div style={{ height: '200vh' }}>
+      <div style={{ height: '200vh' }} className="3d">
         <div className="dot">
           <h1>3D</h1>I fell in-love with VFX and 3D. <br />
           I like modeling in Blender and texturing in Blender/Substance Painter. <br />
@@ -68,17 +68,18 @@ const Overlay = forwardRef(({ caption, scroll, setStarted }, ref) => {
         </div>
       </div>
 
-      <div style={{ height: '200vh' }}>
-        <div className="dot code">
+      <div style={{ height: '200vh' }} className="code">
+        <div className="dot">
           <h1>Code</h1>I am a self-taught passionate fullstack developer that loves great web experiences. <br />
           I code mainly in Node.JS/TypeScript/Javascript/React. <br />
           But I am not limited to any stack. <br />
           One of my greatest qualities is being able to learn anything.
         </div>
       </div>
-      <div style={{ height: '200vh' }}>
+      <div style={{ height: '200vh' }} className="links">
         <div className="dot">
-          <h1>Thank You</h1>You made it to the end. Thanks!<br />
+          <h1>Thank You</h1>You made it to the end. Thanks!
+          <br />
           If you didn't, that's okay. <br />
           You won't see this anyway. <br />
           Check out my links at the bottom.

@@ -33,18 +33,19 @@ export default function Model({ scroll, started, router, ...props }) {
       const paths = {
         // TODO handle mobile
         // TODO and clean this place up!
-        music: { path: '/#music', value: 6500 },
-        motto: { path: '/#motto', value: 4100 },
-        vr: { path: '/#vr', value: 8300 },
-        '3d': { path: '/#3d', value: 10900 },
-        code: { path: '/#code', value: 13000 },
-        links: { path: '/#links', value: 16000 }
+        music: { path: '/#music', value: 6500, selector: '.music' },
+        motto: { path: '/#motto', value: 4100, selector: '.rock' },
+        vr: { path: '/#vr', value: 8300, selector: '.vr' },
+        '3d': { path: '/#3d', value: 10900, selector: '.3d' },
+        code: { path: '/#code', value: 13000, selector: '.code' },
+        links: { path: '/#links', value: 16000, selector: '.links' }
       };
       const keys = Object.keys(paths);
       for (const key of keys) {
         const pathObject = paths[key];
         if (url === pathObject.path) {
-          slowScrollY(pathObject.value);
+          // slowScrollY(pathObject.value);
+          document.querySelector(pathObject.selector).scrollIntoView({ behavior: 'smooth', alignToTop: false, block: 'center' });
         }
       }
     };

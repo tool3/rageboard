@@ -176,7 +176,8 @@ body {
   justify-content: center;
   align-items: center;
   transition: 0.2s ease-in-out;
-  background: rgba(0, 0, 0, 0.9);
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
 
   .welcome_text {
     transition: 0.2s ease-in-out;

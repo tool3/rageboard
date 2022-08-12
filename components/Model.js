@@ -44,8 +44,15 @@ export default function Model({ scroll, started, router, ...props }) {
       for (const key of keys) {
         const pathObject = paths[key];
         if (url === pathObject.path) {
-          // slowScrollY(pathObject.value);
-          document.querySelector(pathObject.selector).scrollIntoView({ behavior: 'smooth', alignToTop: false, block: window.innerWidth <= 600 ? 'center' : 'end' });
+          if (window.innerWidth <= 600) {
+            document.querySelector(pathObject.selector).scrollIntoView({
+              behavior: 'smooth',
+              alignToTop: false,
+              block: 'end'
+            });
+          } else {
+            slowScrollY(pathObject.value);
+          }
         }
       }
     };

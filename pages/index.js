@@ -7,7 +7,6 @@ import Overlay from '../components/Overlay';
 import { Html, useProgress } from '@react-three/drei';
 import { useRouter } from 'next/router';
 
-
 function Loader() {
   const { progress } = useProgress();
   return (
@@ -26,7 +25,9 @@ export default function IndexPage() {
 
   function setStart(e) {
     e.target.style.opacity = 0;
-    setTimeout(() => (e.target.parentElement.style.display = 'none'), 220);
+    setTimeout(() => {
+      e.target.style.display = 'none';
+    }, 220);
     setStarted(true);
   }
 
@@ -48,7 +49,7 @@ export default function IndexPage() {
           <Environment preset="city" />
         </Suspense>
       </Canvas>
-      <Overlay ref={overlay} caption={caption} scroll={scroll} setStarted={setStart} />
+      <Overlay ref={overlay} caption={caption} scroll={scroll} started={started} setStarted={setStart} />
     </>
   );
 }

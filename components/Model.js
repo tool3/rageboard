@@ -36,7 +36,7 @@ export default function Model({ scroll, started, router, ...props }) {
         music: { path: '/#music', value: 6500, selector: '.music' },
         motto: { path: '/#motto', value: 4100, selector: '.rock' },
         vr: { path: '/#vr', value: 8300, selector: '.vr' },
-        '3d': { path: '/#3d', value: 10900, selector: '.3d' },
+        '3d': { path: '/#3d', value: 10900, selector: '.ddd' },
         code: { path: '/#code', value: 13000, selector: '.code' },
         links: { path: '/#links', value: 16000, selector: '.links' }
       };
@@ -45,7 +45,7 @@ export default function Model({ scroll, started, router, ...props }) {
         const pathObject = paths[key];
         if (url === pathObject.path) {
           // slowScrollY(pathObject.value);
-          document.querySelector(pathObject.selector).scrollIntoView({ behavior: 'smooth', alignToTop: false, block: 'center' });
+          document.querySelector(pathObject.selector).scrollIntoView({ behavior: 'smooth', alignToTop: false, block: window.innerWidth <= 600 ? 'center' : 'end' });
         }
       }
     };

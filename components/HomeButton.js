@@ -1,8 +1,10 @@
-import React from 'react';
-import Link from 'next/link';
-import { Suspense } from 'react';
+import React, { useEffect } from 'react';
 
 const HomeButton = () => {
+  useEffect(() => {
+    document.querySelector('.floating_home').style.display = 'none';
+  }, []);
+
   return (
     <div className="floating_home">
       <div onClick={() => document.querySelector('.scroll').scrollTo(0, 0)}>

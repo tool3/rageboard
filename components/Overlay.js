@@ -1,11 +1,9 @@
 import React, { forwardRef } from 'react';
 import Link from 'next/link';
 import HomeButton from './HomeButton';
-import { useEffect } from 'react';
+
 
 const Overlay = forwardRef(({ caption, scroll, setStarted }, ref) => {
-  // const [route, setRoute] = useState('/');
-
   return (
     <>
       <div className="welcome">

@@ -31,7 +31,7 @@ h1 {
 }
 
 a {
-  color: white;
+  width: fit-content;
   display: block;
   text-decoration: unset;
   font-size: 20px;
@@ -91,7 +91,6 @@ body {
 }
 
 .caption {
-  // display: none;
   pointer-events: none;
   position: fixed;
   top: 0;
@@ -108,6 +107,7 @@ body {
 .dot {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   text-transform: uppercase;
   pointer-events: none;
   position: sticky;
@@ -162,6 +162,10 @@ body {
   &:hover {
     cursor: pointer;
   }
+
+  .floating_home_btn {
+    transform: rotate(180deg);
+  }
 }
 
 .menu {
@@ -194,6 +198,10 @@ body {
   backdrop-filter: blur(20px);
 
   .welcome_text {
+    outline: none;
+    font-family: Grotesque;
+    background: transparent;
+    border: none;
     transition: 0.2s ease-in-out;
     color: white;
     font-size: 20em;
@@ -201,6 +209,62 @@ body {
     &:hover {
       cursor: pointer;
     }
+  }
+}
+
+.glitch {
+  font-size: 4em;
+  color: #ff00ff !important;
+  position: relative;
+  // top: -1em;
+  &:before,
+  &:after {
+    content: attr(data-before);
+    position: absolute;
+    left: 0;
+  }
+  &:before {
+    color: #00ffff;
+  }
+  &:after {
+    color: white;
+  }
+  &:hover {
+    cursor: pointer;
+    &:before {
+      animation: glitch 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    }
+    &:after {
+      animation: glitch 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both;
+    }
+  }
+}
+
+@keyframes glitch {
+  0% {
+    -webkit-transform: translate(0);
+    transform: translate(0);
+  }
+  20% {
+    -webkit-transform: translate(-5px, 5px);
+    transform: translate(-5px, 5px);
+    transform: skewX(10deg);
+  }
+  40% {
+    -webkit-transform: translate(-5px, -5px);
+    transform: translate(-5px, -5px);
+  }
+  60% {
+    -webkit-transform: translate(5px, 5px);
+    transform: translate(5px, 5px);
+  }
+  80% {
+    -webkit-transform: translate(5px, -5px);
+    transform: translate(5px, -5px);
+  }
+  to {
+    -webkit-transform: translate(0);
+    transform: translate(0);
   }
 }
 
@@ -227,7 +291,6 @@ body {
   }
 
   .menu {
-    // margin-top: 0;
     top: 31vh;
     left: 25vw;
   }
@@ -246,9 +309,13 @@ body {
   .caption {
     font-size: 2em;
     position: fixed;
-    left: 65px;
-    top: -45px;
+    margin: 0;
+    top: 1em;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
   }
+
   .menu {
     top: 13em;
     left: 32vw;

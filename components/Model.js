@@ -33,12 +33,6 @@ export default function Model({ scroll, started, router, ...props }) {
 
   const extras = { receiveShadow: true, castShadow: true, 'material-envMapIntensity': 0.2 };
 
-  async function slowScrollY(scroll) {
-    for (let i = 0; i < scroll; i += 500) {
-      document.querySelector('.scroll').scroll(0, i);
-    }
-  }
-
   function setMovieMaterial() {
     const videoImage = document.createElement('canvas');
     videoImage.width = 1920;
@@ -70,38 +64,6 @@ export default function Model({ scroll, started, router, ...props }) {
     imageTexture.offset.x = 350;
     return new THREE.MeshBasicMaterial({ map: imageTexture });
   }
-
-  useEffect(() => {
-    const mobile = window.innerWidth <= 600;
-    const onHashChangeStart = (url) => {
-      const paths = {
-        // TODO handle mobile
-        // TODO and clean this place up!
-        music: { path: '/#music', value: mobile ? 6000 : 6500, selector: '.music' },
-        motto: { path: '/#motto', value: mobile ? 4000 : 4100, selector: '.rock' },
-        vr: { path: '/#vr', value: mobile ? 7500 : 8300, selector: '.vr' },
-        '3d': { path: '/#3d', value: mobile ? 9500 : 10900, selector: '.ddd' },
-        code: { path: '/#code', value: mobile ? 11500 : 13000, selector: '.code' },
-        links: { path: '/#links', value: 16000, selector: '.links' }
-      };
-
-      const keys = Object.keys(paths);
-      for (const key of keys) {
-        const pathObject = paths[key];
-        if (url === pathObject.path) {
-          slowScrollY(pathObject.value);
-        }
-      }
-    };
-
-    if (router?.events) {
-      router.events.on('hashChangeStart', onHashChangeStart);
-
-      return () => {
-        router.events.off('hashChangeStart', onHashChangeStart);
-      };
-    }
-  }, [router.events]);
 
   useEffect(() => {
     if (started && !iOSSafari) {

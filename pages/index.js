@@ -1,4 +1,4 @@
-import React, { Suspense, useRef, useState } from 'react';
+import React, { Suspense, useRef, useState, useEffect } from 'react';
 import Head from 'next/head';
 import { Canvas } from '@react-three/fiber';
 import { Environment } from '@react-three/drei';
@@ -6,6 +6,7 @@ import Model from '../components/Model';
 import Overlay from '../components/Overlay';
 import { Html, useProgress } from '@react-three/drei';
 import { useRouter } from 'next/router';
+import Particles from '../components/Particles';
 
 function Loader() {
   const { progress } = useProgress();
@@ -23,6 +24,12 @@ export default function IndexPage() {
   const [started, setStarted] = useState();
   const router = useRouter();
 
+  async function slowScrollY(scroll) {
+    for (let i = 0; i < scroll; i += 500) {
+      document.querySelector('.scroll').scroll(0, i);
+    }
+  }
+
   function setStart(e) {
     e.target.style.opacity = 0;
     setTimeout(() => {
@@ -30,6 +37,36 @@ export default function IndexPage() {
     }, 220);
     setStarted(true);
   }
+
+  useEffect(() => {
+    const mobile = window.innerWidth <= 600;
+    const onHashChangeStart = (url) => {
+      const paths = {
+        music: { path: '/#music', value: mobile ? 6000 : 6500, selector: '.music' },
+        motto: { path: '/#motto', value: mobile ? 4000 : 4000, selector: '.rock' },
+        vr: { path: '/#vr', value: mobile ? 7500 : 8000, selector: '.vr' },
+        '3d': { path: '/#3d', value: mobile ? 9500 : 10000, selector: '.ddd' },
+        code: { path: '/#code', value: mobile ? 11500 : 12000, selector: '.code' },
+        links: { path: '/#links', value: 16000, selector: '.links' }
+      };
+
+      const keys = Object.keys(paths);
+      for (const key of keys) {
+        const pathObject = paths[key];
+        if (url === pathObject.path) {
+          slowScrollY(pathObject.value);
+        }
+      }
+    };
+
+    if (router?.events) {
+      router.events.on('hashChangeStart', onHashChangeStart);
+
+      return () => {
+        router.events.off('hashChangeStart', onHashChangeStart);
+      };
+    }
+  }, [router.events]);
 
   return (
     <>
@@ -46,6 +83,8 @@ export default function IndexPage() {
 
         <Suspense fallback={<Loader />}>
           <Model router={router} scroll={scroll} started={started} />
+          <Particles color={0xff00ff} />
+          <Particles color={0x00ffff} />
           <Environment preset="city" />
         </Suspense>
       </Canvas>

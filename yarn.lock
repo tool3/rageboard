@@ -199,6 +199,16 @@
     screen-space-reflections "2.1.1"
     three-stdlib "^2.8.11"
 
+"@splinetool/loader@^0.9.94":
+  version "0.9.94"
+  resolved "https://registry.yarnpkg.com/@splinetool/loader/-/loader-0.9.94.tgz#c306b97579201bbed89cfcb602363d20726f3107"
+  integrity sha512-pG3coel8SQM9cYp4ojBWxVTfC/6NyaaEbra3sfFPVTSOsKAHZuKbCzr15CMqV6psWXA1x96i0ix1OJDKWMC2Gg==
+
+"@splinetool/r3f-spline@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@splinetool/r3f-spline/-/r3f-spline-1.0.1.tgz#8d6de6e0b8b9677d7a6c57a102cd7fa557d17358"
+  integrity sha512-lAVXna69B67L3W4S7laHy3vA6fuIDQmdmtYoZ/OjGLKUzwJRAU5xTJGrW95c+dnIZdDqTtCe/IBmKASfh5mppw==
+
 "@swc/helpers@0.4.3":
   version "0.4.3"
   resolved "https://registry.yarnpkg.com/@swc/helpers/-/helpers-0.4.3.tgz#16593dfc248c53b699d4b5026040f88ddb497012"

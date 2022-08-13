@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import React, { useEffect, useRef, useState } from 'react';
 import { useGLTF, useAnimations, PerspectiveCamera } from '@react-three/drei';
-import { useFrame } from '@react-three/fiber';
+import { useFrame, useLoader } from '@react-three/fiber';
 
 function isMobile() {
   const ua = window.navigator.userAgent;
@@ -13,16 +13,20 @@ function isMobile() {
 
 export default function Model({ scroll, started, router, ...props }) {
   const group = useRef();
+  const [imageTexture] = useLoader(THREE.TextureLoader, ['/images/matrix_screenshot.png'])
 
   const { nodes, materials, animations } = useGLTF('/models/spiral_scroll_d.glb');
   const { actions } = useAnimations(animations, group);
 
   const video = document.createElement('video');
   const { iOSSafari } = isMobile();
-  video.src = '/videos/matrix_compressed.mp4';
-  video.loop = true;
-  video.muted = true;
-  video.load();
+
+  if (!iOSSafari) {
+    video.src = '/videos/matrix_compressed.mp4';
+    video.loop = true;
+    video.muted = true;
+    video.load();
+  }
 
   const [videoTexture, setVideoTexture] = useState(null);
   const [videoImageContext, setVideoImageContext] = useState(null);
@@ -33,6 +37,38 @@ export default function Model({ scroll, started, router, ...props }) {
     for (let i = 0; i < scroll; i += 500) {
       document.querySelector('.scroll').scroll(0, i);
     }
+  }
+
+  function setMovieMaterial() {
+    const videoImage = document.createElement('canvas');
+    videoImage.width = 1920;
+    videoImage.height = 1080;
+
+    const videoImageContext = videoImage.getContext('2d');
+    // videoImageContext.rotate(10);
+
+    videoImageContext.fillStyle = '#000000';
+    videoImageContext.fillRect(0, 0, videoImage.width, videoImage.height);
+
+    const videoTexture = new THREE.Texture(videoImage);
+    videoTexture.flipY = false;
+
+    videoTexture.minFilter = THREE.LinearFilter;
+    videoTexture.magFilter = THREE.LinearFilter;
+
+    setVideoTexture(videoTexture);
+    setVideoImageContext(videoImageContext);
+
+    return new THREE.MeshBasicMaterial({ map: videoTexture });
+  }
+
+  function setMovieScreenshotMaterial() {
+    imageTexture.flipY = false;
+    imageTexture.wrapS = THREE.RepeatWrapping;
+    imageTexture.wrapT = THREE.RepeatWrapping;
+    imageTexture.repeat.set(1, 1);
+    imageTexture.offset.x = 350;
+    return new THREE.MeshBasicMaterial({ map: imageTexture });
   }
 
   useEffect(() => {
@@ -88,28 +124,13 @@ export default function Model({ scroll, started, router, ...props }) {
             child.material.color.set('#202020').convertSRGBToLinear();
             child.geometry.computeVertexNormals(true);
           } else {
-            const videoImage = document.createElement('canvas');
-            videoImage.width = 1920;
-            videoImage.height = 1080;
-
-            const videoImageContext = videoImage.getContext('2d');
-            // videoImageContext.rotate(10);
-
-            videoImageContext.fillStyle = '#000000';
-            videoImageContext.fillRect(0, 0, videoImage.width, videoImage.height);
-
-            const videoTexture = new THREE.Texture(videoImage);
-            videoTexture.flipY = false;
-
-            videoTexture.minFilter = THREE.LinearFilter;
-            videoTexture.magFilter = THREE.LinearFilter;
-
-            setVideoTexture(videoTexture);
-            setVideoImageContext(videoImageContext);
-
-            const movieMaterial = new THREE.MeshBasicMaterial({ map: videoTexture });
-
-            child.material = movieMaterial;
+            if (!iOSSafari) {
+              const movieMaterial = setMovieMaterial();
+              child.material = movieMaterial;
+            } else {
+              const movieScreenshotMaterial = setMovieScreenshotMaterial();
+              child.material = movieScreenshotMaterial;
+            }
           }
         });
       }

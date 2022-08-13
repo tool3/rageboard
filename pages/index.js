@@ -26,7 +26,7 @@ export default function IndexPage() {
   function setStart(e) {
     e.target.style.opacity = 0;
     setTimeout(() => {
-      e.target.style.display = 'none';
+      e.target.parentElement.style.display = 'none';
     }, 220);
     setStarted(true);
   }
@@ -49,7 +49,14 @@ export default function IndexPage() {
           <Environment preset="city" />
         </Suspense>
       </Canvas>
-      <Overlay ref={overlay} caption={caption} scroll={scroll} started={started} setStarted={setStart} />
+      <Overlay
+        ref={overlay}
+        router={router}
+        caption={caption}
+        scroll={scroll}
+        started={started}
+        setStarted={setStart}
+      />
     </>
   );
 }

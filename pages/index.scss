@@ -150,6 +150,20 @@ body {
   top: 10em;
   // z-index: 2;
 }
+
+.floating_home {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  font-size: 3em;
+  transition: 0.2 ease-in-out;
+  display: flex;
+  &:hover {
+    cursor: pointer;
+  }
+}
+
 .menu {
   position: absolute;
   left: 40vw;

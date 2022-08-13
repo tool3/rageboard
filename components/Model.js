@@ -19,8 +19,7 @@ export default function Model({ scroll, started, router, ...props }) {
 
   const video = document.createElement('video');
   const { iOSSafari } = isMobile();
-  const path = '/videos/matrix_compressed.mp4';
-  video.src = iOSSafari ? `https://tal.vercel.app${path}` : path;
+  video.src = '/videos/matrix_compressed.mp4';
   video.loop = true;
   video.muted = true;
   video.load();
@@ -37,32 +36,24 @@ export default function Model({ scroll, started, router, ...props }) {
   }
 
   useEffect(() => {
+    const mobile = window.innerWidth <= 600;
     const onHashChangeStart = (url) => {
-      console.log(`Path changing to ${url}`);
-      console.log(scroll.current);
       const paths = {
         // TODO handle mobile
         // TODO and clean this place up!
-        music: { path: '/#music', value: 6500, selector: '.music' },
-        motto: { path: '/#motto', value: 4100, selector: '.rock' },
-        vr: { path: '/#vr', value: 8300, selector: '.vr' },
-        '3d': { path: '/#3d', value: 10900, selector: '.ddd' },
-        code: { path: '/#code', value: 13000, selector: '.code' },
+        music: { path: '/#music', value: mobile ? 6000 : 6500, selector: '.music' },
+        motto: { path: '/#motto', value: mobile ? 4000 : 4100, selector: '.rock' },
+        vr: { path: '/#vr', value: mobile ? 7500 : 8300, selector: '.vr' },
+        '3d': { path: '/#3d', value: mobile ? 9500 : 10900, selector: '.ddd' },
+        code: { path: '/#code', value: mobile ? 11500 : 13000, selector: '.code' },
         links: { path: '/#links', value: 16000, selector: '.links' }
       };
+
       const keys = Object.keys(paths);
       for (const key of keys) {
         const pathObject = paths[key];
         if (url === pathObject.path) {
-          if (window.innerWidth <= 600) {
-            document.querySelector(pathObject.selector).scrollIntoView({
-              behavior: 'smooth',
-              alignToTop: false,
-              block: 'end'
-            });
-          } else {
-            slowScrollY(pathObject.value);
-          }
+          slowScrollY(pathObject.value);
         }
       }
     };
@@ -77,7 +68,7 @@ export default function Model({ scroll, started, router, ...props }) {
   }, [router.events]);
 
   useEffect(() => {
-    if (started) {
+    if (started && !iOSSafari) {
       video.play();
       video.muted = false;
     }
@@ -242,8 +233,8 @@ export default function Model({ scroll, started, router, ...props }) {
           <pointLight position={[10, 10, 0]} color={0xff00ff} intensity={2} />
           <pointLight position={[-10, 10, 0]} color={0x00ffff} intensity={2} />
 
-          <pointLight position={[-10, 80, 0]} color={0xff00ff * Math.random()} intensity={2} power={10} />
-          <pointLight position={[10, 80, 0]} color={0x00ffff * Math.random()} intensity={2} power={10} />
+          <pointLight position={[-10, 80, 0]} color={0xff00ff} intensity={2} power={10} />
+          <pointLight position={[10, 80, 0]} color={0x00ffff} intensity={2} power={10} />
 
           <directionalLight
             castShadow

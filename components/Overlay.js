@@ -1,28 +1,32 @@
 import React, { forwardRef } from 'react';
 import Link from 'next/link';
+import HomeButton from './HomeButton';
+import { useEffect } from 'react';
 
-const Overlay = forwardRef(({ caption, scroll, started, setStarted }, ref) => {
+const Overlay = forwardRef(({ caption, scroll, setStarted }, ref) => {
   // const [route, setRoute] = useState('/');
 
   return (
     <>
-      {started ? (
-        setTimeout(() => null, 220)
-      ) : (
-        <div className="welcome">
-          <div className="welcome_text" onClick={setStarted}>
-            START
-          </div>
+      <div className="welcome">
+        <div className="welcome_text" onClick={setStarted}>
+          START
         </div>
-      )}
+      </div>
 
       <div
         ref={ref}
         onScroll={(e) => {
           scroll.current = e.target.scrollTop / (e.target.scrollHeight - window.innerHeight);
           caption.current.innerText = (scroll.current * 100).toFixed(2) + '%';
+          if (scroll.current > 0) {
+            document.querySelector('.floating_home').style.display = 'inline-block';
+          } else {
+            document.querySelector('.floating_home').style.display = 'none';
+          }
         }}
         className="scroll">
+        <HomeButton scroll={scroll} />
         <div className="menu">
           <Link href={'/#motto'}>Motto</Link>
           <Link href={'/#music'}>Music</Link>

@@ -2,15 +2,21 @@ import React, { forwardRef } from 'react';
 import Link from 'next/link';
 import HomeButton from './HomeButton';
 
+function Button({ setStarted, started }) {
+  return (
+    <div className="welcome">
+      {/* <div className="welcome_text--fill">START</div> */}
+      <button className="welcome_text" onClick={setStarted} disabled={started}>
+        START
+      </button>
+    </div>
+  );
+}
+
 const Overlay = forwardRef(({ caption, scroll, started, setStarted }, ref) => {
   return (
     <>
-      <div className="welcome">
-        <button className="welcome_text" onClick={setStarted} disabled={started}>
-          START
-        </button>
-      </div>
-
+      <Button setStarted={setStarted} started={started} />
       <div
         ref={ref}
         onScroll={(e) => {
@@ -101,9 +107,12 @@ const Overlay = forwardRef(({ caption, scroll, started, setStarted }, ref) => {
 
         <div style={{ height: '200vh' }} className="section code">
           <div className="dot">
-            <h1>Code</h1>I am a self-taught passionate fullstack developer that loves great web experiences. <br />
-            I code mainly in Node.JS/TypeScript/Javascript/React. <br />
-            But I am not limited to any stack. <br />
+            <h1>Code</h1>I am a self-taught passionate fullstack developer that loves great web experiences.
+            <br />
+            I code mainly in Node.JS/TypeScript/Javascript/React.
+            <br />
+            But I am not limited to any stack.
+            <br />
             One of my greatest qualities is being able to learn anything.
           </div>
         </div>

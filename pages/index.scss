@@ -204,11 +204,25 @@ body {
     border: none;
     transition: 0.2s ease-in-out;
     color: white;
+    // text-shadow: -1px -1px 0 white, 1px -1px 0 white, -1px 1px 0 white, 1px 1px 0 white;
     font-size: 20em;
-
     &:hover {
       cursor: pointer;
     }
+    &:disabled {
+      color: gray;
+    }
+  }
+
+  .welcome_text--fill {
+    outline: none;
+    font-family: Grotesque;
+    background: transparent;
+    border: none;
+    transition: 0.2s ease-in-out;
+    color: white;
+    font-size: 20em;
+    position: absolute;
   }
 }
 

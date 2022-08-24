@@ -1,7 +1,7 @@
 import React, { Suspense, useRef, useState, useEffect } from 'react';
 import Head from 'next/head';
 import { Canvas } from '@react-three/fiber';
-import { Environment } from '@react-three/drei';
+import { Environment, Sparkles } from '@react-three/drei';
 import Model from '../components/Model';
 import Overlay from '../components/Overlay';
 import { Html, useProgress } from '@react-three/drei';
@@ -10,11 +10,20 @@ import Particles from '../components/Particles';
 
 function Loader() {
   const { progress } = useProgress();
+  useEffect(() => {}, [progress]);
   return (
     <Html center className="loading">
       {progress.toFixed(2)} % loaded
     </Html>
   );
+}
+
+function GlowingParticles({ size, random, amount, ...props }) {
+  const sizes = React.useMemo(() => {
+    return new Float32Array(Array.from({ length: amount }, () => Math.random() * size));
+  }, [size, amount]);
+
+  return <Sparkles {...props} size={random ? sizes : size} color="orange" count={amount} />;
 }
 
 export default function IndexPage() {
@@ -43,10 +52,10 @@ export default function IndexPage() {
     const onHashChangeStart = (url) => {
       const paths = {
         music: { path: '/#music', value: mobile ? 6000 : 6500, selector: '.music' },
-        motto: { path: '/#motto', value: mobile ? 4000 : 4000, selector: '.rock' },
+        motto: { path: '/#motto', value: mobile ? 4000 : 4500, selector: '.rock' },
         vr: { path: '/#vr', value: mobile ? 7500 : 8000, selector: '.vr' },
-        '3d': { path: '/#3d', value: mobile ? 9500 : 10000, selector: '.ddd' },
-        code: { path: '/#code', value: mobile ? 11500 : 12000, selector: '.code' },
+        '3d': { path: '/#3d', value: mobile ? 9500 : 10500, selector: '.ddd' },
+        code: { path: '/#code', value: mobile ? 11000 : 13000, selector: '.code' },
         links: { path: '/#links', value: 16000, selector: '.links' }
       };
 
@@ -85,6 +94,7 @@ export default function IndexPage() {
           <Model router={router} scroll={scroll} started={started} />
           <Particles color={0xff00ff} />
           <Particles color={0x00ffff} />
+          {/* <GlowingParticles random={false} amount={100} size={0.1} position={[1, 2, 10]} /> */}
           <Environment preset="city" />
         </Suspense>
       </Canvas>

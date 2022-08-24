@@ -152,26 +152,26 @@
   resolved "https://registry.yarnpkg.com/@react-spring/types/-/types-9.5.2.tgz#cce1b03afbafb23edfb9cd8c517cc7462abffb65"
   integrity sha512-n/wBRSHPqTmEd4BFWY6TeR1o/UY+3ujoqMxLjqy90CcY/ozJzDRuREL3c+pxMeTF2+B7dX33dTPCtFMX51nbxg==
 
-"@react-three/drei@9.3.4":
-  version "9.3.4"
-  resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-9.3.4.tgz#3fae0ee09f0fc3e63c2c966d61fc05c04ae24b43"
-  integrity sha512-duZXS2scPdx52L882nOmImtBos9fs44RrZehmnjiAJwjJm/yBfE3VM6YIPs8+QyjhcRH/SSMP/unkGLXBcQtmw==
+"@react-three/drei@^9.22.1":
+  version "9.22.1"
+  resolved "https://registry.yarnpkg.com/@react-three/drei/-/drei-9.22.1.tgz#d61a8483d54a4774f45bdccb4749db749603aaa4"
+  integrity sha512-jZ4tYvUFU/NNeLTKIbU4Z9o0SmGWyqr1FXw2veBYDmVW7mu3J41tErOq+5dAdV4TGDbxgCz2GJviXEDJNsncew==
   dependencies:
     "@babel/runtime" "^7.11.2"
     "@react-spring/three" "^9.3.1"
     "@use-gesture/react" "^10.2.0"
-    detect-gpu "^4.0.14"
+    detect-gpu "^4.0.19"
     glsl-noise "^0.0.0"
     lodash.omit "^4.5.0"
     lodash.pick "^4.4.0"
     meshline "^2.0.4"
-    react-composer "^5.0.2"
+    react-composer "^5.0.3"
     react-merge-refs "^1.1.0"
     stats.js "^0.17.0"
     suspend-react "^0.0.8"
-    three-mesh-bvh "^0.5.7"
-    three-stdlib "^2.8.12"
-    troika-three-text "^0.46.3"
+    three-mesh-bvh "^0.5.10"
+    three-stdlib "^2.13.0"
+    troika-three-text "^0.46.4"
     utility-types "^3.10.0"
     zustand "^3.5.13"
 
@@ -328,10 +328,10 @@ debounce@^1.2.1:
   resolved "https://registry.yarnpkg.com/debounce/-/debounce-1.2.1.tgz#38881d8f4166a5c5848020c11827b834bcb3e0a5"
   integrity sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug==
 
-detect-gpu@^4.0.14:
-  version "4.0.34"
-  resolved "https://registry.yarnpkg.com/detect-gpu/-/detect-gpu-4.0.34.tgz#c9f9238f2eaa1fb450a989a8429d054a37319db7"
-  integrity sha512-dDQ5hZDb/MfeJhza+PygGrOAVwf5PgwuXRQOcm2Yf9Qfkg0fD7VeBFMfgXD2GM465JhkDrfEa+vWtiRbC3b3dQ==
+detect-gpu@^4.0.19:
+  version "4.0.35"
+  resolved "https://registry.yarnpkg.com/detect-gpu/-/detect-gpu-4.0.35.tgz#7be7ade40661bb047438a78a1c2b035f97bddc9c"
+  integrity sha512-9MBAlaA3FBO761daObW51GGRuenAy90baYVGKVlqmQM1suWwQ6nYPF/ZxFAcJdYa2Dzuvq4DsmyOYVT440CbZg==
   dependencies:
     webgl-constants "^1.1.1"
 
@@ -527,7 +527,7 @@ prop-types@^15.6.0:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-react-composer@^5.0.2:
+react-composer@^5.0.3:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/react-composer/-/react-composer-5.0.3.tgz#7beb9513da5e8687f4f434ea1333ef36a4f3091b"
   integrity sha512-1uWd07EME6XZvMfapwZmc7NgCZqDemcvicRi3wMJzXsQLvZ3L7fTHVyPy1bZdnWXM4iPjYuNE+uJ41MLKeTtnA==
@@ -649,12 +649,12 @@ suspend-react@^0.0.8:
   resolved "https://registry.yarnpkg.com/suspend-react/-/suspend-react-0.0.8.tgz#b0740c1386b4eb652f17affe4339915ee268bd31"
   integrity sha512-ZC3r8Hu1y0dIThzsGw0RLZplnX9yXwfItcvaIzJc2VQVi8TGyGDlu92syMB5ulybfvGLHAI5Ghzlk23UBPF8xg==
 
-three-mesh-bvh@^0.5.7:
+three-mesh-bvh@^0.5.10:
   version "0.5.15"
   resolved "https://registry.yarnpkg.com/three-mesh-bvh/-/three-mesh-bvh-0.5.15.tgz#bcf681d784d8988618344a5e11e7ded7e76ee86a"
   integrity sha512-jxE5iGjcoEMiyxUs7hMeZL6jBXBz9973ilqhXPhKlA1f7eitjIxRTtu7UWVQy+PhxXTsknmPzWmN5c+uAa/anA==
 
-three-stdlib@^2.8.11, three-stdlib@^2.8.12:
+three-stdlib@^2.13.0, three-stdlib@^2.8.11:
   version "2.13.0"
   resolved "https://registry.yarnpkg.com/three-stdlib/-/three-stdlib-2.13.0.tgz#48baf2f85a781437e42cd53f672ea44ccce4a801"
   integrity sha512-hFTTX6K6y8jrDREtzx1nl029rcOYJ5R8YBWg7M3s7uhcAx0fhs4d8tS+dj82vPksLDlMW8Pu/x0CVTRrqiUFDQ==
@@ -687,7 +687,7 @@ to-regex-range@^5.0.1:
   dependencies:
     is-number "^7.0.0"
 
-troika-three-text@^0.46.3:
+troika-three-text@^0.46.4:
   version "0.46.4"
   resolved "https://registry.yarnpkg.com/troika-three-text/-/troika-three-text-0.46.4.tgz#77627ac2ac4765d5248c857a8b42f82c25f2d034"
   integrity sha512-Qsv0HhUKTZgSmAJs5wvO7YlBoJSP9TGPLmrg+K9pbQq4lseQdcevbno/WI38bwJBZ/qS56hvfqEzY0zUEFzDIw==

@@ -6,7 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@react-three/drei": "9.3.4",
+    "@react-three/drei": "^9.22.1",
     "@react-three/fiber": "8.0.10",
     "@react-three/postprocessing": "^2.6.1",
     "@splinetool/loader": "^0.9.94",

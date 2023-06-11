@@ -1,9 +1,10 @@
-import { Environment, Html, OrbitControls, Sparkles, useProgress } from '@react-three/drei';
+import { Environment, Html, OrbitControls, Sparkles, Stats, useProgress } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { Bloom, DepthOfField, EffectComposer, Noise, Vignette } from '@react-three/postprocessing';
 import Head from 'next/head';
 import React, { Suspense } from 'react';
 import Keyboard from '../components/Keyboard';
+
 
 function Loader() {
   const { progress } = useProgress();
@@ -14,14 +15,6 @@ function Loader() {
       <div className="loading">{progress.toFixed(2)} % loaded</div>
     </Html>
   );
-}
-
-function GlowingParticles({ size = 100, random, amount = 1000, ...props }) {
-  const sizes = React.useMemo(() => {
-    return new Float32Array(Array.from({ length: amount }, () => Math.random() * size));
-  }, [size, amount]);
-
-  return <Sparkles {...props} size={random ? sizes : size} color="orange" count={amount} />;
 }
 
 export default function IndexPage() {
@@ -46,6 +39,7 @@ export default function IndexPage() {
           <Bloom luminanceThreshold={0.5} luminanceSmoothing={0.9} height={300} />
           <Vignette eskil offset={0} darkness={0.8} />
         </EffectComposer>
+        <Stats />
       </Canvas>
     </>
   );

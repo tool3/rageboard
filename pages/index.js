@@ -34,7 +34,7 @@ export default function IndexPage() {
         <OrbitControls target={[0, 0, 0]} />
         {/* <CameraShake yawFrequency={1} maxYaw={0.05} pitchFrequency={1} maxPitch={0.05} rollFrequency={0.5} maxRoll={0.5} intensity={0.2} /> */}
         <EffectComposer>
-          <Noise opacity={0.03} />
+          {/* <Noise opacity={0.03} /> */}
           <DepthOfField focusDistance={0.3} focalLength={1.8} bokehScale={5} height={880} blur={100} />
           <Bloom luminanceThreshold={0.5} luminanceSmoothing={0.9} height={300} />
           <Vignette eskil offset={0} darkness={0.8} />

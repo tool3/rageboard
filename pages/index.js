@@ -20,7 +20,7 @@ function Loader() {
 function Input(props) {
   const [text, set] = useState('hello world ...');
   return (
-    <group visible={false} {...props}>
+    <group {...props}>
       <Text position={[-1.2, -0.022, 0]} anchorX="0px" font="/Inter-Regular.woff" fontSize={0.335} letterSpacing={-0.0}>
         {text}
         <meshStandardMaterial color="black" />
@@ -29,7 +29,7 @@ function Input(props) {
         <planeGeometry />
         <meshBasicMaterial transparent opacity={0.3} depthWrite={false} />
       </mesh>
-      <Html transform>
+      <Html transform className='typeInput'>
         <ControlledInput type={text} onChange={(e) => set(e.target.value)} value={text} />
       </Html>
     </group>

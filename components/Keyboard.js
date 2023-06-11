@@ -7,7 +7,7 @@ import { Color, MeshStandardMaterial, Vector3 } from 'three';
 export default function Model(props) {
   const group = useRef();
   const { nodes, materials } = useGLTF('/models/keyboard-v3.glb');
-
+  const audio = new Audio();
   const flowerMaterial = new LayerMaterial({
     color: new Color('#C7C7C7'),
     lighting: 'physical',
@@ -76,10 +76,12 @@ export default function Model(props) {
       if (e.code === 'KeyT') thisKey.current.position.set(0, -1, 0);
       if (e.code === 'Space') {
         everyhingKey.current.position.set(0, -1, 0);
-        playSound(new Audio(spaceSound));
+        audio.src = spaceSound
+        playSound(audio);
         return;
       }
-      playSound(new Audio(keySounds[Math.floor(Math.random() * keySounds.length)]), 0.1);
+      audio.src = keySounds[Math.floor(Math.random() * keySounds.length)];
+      playSound(audio, 0.1);
     }
     if (e.type === 'keyup' && keysPressed.has(e.code)) {
       if (e.code === 'KeyF') fKey.current.position.set(0, 0, 0);

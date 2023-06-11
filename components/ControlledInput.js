@@ -12,5 +12,5 @@ export const ControlledInput = (props) => {
     setCursor(e.target.selectionStart);
     onChange && onChange(e);
   };
-  return <input ref={ref} value={value} onChange={handleChange} {...rest} />;
+  return <input autoFocus ref={ref} value={value} onChange={handleChange} {...rest} />;
 };

@@ -1,9 +1,10 @@
-import { Environment, Html, OrbitControls, Sparkles, Stats, useProgress } from '@react-three/drei';
+import { Environment, Html, OrbitControls, Sparkles, Stats, Text, useProgress } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { Bloom, DepthOfField, EffectComposer, Noise, Vignette } from '@react-three/postprocessing';
 import Head from 'next/head';
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import Keyboard from '../components/Keyboard';
+import { ControlledInput } from '../components/ControlledInput';
 
 function Loader() {
   const { progress } = useProgress();
@@ -16,12 +17,23 @@ function Loader() {
   );
 }
 
-function GlowingParticles({ size = 100, random, amount = 1000, ...props }) {
-  const sizes = React.useMemo(() => {
-    return new Float32Array(Array.from({ length: amount }, () => Math.random() * size));
-  }, [size, amount]);
-
-  return <Sparkles {...props} size={random ? sizes : size} color="orange" count={amount} />;
+function Input(props) {
+  const [text, set] = useState('hello world ...');
+  return (
+    <group visible={false} {...props}>
+      <Text position={[-1.2, -0.022, 0]} anchorX="0px" font="/Inter-Regular.woff" fontSize={0.335} letterSpacing={-0.0}>
+        {text}
+        <meshStandardMaterial color="black" />
+      </Text>
+      <mesh position={[0, -0.022, 0]} scale={[2.5, 0.48, 1]}>
+        <planeGeometry />
+        <meshBasicMaterial transparent opacity={0.3} depthWrite={false} />
+      </mesh>
+      <Html transform>
+        <ControlledInput type={text} onChange={(e) => set(e.target.value)} value={text} />
+      </Html>
+    </group>
+  );
 }
 
 export default function IndexPage() {
@@ -51,8 +63,8 @@ export default function IndexPage() {
           <Vignette eskil offset={0} darkness={0.8} />
         </EffectComposer>
         <Stats />
+        <Input />
       </Canvas>
-      <input type="text" style={{display: 'none'}}  autoFocus/>
     </>
   );
 }

@@ -344,4 +344,8 @@ body {
   width: max-content;
   text-align: center;
   color: orangered;
+
+  @media screen and (max-width: 1024px) {
+    font-size: 2.5rem;
+  }
 }

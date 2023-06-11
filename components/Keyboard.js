@@ -2,12 +2,13 @@ import { useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import { Depth, Fresnel, LayerMaterial } from 'lamina/vanilla';
 import React, { useEffect, useRef } from 'react';
-import { Color, MeshStandardMaterial, Vector3 } from 'three';
+import { Color, MeshStandardMaterial } from 'three';
 
 export default function Model(props) {
   const group = useRef();
+  
   const { nodes, materials } = useGLTF('/models/keyboard-v3.glb');
-  const audio = new Audio();
+
   const flowerMaterial = new LayerMaterial({
     color: new Color('#C7C7C7'),
     lighting: 'physical',
@@ -57,11 +58,16 @@ export default function Model(props) {
   const blackKey = new MeshStandardMaterial({ ...materials.key, color: 'black' });
   const keySounds = ['/sounds/key1.wav', '/sounds/key2.wav'];
   const spaceSound = ['/sounds/space.wav'];
-  const playSound = (sound, volume = 1) => {
+  const playSound = (sound) => {
     sound.currentTime = sound.currentTime - 10;
-    sound.gain = volume;
     sound.play();
   };
+
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  const audioCtx = new AudioContext();
+  const src = audioCtx.createBufferSource(keySounds[0]);
+  src.connect(audioCtx.destination);
+  const audio = src.start();
 
   const onDocumentKey = (e) => {
     const keysPressed = new Set(['KeyF', 'KeyU', 'KeyC', 'KeyK', 'KeyO', 'KeyY', 'KeyM', 'KeyT', 'Space']);
@@ -76,12 +82,12 @@ export default function Model(props) {
       if (e.code === 'KeyT') thisKey.current.position.set(0, -1, 0);
       if (e.code === 'Space') {
         everyhingKey.current.position.set(0, -1, 0);
-        audio.src = spaceSound
-        playSound(audio);
+        // audio.src = spaceSound;
+        // playSound(audio);
         return;
       }
-      audio.src = keySounds[Math.floor(Math.random() * keySounds.length)];
-      playSound(audio, 0.1);
+      // audio.src = keySounds[Math.floor(Math.random() * keySounds.length)];
+      // playSound(audio, 0.1);
     }
     if (e.type === 'keyup' && keysPressed.has(e.code)) {
       if (e.code === 'KeyF') fKey.current.position.set(0, 0, 0);
@@ -154,9 +160,9 @@ export default function Model(props) {
         />
         <mesh
           name="This_key"
-          onPointerDown={() => onDocumentKey({ code: 'KeyT', type: 'keydown' })}
-          onPointerUp={() => onDocumentKey({ code: 'KeyT', type: 'keyup' })}
-          onPointerLeave={() => onDocumentKey({ code: 'KeyT', type: 'keyup' })}
+          // onPointerDown={() => onDocumentKey({ code: 'KeyT', type: 'keydown' })}
+          // onPointerUp={() => onDocumentKey({ code: 'KeyT', type: 'keyup' })}
+          // onPointerLeave={() => onDocumentKey({ code: 'KeyT', type: 'keyup' })}
           castShadow
           receiveShadow
           geometry={thisKey.current.geometry}
@@ -173,9 +179,9 @@ export default function Model(props) {
         </mesh>
         <mesh
           name="Me_Key"
-          onPointerDown={() => onDocumentKey({ code: 'KeyM', type: 'keydown' })}
-          onPointerUp={() => onDocumentKey({ code: 'KeyM', type: 'keyup' })}
-          onPointerLeave={() => onDocumentKey({ code: 'KeyM', type: 'keyup' })}
+          // onPointerDown={() => onDocumentKey({ code: 'KeyM', type: 'keydown' })}
+          // onPointerUp={() => onDocumentKey({ code: 'KeyM', type: 'keyup' })}
+          // onPointerLeave={() => onDocumentKey({ code: 'KeyM', type: 'keyup' })}
           castShadow
           receiveShadow
           geometry={meKey.current.geometry}
@@ -192,9 +198,9 @@ export default function Model(props) {
         </mesh>
         <mesh
           name="You_Key"
-          onPointerDown={() => onDocumentKey({ code: 'KeyY', type: 'keydown' })}
-          onPointerUp={() => onDocumentKey({ code: 'KeyY', type: 'keyup' })}
-          onPointerLeave={() => onDocumentKey({ code: 'KeyY', type: 'keyup' })}
+          // onPointerDown={() => onDocumentKey({ code: 'KeyY', type: 'keydown' })}
+          // onPointerUp={() => onDocumentKey({ code: 'KeyY', type: 'keyup' })}
+          // onPointerLeave={() => onDocumentKey({ code: 'KeyY', type: 'keyup' })}
           castShadow
           receiveShadow
           geometry={youKey.current.geometry}
@@ -211,9 +217,9 @@ export default function Model(props) {
         </mesh>
         <mesh
           name="Everything_key"
-          onPointerDown={() => onDocumentKey({ code: 'Space', type: 'keydown' })}
-          onPointerUp={() => onDocumentKey({ code: 'Space', type: 'keyup' })}
-          onPointerLeave={() => onDocumentKey({ code: 'Space', type: 'keyup' })}
+          // onPointerDown={() => onDocumentKey({ code: 'Space', type: 'keydown' })}
+          // onPointerUp={() => onDocumentKey({ code: 'Space', type: 'keyup' })}
+          // onPointerLeave={() => onDocumentKey({ code: 'Space', type: 'keyup' })}
           castShadow
           receiveShadow
           geometry={everyhingKey.current.geometry}
@@ -230,9 +236,9 @@ export default function Model(props) {
         </mesh>
         <mesh
           name="Off_Key"
-          onPointerDown={() => onDocumentKey({ code: 'KeyO', type: 'keydown' })}
-          onPointerUp={() => onDocumentKey({ code: 'KeyO', type: 'keyup' })}
-          onPointerLeave={() => onDocumentKey({ code: 'KeyO', type: 'keyup' })}
+          // onPointerDown={() => onDocumentKey({ code: 'KeyO', type: 'keydown' })}
+          // onPointerUp={() => onDocumentKey({ code: 'KeyO', type: 'keyup' })}
+          // onPointerLeave={() => onDocumentKey({ code: 'KeyO', type: 'keyup' })}
           castShadow
           receiveShadow
           geometry={offKey.current.geometry}
@@ -249,9 +255,9 @@ export default function Model(props) {
         </mesh>
         <mesh
           name="K_Key"
-          onPointerDown={() => onDocumentKey({ code: 'KeyK', type: 'keydown' })}
-          onPointerUp={() => onDocumentKey({ code: 'KeyK', type: 'keyup' })}
-          onPointerLeave={() => onDocumentKey({ code: 'KeyK', type: 'keyup' })}
+          // onPointerDown={() => onDocumentKey({ code: 'KeyK', type: 'keydown' })}
+          // onPointerUp={() => onDocumentKey({ code: 'KeyK', type: 'keyup' })}
+          // onPointerLeave={() => onDocumentKey({ code: 'KeyK', type: 'keyup' })}
           castShadow
           receiveShadow
           geometry={kKey.current.geometry}
@@ -268,9 +274,9 @@ export default function Model(props) {
         </mesh>
         <mesh
           name="C_key"
-          onPointerDown={() => onDocumentKey({ code: 'KeyC', type: 'keydown' })}
-          onPointerUp={() => onDocumentKey({ code: 'KeyC', type: 'keyup' })}
-          onPointerLeave={() => onDocumentKey({ code: 'KeyC', type: 'keyup' })}
+          // onPointerDown={() => onDocumentKey({ code: 'KeyC', type: 'keydown' })}
+          // onPointerUp={() => onDocumentKey({ code: 'KeyC', type: 'keyup' })}
+          // onPointerLeave={() => onDocumentKey({ code: 'KeyC', type: 'keyup' })}
           castShadow
           receiveShadow
           geometry={cKey.current.geometry}
@@ -287,9 +293,9 @@ export default function Model(props) {
         </mesh>
         <mesh
           name="U_Key"
-          onPointerDown={() => onDocumentKey({ code: 'KeyU', type: 'keydown' })}
-          onPointerUp={() => onDocumentKey({ code: 'KeyU', type: 'keyup' })}
-          onPointerLeave={() => onDocumentKey({ code: 'KeyU', type: 'keyup' })}
+          // onPointerDown={() => onDocumentKey({ code: 'KeyU', type: 'keydown' })}
+          // onPointerUp={() => onDocumentKey({ code: 'KeyU', type: 'keyup' })}
+          // onPointerLeave={() => onDocumentKey({ code: 'KeyU', type: 'keyup' })}
           castShadow
           receiveShadow
           geometry={uKey.current.geometry}
@@ -306,9 +312,9 @@ export default function Model(props) {
         </mesh>
         <mesh
           name="F_Key"
-          onPointerDown={() => onDocumentKey({ code: 'KeyF', type: 'keydown' })}
-          onPointerUp={() => onDocumentKey({ code: 'KeyF', type: 'keyup' })}
-          onPointerLeave={() => onDocumentKey({ code: 'KeyF', type: 'keyup' })}
+          // onPointerDown={() => onDocumentKey({ code: 'KeyF', type: 'keydown' })}
+          // onPointerUp={() => onDocumentKey({ code: 'KeyF', type: 'keyup' })}
+          // onPointerLeave={() => onDocumentKey({ code: 'KeyF', type: 'keyup' })}
           castShadow
           receiveShadow
           geometry={fKey.current.geometry}

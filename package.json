@@ -11,6 +11,8 @@
     "@react-three/postprocessing": "^2.6.1",
     "@splinetool/loader": "^0.9.94",
     "@splinetool/r3f-spline": "^1.0.1",
+    "gsap": "^3.12.1",
+    "lamina": "^1.1.23",
     "next": "latest",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

@@ -85,7 +85,7 @@ body {
   overflow: hidden;
   overscroll-behavior-y: none;
   background-color: #101010;
-  background: radial-gradient(circle at bottom center, #212121 0%, #101010 80%);
+  background: radial-gradient(circle at bottom center, #e0cfaa 0%, #a39d97 80%);
   font-family: 'Grotesque', 'Inter var', sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -143,12 +143,9 @@ body {
 }
 
 .loading {
-  color: white;
+  color: black;
   display: flex;
-  width: 9em;
-  position: absolute;
   top: 10em;
-  // z-index: 2;
 }
 
 .floating_home {
@@ -340,4 +337,11 @@ body {
   .dot > h1 {
     font-size: 3em;
   }
+}
+
+.title {
+  font-size: 5rem;
+  width: max-content;
+  text-align: center;
+  color: orangered;
 }

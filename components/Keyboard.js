@@ -2,17 +2,12 @@ import { useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import { Depth, Fresnel, LayerMaterial } from 'lamina/vanilla';
 import React, { useEffect, useRef } from 'react';
-import {
-  Color,
-  MeshStandardMaterial,
-  Vector3
-} from 'three';
+import { Color, MeshStandardMaterial, Vector3 } from 'three';
 
 export default function Model(props) {
   const group = useRef();
   const { nodes, materials } = useGLTF('/models/keyboard.glb');
 
-  
   const flowerMaterial = new LayerMaterial({
     color: new Color('#C7C7C7'),
     lighting: 'physical',
@@ -25,19 +20,19 @@ export default function Model(props) {
         colorB: new Color('blue').convertSRGBToLinear(),
         alpha: 1,
         mode: 'normal',
-        mapping: 'vector',
+        mapping: 'vector'
       }),
       new Fresnel({
         color: '#ffffff',
-        alpha: .8,
+        alpha: 0.8,
         mode: 'softlight',
         power: 2,
         intensity: 3,
         bias: 0
-      }),
-    ],
-  })
-  
+      })
+    ]
+  });
+
   Object.keys(materials).map((key) => {
     let material = materials[key];
     if (material.name === 'text') {
@@ -58,6 +53,7 @@ export default function Model(props) {
     useRef(nodes.This_key),
     useRef(nodes.Everything_key)
   ];
+
   const blackKey = new MeshStandardMaterial({ ...materials.key, color: 'black' });
   const keySounds = ['/sounds/key1.wav', '/sounds/key2.wav'];
   const spaceSound = ['/sounds/space.wav'];
@@ -134,8 +130,8 @@ export default function Model(props) {
   return (
     <group ref={group} {...props} dispose={null} rotation={[-5, 0.4, 4.3]}>
       <directionalLight ref={dirLight} intensity={1} position={[-10, 20, 4]} />
-      {/* <pointLight intensity={.4} position={[-20, 15, -10]} color={0xffffff} /> */}
-      {/* <pointLight intensity={.4} position={[-5, 25, -10]} color={0xffffff} /> */}
+      <pointLight intensity={1} position={[0, 0, -10]} color={'red'} />
+      <pointLight intensity={1} position={[-20, -20, 10]} color={'red'} />
 
       <group name="Scene">
         <mesh
@@ -156,6 +152,9 @@ export default function Model(props) {
         />
         <mesh
           name="This_key"
+          onPointerDown={() => onDocumentKey({ code: 'KeyT', type: 'keydown' })}
+          onPointerUp={() => onDocumentKey({ code: 'KeyT', type: 'keyup' })}
+          onPointerLeave={() => onDocumentKey({ code: 'KeyT', type: 'keyup' })}
           castShadow
           receiveShadow
           geometry={thisKey.current.geometry}
@@ -172,6 +171,9 @@ export default function Model(props) {
         </mesh>
         <mesh
           name="Me_Key"
+          onPointerDown={() => onDocumentKey({ code: 'KeyM', type: 'keydown' })}
+          onPointerUp={() => onDocumentKey({ code: 'KeyM', type: 'keyup' })}
+          onPointerLeave={() => onDocumentKey({ code: 'KeyM', type: 'keyup' })}
           castShadow
           receiveShadow
           geometry={meKey.current.geometry}
@@ -188,6 +190,9 @@ export default function Model(props) {
         </mesh>
         <mesh
           name="You_Key"
+          onPointerDown={() => onDocumentKey({ code: 'KeyY', type: 'keydown' })}
+          onPointerUp={() => onDocumentKey({ code: 'KeyY', type: 'keyup' })}
+          onPointerLeave={() => onDocumentKey({ code: 'KeyY', type: 'keyup' })}
           castShadow
           receiveShadow
           geometry={youKey.current.geometry}
@@ -204,6 +209,9 @@ export default function Model(props) {
         </mesh>
         <mesh
           name="Everything_key"
+          onPointerDown={() => onDocumentKey({ code: 'Space', type: 'keydown' })}
+          onPointerUp={() => onDocumentKey({ code: 'Space', type: 'keyup' })}
+          onPointerLeave={() => onDocumentKey({ code: 'Space', type: 'keyup' })}
           castShadow
           receiveShadow
           geometry={everyhingKey.current.geometry}
@@ -220,6 +228,9 @@ export default function Model(props) {
         </mesh>
         <mesh
           name="Off_Key"
+          onPointerDown={() => onDocumentKey({ code: 'KeyO', type: 'keydown' })}
+          onPointerUp={() => onDocumentKey({ code: 'KeyO', type: 'keyup' })}
+          onPointerLeave={() => onDocumentKey({ code: 'KeyO', type: 'keyup' })}
           castShadow
           receiveShadow
           geometry={offKey.current.geometry}
@@ -236,6 +247,9 @@ export default function Model(props) {
         </mesh>
         <mesh
           name="K_Key"
+          onPointerDown={() => onDocumentKey({ code: 'KeyK', type: 'keydown' })}
+          onPointerUp={() => onDocumentKey({ code: 'KeyK', type: 'keyup' })}
+          onPointerLeave={() => onDocumentKey({ code: 'KeyK', type: 'keyup' })}
           castShadow
           receiveShadow
           geometry={kKey.current.geometry}
@@ -252,6 +266,9 @@ export default function Model(props) {
         </mesh>
         <mesh
           name="C_key"
+          onPointerDown={() => onDocumentKey({ code: 'KeyC', type: 'keydown' })}
+          onPointerUp={() => onDocumentKey({ code: 'KeyC', type: 'keyup' })}
+          onPointerLeave={() => onDocumentKey({ code: 'KeyC', type: 'keyup' })}
           castShadow
           receiveShadow
           geometry={cKey.current.geometry}
@@ -268,6 +285,9 @@ export default function Model(props) {
         </mesh>
         <mesh
           name="U_Key"
+          onPointerDown={() => onDocumentKey({ code: 'KeyU', type: 'keydown' })}
+          onPointerUp={() => onDocumentKey({ code: 'KeyU', type: 'keyup' })}
+          onPointerLeave={() => onDocumentKey({ code: 'KeyU', type: 'keyup' })}
           castShadow
           receiveShadow
           geometry={uKey.current.geometry}
@@ -284,6 +304,9 @@ export default function Model(props) {
         </mesh>
         <mesh
           name="F_Key"
+          onPointerDown={() => onDocumentKey({ code: 'KeyF', type: 'keydown' })}
+          onPointerUp={() => onDocumentKey({ code: 'KeyF', type: 'keyup' })}
+          onPointerLeave={() => onDocumentKey({ code: 'KeyF', type: 'keyup' })}
           castShadow
           receiveShadow
           geometry={fKey.current.geometry}

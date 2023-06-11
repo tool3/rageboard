@@ -6,7 +6,7 @@ import { Color, MeshStandardMaterial, Vector3 } from 'three';
 
 export default function Model(props) {
   const group = useRef();
-  const { nodes, materials } = useGLTF('/models/keyboard.glb');
+  const { nodes, materials } = useGLTF('/models/keyboard-v3.glb');
 
   const flowerMaterial = new LayerMaterial({
     color: new Color('#C7C7C7'),
@@ -326,4 +326,4 @@ export default function Model(props) {
   );
 }
 
-useGLTF.preload('/models/keyboard.glb');
+useGLTF.preload('/models/keyboard-v3.glb');

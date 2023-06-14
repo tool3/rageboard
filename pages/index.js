@@ -58,7 +58,7 @@ export default function IndexPage() {
 
         <EffectComposer>
           {/* <Noise opacity={0.03} /> */}
-          <DepthOfField focusDistance={0.3} focalLength={1.8} bokehScale={5} height={880} blur={100} />
+          {/* <DepthOfField focusDistance={0.3} focalLength={1.8} bokehScale={5} height={880} blur={100} /> */}
           <Bloom luminanceThreshold={0.5} luminanceSmoothing={0.9} height={300} />
           <Vignette eskil offset={0} darkness={0.8} />
         </EffectComposer>

@@ -21,15 +21,15 @@ function Input(props) {
   const [text, set] = useState('hello world ...');
   return (
     <group {...props}>
-      <Text position={[-1.2, -0.022, 0]} anchorX="0px" font="/Inter-Regular.woff" fontSize={0.335} letterSpacing={-0.0}>
+      <Text position={[1.2, 0.022, 0]} anchorX="0px" font="/Inter-Regular.woff" fontSize={0.335} letterSpacing={0.0}>
         {text}
         <meshStandardMaterial color="black" />
       </Text>
-      <mesh position={[0, -0.022, 0]} scale={[2.5, 0.48, 1]}>
+      <mesh position={[0, 0, 0]} scale={[2.5, 0.48, 1]}>
         <planeGeometry />
         <meshBasicMaterial transparent opacity={0.3} depthWrite={false} />
       </mesh>
-      <Html transform className='typeInput'>
+      <Html transform>
         <ControlledInput type={text} onChange={(e) => set(e.target.value)} value={text} />
       </Html>
     </group>
@@ -57,13 +57,12 @@ export default function IndexPage() {
         <OrbitControls target={[0, 0, 0]} />
 
         <EffectComposer>
-          <Noise opacity={0.03} />
+          {/* <Noise opacity={0.03} /> */}
           <DepthOfField focusDistance={0.3} focalLength={1.8} bokehScale={5} height={880} blur={100} />
           <Bloom luminanceThreshold={0.5} luminanceSmoothing={0.9} height={300} />
           <Vignette eskil offset={0} darkness={0.8} />
         </EffectComposer>
         <Stats />
-        <Input />
       </Canvas>
     </>
   );

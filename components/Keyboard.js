@@ -1,38 +1,33 @@
 import { useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
-import { Depth, Fresnel, LayerMaterial } from 'lamina/vanilla';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Color, MeshStandardMaterial } from 'three';
+import Key1 from './sounds/key1.mp3';
+import Key2 from './sounds/key2.mp3';
+import Space from './sounds/space.mp3';
+import { Howl } from 'howler';
 
 export default function Model(props) {
   const group = useRef();
-  
   const { nodes, materials } = useGLTF('/models/keyboard-v3.glb');
 
-  const flowerMaterial = new LayerMaterial({
-    color: new Color('#C7C7C7'),
-    lighting: 'physical',
-    layers: [
-      new Depth({
-        far: 7,
-        near: 0,
-        origin: [0, 0, 1],
-        colorA: new Color('red').convertSRGBToLinear(),
-        colorB: new Color('blue').convertSRGBToLinear(),
-        alpha: 1,
-        mode: 'normal',
-        mapping: 'vector'
-      }),
-      new Fresnel({
-        color: '#ffffff',
-        alpha: 0.8,
-        mode: 'softlight',
-        power: 2,
-        intensity: 3,
-        bias: 0
-      })
-    ]
-  });
+  const tracks = {
+    key1: new Howl({
+      src: [Key1],
+      format: ['mp3'],
+      preload: true
+    }),
+    key2: new Howl({
+      src: [Key2],
+      format: ['mp3'],
+      preload: true
+    }),
+    space: new Howl({
+      src: [Space],
+      format: ['mp3'],
+      preload: true
+    })
+  };
 
   Object.keys(materials).map((key) => {
     let material = materials[key];
@@ -56,18 +51,10 @@ export default function Model(props) {
   ];
 
   const blackKey = new MeshStandardMaterial({ ...materials.key, color: 'black' });
-  const keySounds = ['/sounds/key1.wav', '/sounds/key2.wav'];
-  const spaceSound = ['/sounds/space.wav'];
-  const playSound = (sound) => {
-    sound.currentTime = sound.currentTime - 10;
-    sound.play();
-  };
 
-  const AudioContext = window.AudioContext || window.webkitAudioContext;
-  const audioCtx = new AudioContext();
-  const src = audioCtx.createBufferSource(keySounds[0]);
-  src.connect(audioCtx.destination);
-  const audio = src.start();
+  async function playSound(key) {
+    tracks[key].play();
+  }
 
   const onDocumentKey = (e) => {
     const keysPressed = new Set(['KeyF', 'KeyU', 'KeyC', 'KeyK', 'KeyO', 'KeyY', 'KeyM', 'KeyT', 'Space']);
@@ -82,12 +69,11 @@ export default function Model(props) {
       if (e.code === 'KeyT') thisKey.current.position.set(0, -1, 0);
       if (e.code === 'Space') {
         everyhingKey.current.position.set(0, -1, 0);
-        // audio.src = spaceSound;
-        // playSound(audio);
+        playSound('space');
         return;
       }
-      // audio.src = keySounds[Math.floor(Math.random() * keySounds.length)];
-      // playSound(audio, 0.1);
+      const sounds = ['key1', 'key2'];
+      playSound(sounds[Math.floor(Math.random() * sounds.length)]);
     }
     if (e.type === 'keyup' && keysPressed.has(e.code)) {
       if (e.code === 'KeyF') fKey.current.position.set(0, 0, 0);

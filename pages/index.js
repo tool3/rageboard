@@ -1,10 +1,10 @@
-import { Environment, Html, OrbitControls, Sparkles, Stats, Text, useProgress } from '@react-three/drei';
+import { Environment, Html, OrbitControls, Stats, Text, useProgress } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { Bloom, DepthOfField, EffectComposer, Noise, Vignette } from '@react-three/postprocessing';
+import { Bloom, EffectComposer, Vignette } from '@react-three/postprocessing';
 import Head from 'next/head';
 import React, { Suspense, useState } from 'react';
-import Keyboard from '../components/Keyboard';
 import { ControlledInput } from '../components/ControlledInput';
+import Keyboard from '../components/Keyboard';
 
 function Loader() {
   const { progress } = useProgress();
@@ -53,6 +53,23 @@ export default function IndexPage() {
           <color attach="background" args={['#a39d97']} />
           <Keyboard />
           <Environment files="./textures/puresky.hdr" resolution={2048} />
+          {/* <Html className="keyboard">
+            <div className="keyboard-row">
+              <button>f</button>
+              <button>u</button>
+              <button>c</button>
+              <button>k</button>
+            </div>
+            <div className="keyboard-row">
+              <button>o</button>
+              <button>y</button>
+              <button>m</button>
+              <button>t</button>
+            </div>
+            <div className="keyboard-row">
+              <button className="space">[ ]</button>
+            </div>
+          </Html> */}
         </Suspense>
         <OrbitControls target={[0, 0, 0]} />
 

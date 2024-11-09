@@ -1,4 +1,4 @@
-import { useGLTF } from '@react-three/drei';
+import { useGLTF, Html } from '@react-three/drei';
 import gsap from 'gsap';
 import React, { useEffect, useRef, useState } from 'react';
 import { Color, MeshStandardMaterial } from 'three';
@@ -85,9 +85,21 @@ export default function Model(props) {
       if (e.code === 'KeyM') meKey.current.position.set(0, 0, 0);
       if (e.code === 'KeyT') thisKey.current.position.set(0, 0, 0);
       if (e.code === 'Space') everyhingKey.current.position.set(0, 0, 0);
-      // playSound(new Audio(keySounds[Math.floor(Math.random() * keySounds.length)]));
     }
   };
+
+  const onMobileKey = (key) => {
+    console.log('aa');
+    key.current.position.set(0, -1, 0);
+    if (key.current.name === 'Everything_key') {
+      playSound('space');
+    } else {
+      const sounds = ['key1', 'key2'];
+      playSound(sounds[Math.floor(Math.random() * sounds.length)]);
+    }
+
+    setTimeout(() => key.current.position.set(0, 0, 0), 100);
+  }
 
   useEffect(() => {
     document.addEventListener('keydown', onDocumentKey);
@@ -122,201 +134,220 @@ export default function Model(props) {
   // useHelper(dirLight, DirectionalLightHelper, 1, 'red');
 
   return (
-    <group ref={group} {...props} dispose={null} rotation={[-5, 0.4, 4.3]}>
-      <directionalLight ref={dirLight} intensity={1} position={[-10, 20, 4]} />
-      <pointLight intensity={1} position={[0, 0, -10]} color={'red'} />
-      <pointLight intensity={1} position={[-20, -20, 10]} color={'red'} />
+    <>
+      <Html className="keyboard">
+        <div className="keyboard-row">
+          <button className="key__button" onClick={() => onMobileKey(fKey)}>f</button>
+          <button onClick={() => onMobileKey(uKey)}>u</button>
+          <button onClick={() => onMobileKey(cKey)}>c</button>
+          <button onClick={() => onMobileKey(kKey)}>k</button>
+        </div>
+        <div className="keyboard-row">
+          <button onClick={() => onMobileKey(offKey)}>o</button>
+          <button onClick={() => onMobileKey(youKey)}>y</button>
+          <button onClick={() => onMobileKey(meKey)}>m</button>
+          <button onClick={() => onMobileKey(thisKey)}>t</button>
+        </div>
+        <div className="keyboard-row">
+          <button className="space" onClick={() => onMobileKey(everyhingKey)}>[ ]</button>
+        </div>
+      </Html>
+      <group ref={group} {...props} dispose={null} rotation={[-5, 0.4, 4.3]}>
+        <directionalLight ref={dirLight} intensity={1} position={[-10, 20, 4]} />
+        <pointLight intensity={1} position={[0, 0, -10]} color={'red'} />
+        <pointLight intensity={1} position={[-20, -20, 10]} color={'red'} />
 
-      <group name="Scene">
-        <mesh
-          name="Cube"
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube.geometry}
-          material={materials.base}
-          position={[-0.03, -3.15, 0.05]}
-        />
-        <mesh
-          name="Cube001"
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube001.geometry}
-          material={materials.bottom_base}
-          position={[-0.03, -4.21, 0.05]}
-        />
-        <mesh
-          name="This_key"
-          // onPointerDown={() => onDocumentKey({ code: 'KeyT', type: 'keydown' })}
-          // onPointerUp={() => onDocumentKey({ code: 'KeyT', type: 'keyup' })}
-          // onPointerLeave={() => onDocumentKey({ code: 'KeyT', type: 'keyup' })}
-          castShadow
-          receiveShadow
-          geometry={thisKey.current.geometry}
-          ref={thisKey}
-          material={materials.key_orange}>
+        <group name="Scene">
           <mesh
-            name="Text"
+            name="Cube"
             castShadow
             receiveShadow
-            geometry={nodes.Text.geometry}
-            material={materials.text}
-            position={[0, 4.44, 0]}
+            geometry={nodes.Cube.geometry}
+            material={materials.base}
+            position={[-0.03, -3.15, 0.05]}
           />
-        </mesh>
-        <mesh
-          name="Me_Key"
-          // onPointerDown={() => onDocumentKey({ code: 'KeyM', type: 'keydown' })}
-          // onPointerUp={() => onDocumentKey({ code: 'KeyM', type: 'keyup' })}
-          // onPointerLeave={() => onDocumentKey({ code: 'KeyM', type: 'keyup' })}
-          castShadow
-          receiveShadow
-          geometry={meKey.current.geometry}
-          ref={meKey}
-          material={materials.key_orange}>
           <mesh
-            name="Text001"
+            name="Cube001"
             castShadow
             receiveShadow
-            geometry={nodes.Text001.geometry}
-            material={materials.text}
-            position={[0, 4.44, 0]}
+            geometry={nodes.Cube001.geometry}
+            material={materials.bottom_base}
+            position={[-0.03, -4.21, 0.05]}
           />
-        </mesh>
-        <mesh
-          name="You_Key"
-          // onPointerDown={() => onDocumentKey({ code: 'KeyY', type: 'keydown' })}
-          // onPointerUp={() => onDocumentKey({ code: 'KeyY', type: 'keyup' })}
-          // onPointerLeave={() => onDocumentKey({ code: 'KeyY', type: 'keyup' })}
-          castShadow
-          receiveShadow
-          geometry={youKey.current.geometry}
-          ref={youKey}
-          material={materials.key_orange}>
           <mesh
-            name="Text002"
+            name="This_key"
+            // onPointerDown={() => onDocumentKey({ code: 'KeyT', type: 'keydown' })}
+            // onPointerUp={() => onDocumentKey({ code: 'KeyT', type: 'keyup' })}
+            // onPointerLeave={() => onDocumentKey({ code: 'KeyT', type: 'keyup' })}
             castShadow
             receiveShadow
-            geometry={nodes.Text002.geometry}
-            material={materials.text}
-            position={[0, 4.44, 0]}
-          />
-        </mesh>
-        <mesh
-          name="Everything_key"
-          // onPointerDown={() => onDocumentKey({ code: 'Space', type: 'keydown' })}
-          // onPointerUp={() => onDocumentKey({ code: 'Space', type: 'keyup' })}
-          // onPointerLeave={() => onDocumentKey({ code: 'Space', type: 'keyup' })}
-          castShadow
-          receiveShadow
-          geometry={everyhingKey.current.geometry}
-          ref={everyhingKey}
-          material={materials.key_red}>
+            geometry={thisKey.current.geometry}
+            ref={thisKey}
+            material={materials.key_orange}>
+            <mesh
+              name="Text"
+              castShadow
+              receiveShadow
+              geometry={nodes.Text.geometry}
+              material={materials.text}
+              position={[0, 4.44, 0]}
+            />
+          </mesh>
           <mesh
-            name="Text003"
+            name="Me_Key"
+            // onPointerDown={() => onDocumentKey({ code: 'KeyM', type: 'keydown' })}
+            // onPointerUp={() => onDocumentKey({ code: 'KeyM', type: 'keyup' })}
+            // onPointerLeave={() => onDocumentKey({ code: 'KeyM', type: 'keyup' })}
             castShadow
             receiveShadow
-            geometry={nodes.Text003.geometry}
-            material={materials.text}
-            position={[0, 4.44, 0]}
-          />
-        </mesh>
-        <mesh
-          name="Off_Key"
-          // onPointerDown={() => onDocumentKey({ code: 'KeyO', type: 'keydown' })}
-          // onPointerUp={() => onDocumentKey({ code: 'KeyO', type: 'keyup' })}
-          // onPointerLeave={() => onDocumentKey({ code: 'KeyO', type: 'keyup' })}
-          castShadow
-          receiveShadow
-          geometry={offKey.current.geometry}
-          ref={offKey}
-          material={materials.key_orange}>
+            geometry={meKey.current.geometry}
+            ref={meKey}
+            material={materials.key_orange}>
+            <mesh
+              name="Text001"
+              castShadow
+              receiveShadow
+              geometry={nodes.Text001.geometry}
+              material={materials.text}
+              position={[0, 4.44, 0]}
+            />
+          </mesh>
           <mesh
-            name="Text004"
+            name="You_Key"
+            // onPointerDown={() => onDocumentKey({ code: 'KeyY', type: 'keydown' })}
+            // onPointerUp={() => onDocumentKey({ code: 'KeyY', type: 'keyup' })}
+            // onPointerLeave={() => onDocumentKey({ code: 'KeyY', type: 'keyup' })}
             castShadow
             receiveShadow
-            geometry={nodes.Text004.geometry}
-            material={materials.text}
-            position={[0, 4.44, 0]}
-          />
-        </mesh>
-        <mesh
-          name="K_Key"
-          // onPointerDown={() => onDocumentKey({ code: 'KeyK', type: 'keydown' })}
-          // onPointerUp={() => onDocumentKey({ code: 'KeyK', type: 'keyup' })}
-          // onPointerLeave={() => onDocumentKey({ code: 'KeyK', type: 'keyup' })}
-          castShadow
-          receiveShadow
-          geometry={kKey.current.geometry}
-          ref={kKey}
-          material={materials.key}>
+            geometry={youKey.current.geometry}
+            ref={youKey}
+            material={materials.key_orange}>
+            <mesh
+              name="Text002"
+              castShadow
+              receiveShadow
+              geometry={nodes.Text002.geometry}
+              material={materials.text}
+              position={[0, 4.44, 0]}
+            />
+          </mesh>
           <mesh
-            name="Text005"
+            name="Everything_key"
+            // onPointerDown={() => onDocumentKey({ code: 'Space', type: 'keydown' })}
+            // onPointerUp={() => onDocumentKey({ code: 'Space', type: 'keyup' })}
+            // onPointerLeave={() => onDocumentKey({ code: 'Space', type: 'keyup' })}
             castShadow
             receiveShadow
-            geometry={nodes.Text005.geometry}
-            material={blackKey}
-            position={[0, 4.44, 0]}
-          />
-        </mesh>
-        <mesh
-          name="C_key"
-          // onPointerDown={() => onDocumentKey({ code: 'KeyC', type: 'keydown' })}
-          // onPointerUp={() => onDocumentKey({ code: 'KeyC', type: 'keyup' })}
-          // onPointerLeave={() => onDocumentKey({ code: 'KeyC', type: 'keyup' })}
-          castShadow
-          receiveShadow
-          geometry={cKey.current.geometry}
-          ref={cKey}
-          material={materials.key}>
+            geometry={everyhingKey.current.geometry}
+            ref={everyhingKey}
+            material={materials.key_red}>
+            <mesh
+              name="Text003"
+              castShadow
+              receiveShadow
+              geometry={nodes.Text003.geometry}
+              material={materials.text}
+              position={[0, 4.44, 0]}
+            />
+          </mesh>
           <mesh
-            name="Text006"
+            name="Off_Key"
+            // onPointerDown={() => onDocumentKey({ code: 'KeyO', type: 'keydown' })}
+            // onPointerUp={() => onDocumentKey({ code: 'KeyO', type: 'keyup' })}
+            // onPointerLeave={() => onDocumentKey({ code: 'KeyO', type: 'keyup' })}
             castShadow
             receiveShadow
-            geometry={nodes.Text006.geometry}
-            material={blackKey}
-            position={[0, 4.44, 0]}
-          />
-        </mesh>
-        <mesh
-          name="U_Key"
-          // onPointerDown={() => onDocumentKey({ code: 'KeyU', type: 'keydown' })}
-          // onPointerUp={() => onDocumentKey({ code: 'KeyU', type: 'keyup' })}
-          // onPointerLeave={() => onDocumentKey({ code: 'KeyU', type: 'keyup' })}
-          castShadow
-          receiveShadow
-          geometry={uKey.current.geometry}
-          ref={uKey}
-          material={materials.key}>
+            geometry={offKey.current.geometry}
+            ref={offKey}
+            material={materials.key_orange}>
+            <mesh
+              name="Text004"
+              castShadow
+              receiveShadow
+              geometry={nodes.Text004.geometry}
+              material={materials.text}
+              position={[0, 4.44, 0]}
+            />
+          </mesh>
           <mesh
-            name="Text007"
+            name="K_Key"
+            // onPointerDown={() => onDocumentKey({ code: 'KeyK', type: 'keydown' })}
+            // onPointerUp={() => onDocumentKey({ code: 'KeyK', type: 'keyup' })}
+            // onPointerLeave={() => onDocumentKey({ code: 'KeyK', type: 'keyup' })}
             castShadow
             receiveShadow
-            geometry={nodes.Text007.geometry}
-            material={blackKey}
-            position={[0, 4.44, 0]}
-          />
-        </mesh>
-        <mesh
-          name="F_Key"
-          // onPointerDown={() => onDocumentKey({ code: 'KeyF', type: 'keydown' })}
-          // onPointerUp={() => onDocumentKey({ code: 'KeyF', type: 'keyup' })}
-          // onPointerLeave={() => onDocumentKey({ code: 'KeyF', type: 'keyup' })}
-          castShadow
-          receiveShadow
-          geometry={fKey.current.geometry}
-          ref={fKey}
-          material={materials.key}>
+            geometry={kKey.current.geometry}
+            ref={kKey}
+            material={materials.key}>
+            <mesh
+              name="Text005"
+              castShadow
+              receiveShadow
+              geometry={nodes.Text005.geometry}
+              material={blackKey}
+              position={[0, 4.44, 0]}
+            />
+          </mesh>
           <mesh
-            name="Text008"
+            name="C_key"
+            // onPointerDown={() => onDocumentKey({ code: 'KeyC', type: 'keydown' })}
+            // onPointerUp={() => onDocumentKey({ code: 'KeyC', type: 'keyup' })}
+            // onPointerLeave={() => onDocumentKey({ code: 'KeyC', type: 'keyup' })}
             castShadow
             receiveShadow
-            geometry={nodes.Text008.geometry}
-            material={blackKey}
-            position={[0, 4.44, 0]}
-          />
-        </mesh>
+            geometry={cKey.current.geometry}
+            ref={cKey}
+            material={materials.key}>
+            <mesh
+              name="Text006"
+              castShadow
+              receiveShadow
+              geometry={nodes.Text006.geometry}
+              material={blackKey}
+              position={[0, 4.44, 0]}
+            />
+          </mesh>
+          <mesh
+            name="U_Key"
+            // onPointerDown={() => onDocumentKey({ code: 'KeyU', type: 'keydown' })}
+            // onPointerUp={() => onDocumentKey({ code: 'KeyU', type: 'keyup' })}
+            // onPointerLeave={() => onDocumentKey({ code: 'KeyU', type: 'keyup' })}
+            castShadow
+            receiveShadow
+            geometry={uKey.current.geometry}
+            ref={uKey}
+            material={materials.key}>
+            <mesh
+              name="Text007"
+              castShadow
+              receiveShadow
+              geometry={nodes.Text007.geometry}
+              material={blackKey}
+              position={[0, 4.44, 0]}
+            />
+          </mesh>
+          <mesh
+            name="F_Key"
+            // onPointerDown={() => onDocumentKey({ code: 'KeyF', type: 'keydown' })}
+            // onPointerUp={() => onDocumentKey({ code: 'KeyF', type: 'keyup' })}
+            // onPointerLeave={() => onDocumentKey({ code: 'KeyF', type: 'keyup' })}
+            castShadow
+            receiveShadow
+            geometry={fKey.current.geometry}
+            ref={fKey}
+            material={materials.key}>
+            <mesh
+              name="Text008"
+              castShadow
+              receiveShadow
+              geometry={nodes.Text008.geometry}
+              material={blackKey}
+              position={[0, 4.44, 0]}
+            />
+          </mesh>
+        </group>
       </group>
-    </group>
+    </>
   );
 }
 

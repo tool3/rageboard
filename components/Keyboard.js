@@ -52,7 +52,7 @@ export default function Model(props) {
 
   const blackKey = new MeshStandardMaterial({ ...materials.key, color: 'black' });
 
-  async function playSound(key) {
+  async function playSound(tracks, key) {
     tracks[key].play();
   }
 
@@ -69,11 +69,11 @@ export default function Model(props) {
       if (e.code === 'KeyT') thisKey.current.position.set(0, -1, 0);
       if (e.code === 'Space') {
         everyhingKey.current.position.set(0, -1, 0);
-        playSound('space');
+        playSound(tracks, 'space');
         return;
       }
       const sounds = ['key1', 'key2'];
-      playSound(sounds[Math.floor(Math.random() * sounds.length)]);
+      playSound(tracks, sounds[Math.floor(Math.random() * sounds.length)]);
     }
     if (e.type === 'keyup' && keysPressed.has(e.code)) {
       if (e.code === 'KeyF') fKey.current.position.set(0, 0, 0);
@@ -89,13 +89,12 @@ export default function Model(props) {
   };
 
   const onMobileKey = (key) => {
-    console.log('aa');
     key.current.position.set(0, -1, 0);
     if (key.current.name === 'Everything_key') {
-      playSound('space');
+      playSound(tracks, 'space');
     } else {
       const sounds = ['key1', 'key2'];
-      playSound(sounds[Math.floor(Math.random() * sounds.length)]);
+      playSound(tracks, sounds[Math.floor(Math.random() * sounds.length)]);
     }
 
     setTimeout(() => key.current.position.set(0, 0, 0), 100);

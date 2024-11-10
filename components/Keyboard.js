@@ -7,104 +7,35 @@ import Key2 from './sounds/key2.mp3';
 import SpaceSound from './sounds/space.mp3';
 import { Howl } from 'howler';
 
-export default function Model(props) {
+const Layover = (props) => {
+  const { onDocumentKey } = props;
+  return (
+    <Html className="keyboard" pointerEvents='none'>
+      <div className="keyboard-row">
+        <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>f</button>
+        <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>u</button>
+        <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>c</button>
+        <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>k</button>
+      </div>
+      <div className="keyboard-row">
+        <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>o</button>
+        <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>y</button>
+        <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>m</button>
+        <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>t</button>
+      </div>
+
+      <div className="keyboard-row">
+        <button className="space" onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>space</button>
+      </div>
+    </Html>
+  )
+}
+
+const Model = (props) => {
+  const { onDocumentKey, nodes, materials, keys } = props;
+  const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = keys;
   const group = useRef();
-  const { nodes, materials } = useGLTF('/models/keyboard-v3.glb');
-
-  const tracks = {
-    key1: new Howl({
-      src: [Key1],
-      format: ['mp3'],
-      preload: true
-    }),
-    key2: new Howl({
-      src: [Key2],
-      format: ['mp3'],
-      preload: true
-    }),
-    space: new Howl({
-      src: [SpaceSound],
-      format: ['mp3'],
-      preload: true
-    })
-  };
-
-  Object.keys(materials).map((key) => {
-    let material = materials[key];
-    if (material.name === 'text') {
-      material.color = new Color('white');
-    }
-
-    material.roughness = 0.2;
-  });
-
-  const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = [
-    useRef(nodes.F_Key),
-    useRef(nodes.U_Key),
-    useRef(nodes.C_key),
-    useRef(nodes.K_Key),
-    useRef(nodes.Off_Key),
-    useRef(nodes.You_Key),
-    useRef(nodes.Me_Key),
-    useRef(nodes.This_key),
-    useRef(nodes.Everything_key)
-  ];
-
   const blackKey = new MeshStandardMaterial({ ...materials.key, color: 'black' });
-
-  async function playSound(tracks, key) {
-    tracks[key].play();
-  }
-
-  const getSplitKey = (e, isSpace) => {
-    const part = e.code.split('Key');
-    const code = isSpace ? 'Space' : `Key_${part[1]}`
-    return code;
-  }
-
-
-  const getKeyPress = (keys, prop) => {
-    debugger
-    return keys.find(k => {
-      const [, char] = k.current.name === 'Space' ? [, 'space'] : k.current.name.split('_');
-      return k.current.name === prop || char.toLowerCase() === prop.toLowerCase();
-    });
-  }
-
-  const onDocumentKey = (e) => {
-    const keys = [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space];
-    const chars = ['f', 'u', 'c', 'k', 'o', 'y', 'm', 't', 'space'];
-
-    const keysPressed = new Set(keys.map(k => k.current.name));
-    const validChars = new Set(chars);
-
-    const validPress = (key) => keysPressed.has(key) || validChars.has(key);
-
-
-    const isSpace = e.code === 'Space';
-    const isValidStart = e.type === 'keydown' || e.type === 'touchstart';
-    const isValidEnd = e.type === 'keyup' || e.type === 'touchend';
-
-    const prop = e.type === 'keydown' ? getSplitKey(e, isSpace) : e.target.innerText;
-
-    if (isValidStart && validPress(prop)) {
-      if (isSpace) {
-        playSound(tracks, 'space');
-      } else {
-        const sounds = ['key1', 'key2'];
-        playSound(tracks, sounds[Math.floor(Math.random() * sounds.length)]);
-      }
-
-      const key = getKeyPress(keys, prop);
-      key.current.position.set(0, -1, 0);
-    }
-
-    if (isValidEnd && validPress(prop)) {
-      const key = getKeyPress(keys, prop);
-      key.current.position.set(0, 0, 0);
-    }
-  };
-
   useEffect(() => {
     document.addEventListener('keydown', onDocumentKey);
     document.addEventListener('keyup', onDocumentKey);
@@ -134,27 +65,9 @@ export default function Model(props) {
   }, []);
 
   const dirLight = useRef(null);
-  // useHelper(dirLight, DirectionalLightHelper, 1, 'red');
 
   return (
     <>
-      <Html className="keyboard">
-        <div className="keyboard-row">
-          <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>f</button>
-          <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>u</button>
-          <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>c</button>
-          <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>k</button>
-        </div>
-        <div className="keyboard-row">
-          <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>o</button>
-          <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>y</button>
-          <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>m</button>
-          <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>t</button>
-        </div>
-        <div className="keyboard-row">
-          <button className="space" onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>space</button>
-        </div>
-      </Html>
       <group ref={group} {...props} dispose={null} rotation={[-5, 0.4, 4.3]}>
         <directionalLight ref={dirLight} intensity={1} position={[-10, 20, 4]} />
         <pointLight intensity={1} position={[0, 0, -10]} color={'red'} />
@@ -325,6 +238,112 @@ export default function Model(props) {
       </group>
     </>
   );
+
+}
+
+export default function Keyboard(props) {
+  const { nodes, materials } = useGLTF('/models/keyboard-v3.glb');
+
+  const tracks = {
+    key1: new Howl({
+      src: [Key1],
+      format: ['mp3'],
+      preload: true
+    }),
+    key2: new Howl({
+      src: [Key2],
+      format: ['mp3'],
+      preload: true
+    }),
+    space: new Howl({
+      src: [SpaceSound],
+      format: ['mp3'],
+      preload: true
+    })
+  };
+
+  Object.keys(materials).map((key) => {
+    let material = materials[key];
+    if (material.name === 'text') {
+      material.color = new Color('white');
+    }
+
+    material.roughness = 0.2;
+  });
+
+  const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = [
+    useRef(nodes.F_Key),
+    useRef(nodes.U_Key),
+    useRef(nodes.C_key),
+    useRef(nodes.K_Key),
+    useRef(nodes.Off_Key),
+    useRef(nodes.You_Key),
+    useRef(nodes.Me_Key),
+    useRef(nodes.This_key),
+    useRef(nodes.Everything_key)
+  ];
+  const keys = [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space];
+
+  async function playSound(tracks, key) {
+    tracks[key].play();
+  }
+
+  const getSplitKey = (e, isSpace) => {
+    const part = e.code.split('Key');
+    const code = isSpace ? 'Space' : `Key_${part[1]}`
+    return code;
+  }
+
+
+  const getKeyPress = (keys, prop) => {
+    return keys.find(k => {
+      const [, char] = k.current.name === 'Space' ? [, 'space'] : k.current.name.split('_');
+      return k.current.name === prop || char.toLowerCase() === prop.toLowerCase();
+    });
+  }
+
+  const onDocumentKey = (e) => {
+    const chars = ['f', 'u', 'c', 'k', 'o', 'y', 'm', 't', 'space'];
+
+    const keysPressed = new Set(keys.map(k => k.current.name));
+    const validChars = new Set(chars);
+
+    const validPress = (key) => keysPressed.has(key) || validChars.has(key);
+
+    const isSpace = e.code === 'Space';
+    const isValidStart = e.type === 'keydown' || e.type === 'touchstart';
+    const isValidEnd = e.type === 'keyup' || e.type === 'touchend';
+
+    const prop = (e.type === 'keydown' || e.type === 'keyup') ? getSplitKey(e, isSpace) : e.target.innerText;
+
+    if (isValidStart && validPress(prop)) {
+      if (isSpace) {
+        playSound(tracks, 'space');
+      } else {
+        const sounds = ['key1', 'key2'];
+        playSound(tracks, sounds[Math.floor(Math.random() * sounds.length)]);
+      }
+
+      const key = getKeyPress(keys, prop);
+      key.current.position.set(0, -1, 0);
+    }
+
+    if (isValidEnd && validPress(prop)) {
+      const key = getKeyPress(keys, prop);
+      key.current.position.set(0, 0, 0);
+    }
+  };
+
+
+  // useHelper(dirLight, DirectionalLightHelper, 1, 'red');
+
+
+  return (
+    <>
+      <Layover onDocumentKey={onDocumentKey} />
+      <Model onDocumentKey={onDocumentKey} nodes={nodes} materials={materials} keys={keys} />
+    </>
+  )
 }
 
 useGLTF.preload('/models/keyboard-v3.glb');

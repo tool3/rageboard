@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Color, MeshStandardMaterial } from 'three';
 import Key1 from './sounds/key1.mp3';
 import Key2 from './sounds/key2.mp3';
-import Space from './sounds/space.mp3';
+import SpaceSound from './sounds/space.mp3';
 import { Howl } from 'howler';
 
 export default function Model(props) {
@@ -23,7 +23,7 @@ export default function Model(props) {
       preload: true
     }),
     space: new Howl({
-      src: [Space],
+      src: [SpaceSound],
       format: ['mp3'],
       preload: true
     })
@@ -38,7 +38,7 @@ export default function Model(props) {
     material.roughness = 0.2;
   });
 
-  const [fKey, uKey, cKey, kKey, offKey, youKey, meKey, thisKey, everyhingKey] = [
+  const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = [
     useRef(nodes.F_Key),
     useRef(nodes.U_Key),
     useRef(nodes.C_key),
@@ -56,49 +56,54 @@ export default function Model(props) {
     tracks[key].play();
   }
 
+  const getSplitKey = (e, isSpace) => {
+    const part = e.code.split('Key');
+    const code = isSpace ? 'Space' : `Key_${part[1]}`
+    return code;
+  }
+
+
+  const getKeyPress = (keys, prop) => {
+    debugger
+    return keys.find(k => {
+      const [, char] = k.current.name === 'Space' ? [, 'space'] : k.current.name.split('_');
+      return k.current.name === prop || char.toLowerCase() === prop.toLowerCase();
+    });
+  }
+
   const onDocumentKey = (e) => {
-    const keysPressed = new Set(['KeyF', 'KeyU', 'KeyC', 'KeyK', 'KeyO', 'KeyY', 'KeyM', 'KeyT', 'Space']);
-    if (e.type === 'keydown' && keysPressed.has(e.code)) {
-      if (e.code === 'KeyF') fKey.current.position.set(0, -1, 0);
-      if (e.code === 'KeyU') uKey.current.position.set(0, -1, 0);
-      if (e.code === 'KeyC') cKey.current.position.set(0, -1, 0);
-      if (e.code === 'KeyK') kKey.current.position.set(0, -1, 0);
-      if (e.code === 'KeyO') offKey.current.position.set(0, -1, 0);
-      if (e.code === 'KeyY') youKey.current.position.set(0, -1, 0);
-      if (e.code === 'KeyM') meKey.current.position.set(0, -1, 0);
-      if (e.code === 'KeyT') thisKey.current.position.set(0, -1, 0);
-      if (e.code === 'Space') {
-        everyhingKey.current.position.set(0, -1, 0);
+    const keys = [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space];
+    const chars = ['f', 'u', 'c', 'k', 'o', 'y', 'm', 't', 'space'];
+
+    const keysPressed = new Set(keys.map(k => k.current.name));
+    const validChars = new Set(chars);
+
+    const validPress = (key) => keysPressed.has(key) || validChars.has(key);
+
+
+    const isSpace = e.code === 'Space';
+    const isValidStart = e.type === 'keydown' || e.type === 'touchstart';
+    const isValidEnd = e.type === 'keyup' || e.type === 'touchend';
+
+    const prop = e.type === 'keydown' ? getSplitKey(e, isSpace) : e.target.innerText;
+
+    if (isValidStart && validPress(prop)) {
+      if (isSpace) {
         playSound(tracks, 'space');
-        return;
+      } else {
+        const sounds = ['key1', 'key2'];
+        playSound(tracks, sounds[Math.floor(Math.random() * sounds.length)]);
       }
-      const sounds = ['key1', 'key2'];
-      playSound(tracks, sounds[Math.floor(Math.random() * sounds.length)]);
+
+      const key = getKeyPress(keys, prop);
+      key.current.position.set(0, -1, 0);
     }
-    if (e.type === 'keyup' && keysPressed.has(e.code)) {
-      if (e.code === 'KeyF') fKey.current.position.set(0, 0, 0);
-      if (e.code === 'KeyU') uKey.current.position.set(0, 0, 0);
-      if (e.code === 'KeyC') cKey.current.position.set(0, 0, 0);
-      if (e.code === 'KeyK') kKey.current.position.set(0, 0, 0);
-      if (e.code === 'KeyO') offKey.current.position.set(0, 0, 0);
-      if (e.code === 'KeyY') youKey.current.position.set(0, 0, 0);
-      if (e.code === 'KeyM') meKey.current.position.set(0, 0, 0);
-      if (e.code === 'KeyT') thisKey.current.position.set(0, 0, 0);
-      if (e.code === 'Space') everyhingKey.current.position.set(0, 0, 0);
+
+    if (isValidEnd && validPress(prop)) {
+      const key = getKeyPress(keys, prop);
+      key.current.position.set(0, 0, 0);
     }
   };
-
-  const onMobileKey = (key) => {
-    key.current.position.set(0, -1, 0);
-    if (key.current.name === 'Everything_key') {
-      playSound(tracks, 'space');
-    } else {
-      const sounds = ['key1', 'key2'];
-      playSound(tracks, sounds[Math.floor(Math.random() * sounds.length)]);
-    }
-
-    setTimeout(() => key.current.position.set(0, 0, 0), 100);
-  }
 
   useEffect(() => {
     document.addEventListener('keydown', onDocumentKey);
@@ -113,7 +118,6 @@ export default function Model(props) {
     if (!group.current) return;
     gsap.from(group.current.rotation, {
       z: -Math.PI,
-      // x: Math.PI / 2 ,
       ease: 'power3',
       repeat: 0,
       duration: 1,
@@ -136,19 +140,19 @@ export default function Model(props) {
     <>
       <Html className="keyboard">
         <div className="keyboard-row">
-          <button className="key__button" onClick={() => onMobileKey(fKey)}>f</button>
-          <button onClick={() => onMobileKey(uKey)}>u</button>
-          <button onClick={() => onMobileKey(cKey)}>c</button>
-          <button onClick={() => onMobileKey(kKey)}>k</button>
+          <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>f</button>
+          <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>u</button>
+          <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>c</button>
+          <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>k</button>
         </div>
         <div className="keyboard-row">
-          <button onClick={() => onMobileKey(offKey)}>o</button>
-          <button onClick={() => onMobileKey(youKey)}>y</button>
-          <button onClick={() => onMobileKey(meKey)}>m</button>
-          <button onClick={() => onMobileKey(thisKey)}>t</button>
+          <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>o</button>
+          <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>y</button>
+          <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>m</button>
+          <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>t</button>
         </div>
         <div className="keyboard-row">
-          <button className="space" onClick={() => onMobileKey(everyhingKey)}>[ ]</button>
+          <button className="space" onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>space</button>
         </div>
       </Html>
       <group ref={group} {...props} dispose={null} rotation={[-5, 0.4, 4.3]}>
@@ -174,14 +178,11 @@ export default function Model(props) {
             position={[-0.03, -4.21, 0.05]}
           />
           <mesh
-            name="This_key"
-            // onPointerDown={() => onDocumentKey({ code: 'KeyT', type: 'keydown' })}
-            // onPointerUp={() => onDocumentKey({ code: 'KeyT', type: 'keyup' })}
-            // onPointerLeave={() => onDocumentKey({ code: 'KeyT', type: 'keyup' })}
+            name="Key_T"
             castShadow
             receiveShadow
-            geometry={thisKey.current.geometry}
-            ref={thisKey}
+            geometry={Key_T.current.geometry}
+            ref={Key_T}
             material={materials.key_orange}>
             <mesh
               name="Text"
@@ -193,14 +194,11 @@ export default function Model(props) {
             />
           </mesh>
           <mesh
-            name="Me_Key"
-            // onPointerDown={() => onDocumentKey({ code: 'KeyM', type: 'keydown' })}
-            // onPointerUp={() => onDocumentKey({ code: 'KeyM', type: 'keyup' })}
-            // onPointerLeave={() => onDocumentKey({ code: 'KeyM', type: 'keyup' })}
+            name="Key_M"
             castShadow
             receiveShadow
-            geometry={meKey.current.geometry}
-            ref={meKey}
+            geometry={Key_M.current.geometry}
+            ref={Key_M}
             material={materials.key_orange}>
             <mesh
               name="Text001"
@@ -212,14 +210,11 @@ export default function Model(props) {
             />
           </mesh>
           <mesh
-            name="You_Key"
-            // onPointerDown={() => onDocumentKey({ code: 'KeyY', type: 'keydown' })}
-            // onPointerUp={() => onDocumentKey({ code: 'KeyY', type: 'keyup' })}
-            // onPointerLeave={() => onDocumentKey({ code: 'KeyY', type: 'keyup' })}
+            name="Key_Y"
             castShadow
             receiveShadow
-            geometry={youKey.current.geometry}
-            ref={youKey}
+            geometry={Key_Y.current.geometry}
+            ref={Key_Y}
             material={materials.key_orange}>
             <mesh
               name="Text002"
@@ -231,14 +226,11 @@ export default function Model(props) {
             />
           </mesh>
           <mesh
-            name="Everything_key"
-            // onPointerDown={() => onDocumentKey({ code: 'Space', type: 'keydown' })}
-            // onPointerUp={() => onDocumentKey({ code: 'Space', type: 'keyup' })}
-            // onPointerLeave={() => onDocumentKey({ code: 'Space', type: 'keyup' })}
+            name="Space"
             castShadow
             receiveShadow
-            geometry={everyhingKey.current.geometry}
-            ref={everyhingKey}
+            geometry={Space.current.geometry}
+            ref={Space}
             material={materials.key_red}>
             <mesh
               name="Text003"
@@ -250,14 +242,11 @@ export default function Model(props) {
             />
           </mesh>
           <mesh
-            name="Off_Key"
-            // onPointerDown={() => onDocumentKey({ code: 'KeyO', type: 'keydown' })}
-            // onPointerUp={() => onDocumentKey({ code: 'KeyO', type: 'keyup' })}
-            // onPointerLeave={() => onDocumentKey({ code: 'KeyO', type: 'keyup' })}
+            name="Key_O"
             castShadow
             receiveShadow
-            geometry={offKey.current.geometry}
-            ref={offKey}
+            geometry={Key_O.current.geometry}
+            ref={Key_O}
             material={materials.key_orange}>
             <mesh
               name="Text004"
@@ -269,14 +258,11 @@ export default function Model(props) {
             />
           </mesh>
           <mesh
-            name="K_Key"
-            // onPointerDown={() => onDocumentKey({ code: 'KeyK', type: 'keydown' })}
-            // onPointerUp={() => onDocumentKey({ code: 'KeyK', type: 'keyup' })}
-            // onPointerLeave={() => onDocumentKey({ code: 'KeyK', type: 'keyup' })}
+            name="Key_K"
             castShadow
             receiveShadow
-            geometry={kKey.current.geometry}
-            ref={kKey}
+            geometry={Key_K.current.geometry}
+            ref={Key_K}
             material={materials.key}>
             <mesh
               name="Text005"
@@ -288,14 +274,11 @@ export default function Model(props) {
             />
           </mesh>
           <mesh
-            name="C_key"
-            // onPointerDown={() => onDocumentKey({ code: 'KeyC', type: 'keydown' })}
-            // onPointerUp={() => onDocumentKey({ code: 'KeyC', type: 'keyup' })}
-            // onPointerLeave={() => onDocumentKey({ code: 'KeyC', type: 'keyup' })}
+            name="Key_C"
             castShadow
             receiveShadow
-            geometry={cKey.current.geometry}
-            ref={cKey}
+            geometry={Key_C.current.geometry}
+            ref={Key_C}
             material={materials.key}>
             <mesh
               name="Text006"
@@ -307,14 +290,11 @@ export default function Model(props) {
             />
           </mesh>
           <mesh
-            name="U_Key"
-            // onPointerDown={() => onDocumentKey({ code: 'KeyU', type: 'keydown' })}
-            // onPointerUp={() => onDocumentKey({ code: 'KeyU', type: 'keyup' })}
-            // onPointerLeave={() => onDocumentKey({ code: 'KeyU', type: 'keyup' })}
+            name="Key_U"
             castShadow
             receiveShadow
-            geometry={uKey.current.geometry}
-            ref={uKey}
+            geometry={Key_U.current.geometry}
+            ref={Key_U}
             material={materials.key}>
             <mesh
               name="Text007"
@@ -326,14 +306,11 @@ export default function Model(props) {
             />
           </mesh>
           <mesh
-            name="F_Key"
-            // onPointerDown={() => onDocumentKey({ code: 'KeyF', type: 'keydown' })}
-            // onPointerUp={() => onDocumentKey({ code: 'KeyF', type: 'keyup' })}
-            // onPointerLeave={() => onDocumentKey({ code: 'KeyF', type: 'keyup' })}
+            name="Key_F"
             castShadow
             receiveShadow
-            geometry={fKey.current.geometry}
-            ref={fKey}
+            geometry={Key_F.current.geometry}
+            ref={Key_F}
             material={materials.key}>
             <mesh
               name="Text008"

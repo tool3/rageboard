@@ -370,11 +370,12 @@ body {
     button {
       width: 2rem;
       height: 2rem;
+      
       box-shadow: 0 4px 11px 0 rgba(37,44,97,.15),0 1px 3px 0 rgba(93,100,148,.6);
-
       border-left-width: 1px;
       border-right-width: 1px;
       border-color: rgba(214,214,231,1);
+
       color: black;
 
       &.space {

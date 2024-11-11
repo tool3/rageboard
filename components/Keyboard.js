@@ -1,15 +1,15 @@
-import { useGLTF, Html } from '@react-three/drei';
+import { useGLTF, Html, Text } from '@react-three/drei';
 import gsap from 'gsap';
 import React, { useEffect, useRef, useState } from 'react';
-import { Color, MeshStandardMaterial } from 'three';
+import { Color, MeshPhongMaterial, MeshStandardMaterial } from 'three';
 import Key1 from './sounds/key1.mp3';
 import Key2 from './sounds/key2.mp3';
 import SpaceSound from './sounds/space.mp3';
 import { Howl } from 'howler';
 
 const Layover = (props) => {
-  const { onDocumentKey } = props;
-  return (
+  const { onDocumentKey, keyboard } = props;
+  return keyboard ? (
     <Html className="keyboard" pointerEvents='none'>
       <div className="keyboard-row">
         <button onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>f</button>
@@ -28,14 +28,45 @@ const Layover = (props) => {
         <button className="space" onTouchEnd={onDocumentKey} onTouchStart={onDocumentKey}>space</button>
       </div>
     </Html>
-  )
+  ) : null;
 }
 
 const Model = (props) => {
-  const { onDocumentKey, nodes, materials, keys } = props;
+  const { onDocumentKey, nodes, materials, keys, theme } = props;
   const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = keys;
   const group = useRef();
-  const blackKey = new MeshStandardMaterial({ ...materials.key, color: 'black' });
+
+  const themes = {
+    default: {
+      text: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
+      invertText: new MeshStandardMaterial({ ...materials.key, color: 'white' }),
+      bottom_base: materials.bottom_base,
+      base: materials.base,
+      key: materials.key,
+      key_orange: materials.key_orange,
+      key_red: materials.key_red,
+    },
+    metal: {
+      text: new MeshStandardMaterial({ ...materials.text }),
+      invertText: new MeshStandardMaterial({ ...materials.key, color: 'white' }),
+      bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, metalness: 1, roughness: 0 }),
+      base: new MeshStandardMaterial({ ...materials.base, metalness: 1, roughness: 0 }),
+      key: new MeshStandardMaterial({ ...materials.key, metalness: 1, roughness: 0 }),
+      key_orange: new MeshStandardMaterial({ ...materials.key_orange, metalness: 1, roughness: 0 }),
+      key_red: new MeshStandardMaterial({ ...materials.key_red, metalness: 1, roughness: 0 }),
+    },
+    wood: {
+      text: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
+      invertText: new MeshStandardMaterial({ ...materials.key, color: 'white' }),
+      bottom_base: materials.bottom_base,
+      base: materials.base,
+      key: materials.key,
+      key_orange: materials.key_orange,
+      key_red: materials.key_red,
+    },
+  }
+
+
   useEffect(() => {
     document.addEventListener('keydown', onDocumentKey);
     document.addEventListener('keyup', onDocumentKey);
@@ -74,20 +105,23 @@ const Model = (props) => {
         <pointLight intensity={1} position={[-20, -20, 10]} color={'red'} />
 
         <group name="Scene">
-          <mesh
-            name="Cube"
-            castShadow
-            receiveShadow
-            geometry={nodes.Cube.geometry}
-            material={materials.base}
-            position={[-0.03, -3.15, 0.05]}
-          />
+          <group>
+            <mesh
+              name="Cube"
+              castShadow
+              receiveShadow
+              geometry={nodes.Cube.geometry}
+              material={themes[theme].base}
+              position={[-0.03, -3.15, 0.05]}
+            />
+            <Text fontSize={0.1} rotation={[Math.PI / 2, 0, Math.PI]} position={[0, 0.25, 0]}>Nothing to see here but I am glad you are exploring</Text>
+          </group>
           <mesh
             name="Cube001"
             castShadow
             receiveShadow
             geometry={nodes.Cube001.geometry}
-            material={materials.bottom_base}
+            material={themes[theme].bottom_base}
             position={[-0.03, -4.21, 0.05]}
           />
           <mesh
@@ -96,14 +130,14 @@ const Model = (props) => {
             receiveShadow
             geometry={Key_T.current.geometry}
             ref={Key_T}
-            material={materials.key_orange}>
+            material={themes[theme].key_orange}>
             <mesh
               name="Text"
               castShadow
               receiveShadow
               geometry={nodes.Text.geometry}
-              material={materials.text}
-              position={[0, 4.44, 0]}
+              material={themes[theme].invertText}
+              position={[0, 4.45, 0]}
             />
           </mesh>
           <mesh
@@ -112,14 +146,14 @@ const Model = (props) => {
             receiveShadow
             geometry={Key_M.current.geometry}
             ref={Key_M}
-            material={materials.key_orange}>
+            material={themes[theme].key_orange}>
             <mesh
               name="Text001"
               castShadow
               receiveShadow
               geometry={nodes.Text001.geometry}
-              material={materials.text}
-              position={[0, 4.44, 0]}
+              material={themes[theme].invertText}
+              position={[0, 4.45, 0]}
             />
           </mesh>
           <mesh
@@ -128,14 +162,14 @@ const Model = (props) => {
             receiveShadow
             geometry={Key_Y.current.geometry}
             ref={Key_Y}
-            material={materials.key_orange}>
+            material={themes[theme].key_orange}>
             <mesh
               name="Text002"
               castShadow
               receiveShadow
               geometry={nodes.Text002.geometry}
-              material={materials.text}
-              position={[0, 4.44, 0]}
+              material={themes[theme].invertText}
+              position={[0, 4.45, 0]}
             />
           </mesh>
           <mesh
@@ -144,14 +178,14 @@ const Model = (props) => {
             receiveShadow
             geometry={Space.current.geometry}
             ref={Space}
-            material={materials.key_red}>
+            material={themes[theme].key_red}>
             <mesh
               name="Text003"
               castShadow
               receiveShadow
               geometry={nodes.Text003.geometry}
-              material={materials.text}
-              position={[0, 4.44, 0]}
+              material={themes[theme].invertText}
+              position={[0, 4.45, 0]}
             />
           </mesh>
           <mesh
@@ -160,14 +194,14 @@ const Model = (props) => {
             receiveShadow
             geometry={Key_O.current.geometry}
             ref={Key_O}
-            material={materials.key_orange}>
+            material={themes[theme].key_orange}>
             <mesh
               name="Text004"
               castShadow
               receiveShadow
               geometry={nodes.Text004.geometry}
-              material={materials.text}
-              position={[0, 4.44, 0]}
+              material={themes[theme].invertText}
+              position={[0, 4.45, 0]}
             />
           </mesh>
           <mesh
@@ -176,14 +210,14 @@ const Model = (props) => {
             receiveShadow
             geometry={Key_K.current.geometry}
             ref={Key_K}
-            material={materials.key}>
+            material={themes[theme].key}>
             <mesh
               name="Text005"
               castShadow
               receiveShadow
               geometry={nodes.Text005.geometry}
-              material={blackKey}
-              position={[0, 4.44, 0]}
+              material={themes[theme].text}
+              position={[0, 4.45, 0]}
             />
           </mesh>
           <mesh
@@ -192,14 +226,14 @@ const Model = (props) => {
             receiveShadow
             geometry={Key_C.current.geometry}
             ref={Key_C}
-            material={materials.key}>
+            material={themes[theme].key}>
             <mesh
               name="Text006"
               castShadow
               receiveShadow
               geometry={nodes.Text006.geometry}
-              material={blackKey}
-              position={[0, 4.44, 0]}
+              material={themes[theme].text}
+              position={[0, 4.45, 0]}
             />
           </mesh>
           <mesh
@@ -208,14 +242,14 @@ const Model = (props) => {
             receiveShadow
             geometry={Key_U.current.geometry}
             ref={Key_U}
-            material={materials.key}>
+            material={themes[theme].key}>
             <mesh
               name="Text007"
               castShadow
               receiveShadow
               geometry={nodes.Text007.geometry}
-              material={blackKey}
-              position={[0, 4.44, 0]}
+              material={themes[theme].text}
+              position={[0, 4.45, 0]}
             />
           </mesh>
           <mesh
@@ -224,14 +258,14 @@ const Model = (props) => {
             receiveShadow
             geometry={Key_F.current.geometry}
             ref={Key_F}
-            material={materials.key}>
+            material={themes[theme].key}>
             <mesh
               name="Text008"
               castShadow
               receiveShadow
               geometry={nodes.Text008.geometry}
-              material={blackKey}
-              position={[0, 4.44, 0]}
+              material={themes[theme].text}
+              position={[0, 4.45, 0]}
             />
           </mesh>
         </group>
@@ -242,6 +276,7 @@ const Model = (props) => {
 }
 
 export default function Keyboard(props) {
+  const { keyboard, theme } = props;
   const { nodes, materials } = useGLTF('/models/keyboard-v3.glb');
 
   const tracks = {
@@ -303,6 +338,7 @@ export default function Keyboard(props) {
   }
 
   const onDocumentKey = (e) => {
+    if (e.repeat) { return }
     const chars = ['f', 'u', 'c', 'k', 'o', 'y', 'm', 't', 'space'];
 
     const keysPressed = new Set(keys.map(k => k.current.name));
@@ -310,7 +346,7 @@ export default function Keyboard(props) {
 
     const validPress = (key) => keysPressed.has(key) || validChars.has(key);
 
-    const isSpace = e.code === 'Space';
+    const isSpace = e.code === 'Space' || e.currentTarget?.innerText === 'space';
     const isValidStart = e.type === 'keydown' || e.type === 'touchstart';
     const isValidEnd = e.type === 'keyup' || e.type === 'touchend';
 
@@ -340,8 +376,8 @@ export default function Keyboard(props) {
 
   return (
     <>
-      <Layover onDocumentKey={onDocumentKey} />
-      <Model onDocumentKey={onDocumentKey} nodes={nodes} materials={materials} keys={keys} />
+      <Layover onDocumentKey={onDocumentKey} keyboard={keyboard} />
+      <Model theme={theme} onDocumentKey={onDocumentKey} nodes={nodes} materials={materials} keys={keys} />
     </>
   )
 }

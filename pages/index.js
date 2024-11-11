@@ -2,8 +2,10 @@ import { Environment, Html, OrbitControls, Stats, useProgress } from '@react-thr
 import { Canvas } from '@react-three/fiber';
 import { Bloom, EffectComposer, Vignette } from '@react-three/postprocessing';
 import Head from 'next/head';
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import Keyboard from '../components/Keyboard';
+import Debug from '../components/Debug';
+import { Leva, useControls } from 'leva';
 
 function Loader() {
   const { progress } = useProgress();
@@ -17,6 +19,17 @@ function Loader() {
 }
 
 export default function IndexPage() {
+  const [active, setActive] = useState(false);
+  const { fps, keyboard, background, theme } = useControls({
+    fps: false,
+    keyboard: true,
+    background: '#a39d97',
+    theme: {
+      value: 'default',
+      options: { metal: 'metal', default: 'default', wood: 'wood' },
+    }
+  })
+
   return (
     <>
       <Head>
@@ -24,15 +37,19 @@ export default function IndexPage() {
         <meta name="description" content="rage keyboard made with threejs and blender" />
         <meta name="author" content="Tal Hayut" />
       </Head>
+      <Leva hidden={!active} />
+      {fps ? <Stats /> : null}
+      <Debug active={active} setActive={setActive} />
       <Canvas
         shadows
         orthographic
         camera={{ fov: 50, position: [20, -5, -20], zoom: 25 }}
         raycaster={{ computeOffsets: ({ clientX, clientY }) => ({ offsetX: clientX, offsetY: clientY }) }}>
         <Suspense fallback={<Loader />}>
-          <color attach="background" args={['#a39d97']} />
-          <Keyboard />
+          <color attach="background" args={[background]} />
+          <Keyboard theme={theme} keyboard={keyboard} />
           <Environment files="./textures/puresky.hdr" resolution={2048} />
+
         </Suspense>
         <OrbitControls target={[0, 0, 0]} />
 
@@ -40,7 +57,6 @@ export default function IndexPage() {
           <Bloom luminanceThreshold={0.5} luminanceSmoothing={0.9} height={300} />
           <Vignette eskil offset={0} darkness={0.8} />
         </EffectComposer>
-        <Stats />
       </Canvas>
     </>
   );

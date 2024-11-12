@@ -1,20 +1,26 @@
-import { Html, useGLTF } from "@react-three/drei";
+import { useControls } from "leva";
+import { useEffect, useState } from "react";
 
-const Layover = (props) => {
-    const { keyboard } = props;
-
+const Layover = () => {
+    const { keyboard } = useControls({ keyboard: true })
+    const [loading, setLoading] = useState(true);
     const sendEvent = (e, type) => {
         const element = e.target;
+        const event = new TouchEvent(type, { key: e.target.innerText });
+        element.dispatchEvent(event);
 
-        // const event = new CustomEvent("mobile-key-press", { bubbles: false, detail: { key, code: `Key_${key}` } });
-        // setTimeout(() => {
-            const event = new TouchEvent(type, { key: e.target.innerText });
-            element.dispatchEvent(event);
-        
     }
 
-    return keyboard ? (
-        <Html className="keyboard" pointerEvents='none'>
+    useEffect(() => {
+        addEventListener('rendered', (e) => { setLoading(false) });
+
+        return () => {
+            removeEventListener('rendered', (e) => { setLoading(true) });
+        }
+    }, [])
+
+    return keyboard && !loading ? (
+        <div className="keyboard" pointerEvents='none'>
             <div className="keyboard-row">
                 <button onTouchStart={sendEvent} onTouchEnd={sendEvent}>f</button>
                 <button onTouchStart={sendEvent} onTouchEnd={sendEvent}>u</button>
@@ -31,7 +37,7 @@ const Layover = (props) => {
             <div className="keyboard-row">
                 <button className="space" onTouchStart={sendEvent} onTouchEnd={sendEvent}>space</button>
             </div>
-        </Html>
+        </div>
     ) : null;
 }
 

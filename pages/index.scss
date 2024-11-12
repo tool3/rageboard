@@ -2,7 +2,7 @@ body {
   margin: 0;
   padding: 0;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background: lavender;
 }
 
@@ -355,11 +355,16 @@ body {
 }
 
 .keyboard {
-  position: relative;
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: fade-in .6s ease-in-out;
+
+  z-index: 2;
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  transform: translate(-50%, 60%) !important;
 
   .keyboard-row {
     display: flex;
@@ -381,6 +386,20 @@ body {
         width: 100%;
       }
     }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 100;
+    }
+  }
+  
+
+  @media screen and (min-width: 600px) {
+    display: none;
   }
 }
 

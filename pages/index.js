@@ -20,15 +20,19 @@ function Loader() {
   );
 }
 
-export default function IndexPage() {
+export default function IndexPage(props) {
   const [active, setActive] = useState(false);
-  const { fps, keyboard, background, theme } = useControls({
+  const { fps, background, theme } = useControls({
     fps: false,
-    keyboard: true,
     background: '#a39d97',
     theme: {
       value: 'default',
-      options: { metal: 'metal', default: 'default', wood: 'wood' },
+      options: {
+        default: 'default',
+        metal: 'metal',
+        hack: 'hack',
+        wood: 'wood',
+      },
     }
   });
 
@@ -38,10 +42,16 @@ export default function IndexPage() {
         <title>Rage Board</title>
         <meta name="description" content="rage keyboard made with threejs and blender" />
         <meta name="author" content="Tal Hayut" />
+        <link rel="icon" href="/images/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/images/favicon.ico" sizes="any" />
       </Head>
       <Leva hidden={!active} />
       {fps ? <Stats /> : null}
       <Debug active={active} setActive={setActive} />
+
+      <Suspense fallback={null}>
+        <Layover />
+      </Suspense>
 
       <Canvas
         shadows
@@ -49,11 +59,10 @@ export default function IndexPage() {
         camera={{ fov: 50, position: [20, -5, -20], zoom: 25 }}
         raycaster={{ computeOffsets: ({ clientX, clientY }) => ({ offsetX: clientX, offsetY: clientY }) }}>
 
-        <Layover keyboard />
 
         <Suspense fallback={<Loader />}>
           <color attach="background" args={[background]} />
-          <Keyboard theme={theme} keyboard={keyboard} />
+          <Keyboard theme={theme} />
           <Environment files="./textures/puresky.hdr" resolution={2048} />
         </Suspense>
         <OrbitControls target={[0, 0, 0]} />

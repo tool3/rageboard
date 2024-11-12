@@ -2,7 +2,7 @@ import { Text, useGLTF } from '@react-three/drei';
 import { useFrame, useLoader } from '@react-three/fiber';
 import gsap from 'gsap';
 import React, { useEffect, useRef } from 'react';
-import { Color, MeshStandardMaterial, TextureLoader } from 'three';
+import { BackSide, Color, FrontSide, MeshStandardMaterial, TextureLoader } from 'three';
 import Key1 from '../components/sounds/key1.mp3';
 import Key2 from '../components/sounds/key2.mp3';
 import SpaceSound from '../components/sounds/space.mp3';
@@ -52,6 +52,15 @@ const Model = (props) => {
       key: new MeshStandardMaterial({ ...materials.key, metalness: 1, roughness: 0 }),
       key_orange: new MeshStandardMaterial({ ...materials.key_orange, metalness: 1, roughness: 0 }),
       key_red: new MeshStandardMaterial({ ...materials.key_red, metalness: 1, roughness: 0 }),
+    },
+    hack: {
+      text: new MeshStandardMaterial({ ...materials.text, color: '#66FF00' }),
+      invertText: new MeshStandardMaterial({ ...materials.key, color: '#66FF00' }),
+      bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, metalness: 1, roughness: 0, color: '#1e1e1e' }),
+      base: new MeshStandardMaterial({ ...materials.base, metalness: 1, roughness: 0, color: '#00040d' }),
+      key: new MeshStandardMaterial({ ...materials.key, metalness: 1, roughness: 0, color: '#4d4f56', }),
+      key_orange: new MeshStandardMaterial({ ...materials.key_orange, metalness: 1, roughness: 0, color: '#33363d', }),
+      key_red: new MeshStandardMaterial({ ...materials.key_red, metalness: 1, roughness: 0, color: '#1a1d25' }),
     },
     wood: {
       text: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
@@ -112,7 +121,7 @@ const Model = (props) => {
               material={themes[theme].base}
               position={[-0.03, -3.15, 0.05]}
             />
-            <Text fontSize={0.1} rotation={[Math.PI / 2, 0, Math.PI]} position={[0, 0.25, 0]}>Nothing to see here but I am glad you are exploring</Text>
+            <Text fontSize={0.1} rotation={[Math.PI / 2, 0, Math.PI]} position={[0, 0.25, 0]} o >Nothing to see here but I am glad you are exploring</Text>
           </group>
           <mesh
             name="Cube001"
@@ -277,6 +286,7 @@ export default function Keyboard(props) {
   const { nodes, materials } = useGLTF('/models/keyboard-v3.glb');
 
   useEffect(() => {
+    dispatchEvent(new Event('rendered'));
     document.addEventListener('touchstart', onDocumentKey);
     document.addEventListener('touchend', onDocumentKey);
     return () => {
@@ -343,7 +353,7 @@ export default function Keyboard(props) {
 
     const validPress = (key) => keysPressed.has(key) || validChars.has(key);
 
-    const isSpace = e.code === 'Space' || e.currentTarget?.innerText === 'space';
+    const isSpace = e.code === 'Space' || e.target?.innerText === 'space';
     const isValidStart = e.type === 'keydown' || e.type === 'touchstart' || e.type === 'mobile-key-press';
     const isValidEnd = e.type === 'keyup' || e.type === 'touchend' || e.type === 'mobile-key-press';;
 
@@ -369,12 +379,22 @@ export default function Keyboard(props) {
 
   Object.keys(materials).map((key) => {
     let material = materials[key];
+    material.side = FrontSide;
+
     if (material.name === 'text') {
       material.color = new Color('white');
     }
 
+    if (material.name === 'key_orange') console.log({ material });
+
     material.roughness = 0.2;
+
   });
+
+  for (const node in nodes) {
+    nodes[node].castShadow = true;
+    nodes[node].receiveShadow = true;
+  }
 
   return <Model theme={theme} onDocumentKey={onDocumentKey} nodes={nodes} materials={materials} keys={keys} />
 

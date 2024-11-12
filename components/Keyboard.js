@@ -1,38 +1,18 @@
-import { Text, useGLTF } from '@react-three/drei';
-import { useFrame, useLoader } from '@react-three/fiber';
+import { Plane, Text, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
+import { Howl } from 'howler';
+import { useControls } from 'leva';
 import React, { useEffect, useRef } from 'react';
-import { BackSide, Color, FrontSide, MeshStandardMaterial, TextureLoader } from 'three';
+import { Color, FrontSide, MeshStandardMaterial } from 'three';
 import Key1 from '../components/sounds/key1.mp3';
 import Key2 from '../components/sounds/key2.mp3';
 import SpaceSound from '../components/sounds/space.mp3';
-import { Howl } from 'howler';
 
 const Model = (props) => {
   const { onDocumentKey, nodes, materials, keys, theme } = props;
   const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = keys;
   const group = useRef();
-
-  const woodColor = useLoader(TextureLoader, '/textures/wood/color.jpg');
-  const woodAo = useLoader(TextureLoader, '/textures/wood/ao.jpg');
-  const woodNormal = useLoader(TextureLoader, '/textures/wood/normal.jpg');
-  const woodRoughness = useLoader(TextureLoader, '/textures/wood/roughness.jpg');
-
-
-  const rosewoodColor = useLoader(TextureLoader, '/textures/rosewood/color.jpg');
-  const rosewoodAo = useLoader(TextureLoader, '/textures/rosewood/ao.jpg');
-  const rosewoodNormal = useLoader(TextureLoader, '/textures/rosewood/normal.jpg');
-  const rosewoodRoughness = useLoader(TextureLoader, '/textures/rosewood/roughness.jpg');
-
-  const wornwoodColor = useLoader(TextureLoader, '/textures/wornwood/color.jpg');
-  const wornwoodAo = useLoader(TextureLoader, '/textures/wornwood/ao.jpg');
-  const wornwoodNormal = useLoader(TextureLoader, '/textures/wornwood/normal.jpg');
-  const wornwoodRoughness = useLoader(TextureLoader, '/textures/wornwood/roughness.jpg');
-
-  const darkwoodColor = useLoader(TextureLoader, '/textures/darkwood/color.jpg');
-  const darkwoodAo = useLoader(TextureLoader, '/textures/darkwood/ao.jpg');
-  const darkwoodNormal = useLoader(TextureLoader, '/textures/darkwood/normal.jpg');
-  const darkwoodRoughness = useLoader(TextureLoader, '/textures/darkwood/roughness.jpg');
+  const { backlit } = useControls({ backlit: false })
 
   const themes = {
     default: {
@@ -61,16 +41,7 @@ const Model = (props) => {
       key: new MeshStandardMaterial({ ...materials.key, metalness: 1, roughness: 0, color: '#4d4f56', }),
       key_orange: new MeshStandardMaterial({ ...materials.key_orange, metalness: 1, roughness: 0, color: '#33363d', }),
       key_red: new MeshStandardMaterial({ ...materials.key_red, metalness: 1, roughness: 0, color: '#1a1d25' }),
-    },
-    wood: {
-      text: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
-      invertText: new MeshStandardMaterial({ ...materials.key, color: 'white' }),
-      bottom_base: new MeshStandardMaterial({ map: woodColor, aoMap: woodAo, normalMap: woodNormal, roughnessMap: woodRoughness }),
-      base: new MeshStandardMaterial({ map: woodColor, aoMap: woodAo, normalMap: woodNormal, roughnessMap: woodRoughness }),
-      key: new MeshStandardMaterial({ map: wornwoodColor, aoMap: wornwoodAo, normalMap: wornwoodNormal, roughnessMap: wornwoodRoughness }),
-      key_orange: new MeshStandardMaterial({ map: rosewoodColor, aoMap: rosewoodAo, normalMap: rosewoodNormal, roughnessMap: rosewoodRoughness }),
-      key_red: new MeshStandardMaterial({ map: darkwoodColor, aoMap: darkwoodAo, normalMap: darkwoodNormal, roughnessMap: darkwoodRoughness }),
-    },
+    }
   }
 
 
@@ -121,7 +92,8 @@ const Model = (props) => {
               material={themes[theme].base}
               position={[-0.03, -3.15, 0.05]}
             />
-            <Text fontSize={0.1} rotation={[Math.PI / 2, 0, Math.PI]} position={[0, 0.25, 0]} o >Nothing to see here but I am glad you are exploring</Text>
+            <Text fontSize={0.1} rotation={[Math.PI / 2, 0, Math.PI]} position={[0, 0.25, 0]}>Nothing to see here but I am glad you are exploring</Text>
+            {backlit ? <Plane rotation={[Math.PI / 2, Math.PI, 0]} position={[-0.05, 2.6, 0.1]} material={new MeshStandardMaterial({ color: 'white', emissive: 'white', emissiveIntensity: 2 })} args={[13.2, 10.1]} /> : null}
           </group>
           <mesh
             name="Cube001"

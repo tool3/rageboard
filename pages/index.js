@@ -31,7 +31,6 @@ export default function IndexPage(props) {
         default: 'default',
         metal: 'metal',
         hack: 'hack',
-        wood: 'wood',
       },
     }
   });

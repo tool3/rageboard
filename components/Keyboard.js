@@ -2,11 +2,12 @@ import { Plane, Text, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import { Howl } from 'howler';
 import { useControls } from 'leva';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Color, FrontSide, MeshStandardMaterial } from 'three';
 import Key1 from '../components/sounds/key1.mp3';
 import Key2 from '../components/sounds/key2.mp3';
 import SpaceSound from '../components/sounds/space.mp3';
+import Coin from '../components/sounds/coin.mp3';
 
 const Model = (props) => {
   const { onDocumentKey, nodes, materials, keys, theme } = props;
@@ -24,6 +25,15 @@ const Model = (props) => {
       key_orange: materials.key_orange,
       key_red: materials.key_red,
     },
+    uniform: {
+      text: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
+      invertText: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
+      bottom_base: materials.bottom_base,
+      base: materials.base,
+      key: new MeshStandardMaterial({ ...materials.key, color: 'white' }),
+      key_orange: new MeshStandardMaterial({ ...materials.key_orange, color: 'white' }),
+      key_red: new MeshStandardMaterial({ ...materials.key_red, color: 'white', roughness: 1 }),
+    },
     metal: {
       text: new MeshStandardMaterial({ ...materials.text }),
       invertText: new MeshStandardMaterial({ ...materials.key, color: 'white' }),
@@ -40,6 +50,24 @@ const Model = (props) => {
       base: new MeshStandardMaterial({ ...materials.base, metalness: 1, roughness: 0, color: '#00040d' }),
       key: new MeshStandardMaterial({ ...materials.key, metalness: 1, roughness: 0, color: '#4d4f56', }),
       key_orange: new MeshStandardMaterial({ ...materials.key_orange, metalness: 1, roughness: 0, color: '#33363d', }),
+      key_red: new MeshStandardMaterial({ ...materials.key_red, metalness: 1, roughness: 0, color: '#1a1d25' }),
+    },
+    kawaii: {
+      text: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
+      invertText: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
+      bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, color: 'violet' }),
+      base: new MeshStandardMaterial({ ...materials.base, color: '#D68D96' }),
+      key: new MeshStandardMaterial({ ...materials.key, color: 'hotpink' }),
+      key_orange: new MeshStandardMaterial({ ...materials.key_orange, color: 'cyan' }),
+      key_red: new MeshStandardMaterial({ ...materials.key_red, color: 'lime' }),
+    },
+    blackops: {
+      text: new MeshStandardMaterial({ ...materials.text, color: '#ff5b00', emissive: '#ff5b00', emissiveIntensity: 2 }),
+      invertText: new MeshStandardMaterial({ ...materials.key, color: '#ff5b00', emissive: '#ff5b00', emissiveIntensity: 2 }),
+      bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, metalness: 1, roughness: 0, color: '#1e1e1e' }),
+      base: new MeshStandardMaterial({ ...materials.base, metalness: 1, roughness: 0, color: '#00040d' }),
+      key: new MeshStandardMaterial({ ...materials.key, metalness: 1, roughness: 0, color: '#1a1d25', }),
+      key_orange: new MeshStandardMaterial({ ...materials.key_orange, metalness: 1, roughness: 0, color: '#ff5b00', }),
       key_red: new MeshStandardMaterial({ ...materials.key_red, metalness: 1, roughness: 0, color: '#1a1d25' }),
     }
   }
@@ -92,8 +120,8 @@ const Model = (props) => {
               material={themes[theme].base}
               position={[-0.03, -3.15, 0.05]}
             />
-            <Text fontSize={0.1} rotation={[Math.PI / 2, 0, Math.PI]} position={[0, 0.25, 0]}>Nothing to see here but I am glad you are exploring</Text>
-            {backlit ? <Plane rotation={[Math.PI / 2, Math.PI, 0]} position={[-0.05, 2.6, 0.1]} material={new MeshStandardMaterial({ color: 'white', emissive: 'white', emissiveIntensity: 2 })} args={[13.2, 10.1]} /> : null}
+            <Text fontSize={0.1} rotation={[Math.PI / 2, 0, Math.PI]} position={[0, 0.25, 0]}>Can you find all easter eggs?</Text>
+            {backlit ? <Plane rotation={[Math.PI / 2, Math.PI, 0]} position={[-0.06, 2.52, 0.1]} material={new MeshStandardMaterial({ color: 'white', emissive: 'white', emissiveIntensity: 2 })} args={[13.3, 10.2]} /> : null}
           </group>
           <mesh
             name="Cube001"
@@ -267,6 +295,8 @@ export default function Keyboard(props) {
     };
   }, []);
 
+  
+
 
   const keys = [
     useRef(nodes.F_Key),
@@ -295,7 +325,13 @@ export default function Keyboard(props) {
       src: [SpaceSound],
       format: ['mp3'],
       preload: true
-    })
+    }),
+    coin: new Howl({
+      src: [Coin],
+      format: ['mp3'],
+      preload: true
+    }),
+
   };
 
   async function playSound(tracks, key) {
@@ -315,9 +351,9 @@ export default function Keyboard(props) {
     })
   }
 
-
   const onDocumentKey = (e) => {
     if (e.repeat) { return }
+
     const chars = ['f', 'u', 'c', 'k', 'o', 'y', 'm', 't', 'space'];
 
     const keysPressed = new Set(keys.map(k => k.current.name));
@@ -326,12 +362,16 @@ export default function Keyboard(props) {
     const validPress = (key) => keysPressed.has(key) || validChars.has(key);
 
     const isSpace = e.code === 'Space' || e.target?.innerText === 'space';
-    const isValidStart = e.type === 'keydown' || e.type === 'touchstart' || e.type === 'mobile-key-press';
-    const isValidEnd = e.type === 'keyup' || e.type === 'touchend' || e.type === 'mobile-key-press';;
+    const isValidStart = e.type === 'keydown' || e.type === 'touchstart';
+    const isValidEnd = e.type === 'keyup' || e.type === 'touchend';
 
     const prop = (e.type === 'keydown' || e.type === 'keyup') ? getSplitKey(e, isSpace) : (e.type === 'mobile-key-press' ? e.key : e.target.innerText);
 
     if (isValidStart && validPress(prop)) {
+      if (currentWord === 'fuck') {
+        playSound(tracks, 'coin');
+      }
+
       if (isSpace) {
         playSound(tracks, 'space');
       } else {
@@ -356,8 +396,6 @@ export default function Keyboard(props) {
     if (material.name === 'text') {
       material.color = new Color('white');
     }
-
-    if (material.name === 'key_orange') console.log({ material });
 
     material.roughness = 0.2;
 

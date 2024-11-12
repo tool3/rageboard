@@ -20,7 +20,7 @@ function Loader() {
   );
 }
 
-export default function IndexPage(props) {
+export default function IndexPage() {
   const [active, setActive] = useState(false);
   const { fps, background, theme } = useControls({
     fps: false,
@@ -29,8 +29,11 @@ export default function IndexPage(props) {
       value: 'default',
       options: {
         default: 'default',
+        uniform: 'uniform',
         metal: 'metal',
         hack: 'hack',
+        kawaii: 'kawaii',
+        blackops: 'blackops',
       },
     }
   });

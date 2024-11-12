@@ -13,6 +13,7 @@ const Model = (props) => {
   const { onDocumentKey, nodes, materials, keys, theme } = props;
   const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = keys;
   const group = useRef();
+
   const { backlit } = useControls({ backlit: false })
 
   const themes = {
@@ -284,6 +285,7 @@ const Model = (props) => {
 export default function Keyboard(props) {
   const { theme } = props;
   const { nodes, materials } = useGLTF('/models/keyboard-v3.glb');
+  const word = useRef();
 
   useEffect(() => {
     dispatchEvent(new Event('rendered'));
@@ -294,9 +296,6 @@ export default function Keyboard(props) {
       document.removeEventListener('touchend', onDocumentKey);
     };
   }, []);
-
-  
-
 
   const keys = [
     useRef(nodes.F_Key),
@@ -351,10 +350,30 @@ export default function Keyboard(props) {
     })
   }
 
+  const updateWord = (e) => {
+    if (e.type === 'touchstart' || e.type === 'keydown') {
+      const currentChar = e.code ? e.code.replace('Key', '').toLowerCase() : e.target.innerText.toLowerCase();
+      word.current = word.current ? word.current + currentChar : currentChar;
+
+      console.log(word.current);
+
+      if (word.current === 'fuck') {
+        playSound(tracks, 'coin');
+        word.current = '';
+      }
+
+      if (word.current.length > 4) {
+        word.current = '';
+      }
+    }
+  }
+
   const onDocumentKey = (e) => {
     if (e.repeat) { return }
 
     const chars = ['f', 'u', 'c', 'k', 'o', 'y', 'm', 't', 'space'];
+
+    updateWord(e);
 
     const keysPressed = new Set(keys.map(k => k.current.name));
     const validChars = new Set(chars);
@@ -368,10 +387,6 @@ export default function Keyboard(props) {
     const prop = (e.type === 'keydown' || e.type === 'keyup') ? getSplitKey(e, isSpace) : (e.type === 'mobile-key-press' ? e.key : e.target.innerText);
 
     if (isValidStart && validPress(prop)) {
-      if (currentWord === 'fuck') {
-        playSound(tracks, 'coin');
-      }
-
       if (isSpace) {
         playSound(tracks, 'space');
       } else {

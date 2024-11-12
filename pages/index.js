@@ -1,11 +1,13 @@
 import { Environment, Html, OrbitControls, Stats, useProgress } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { Bloom, EffectComposer, Vignette } from '@react-three/postprocessing';
-import Head from 'next/head';
-import React, { Suspense, useEffect, useState } from 'react';
-import Keyboard from '../components/Keyboard';
-import Debug from '../components/Debug';
 import { Leva, useControls } from 'leva';
+import Head from 'next/head';
+import React, { Suspense, useState } from 'react';
+import Debug from '../components/Debug';
+import Keyboard from '../components/Keyboard';
+import Layover from '../components/Layover';
+
 
 function Loader() {
   const { progress } = useProgress();
@@ -28,7 +30,7 @@ export default function IndexPage() {
       value: 'default',
       options: { metal: 'metal', default: 'default', wood: 'wood' },
     }
-  })
+  });
 
   return (
     <>
@@ -40,16 +42,19 @@ export default function IndexPage() {
       <Leva hidden={!active} />
       {fps ? <Stats /> : null}
       <Debug active={active} setActive={setActive} />
+
       <Canvas
         shadows
         orthographic
         camera={{ fov: 50, position: [20, -5, -20], zoom: 25 }}
         raycaster={{ computeOffsets: ({ clientX, clientY }) => ({ offsetX: clientX, offsetY: clientY }) }}>
+
+        <Layover keyboard />
+
         <Suspense fallback={<Loader />}>
           <color attach="background" args={[background]} />
           <Keyboard theme={theme} keyboard={keyboard} />
           <Environment files="./textures/puresky.hdr" resolution={2048} />
-
         </Suspense>
         <OrbitControls target={[0, 0, 0]} />
 

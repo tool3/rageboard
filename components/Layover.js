@@ -2,13 +2,11 @@ import { useControls } from "leva";
 import { useEffect, useState } from "react";
 
 const Layover = () => {
-    const { keyboard } = useControls({ keyboard: true })
     const [loading, setLoading] = useState(true);
     const sendEvent = (e, type) => {
         const element = e.target;
         const event = new TouchEvent(type, { key: e.target.innerText });
         element.dispatchEvent(event);
-
     }
 
     useEffect(() => {
@@ -19,7 +17,7 @@ const Layover = () => {
         }
     }, [])
 
-    return keyboard && !loading ? (
+    return !loading ? (
         <div className="keyboard" pointerEvents='none'>
             <div className="keyboard-row">
                 <button onTouchStart={sendEvent} onTouchEnd={sendEvent}>f</button>

@@ -286,6 +286,7 @@ export default function Keyboard(props) {
   const { theme } = props;
   const { nodes, materials } = useGLTF('/models/keyboard-v3.glb');
   const word = useRef();
+  const me = useRef();
 
   useEffect(() => {
     dispatchEvent(new Event('rendered'));
@@ -350,12 +351,14 @@ export default function Keyboard(props) {
     })
   }
 
+  const getCurrentChar = (e) => {
+    return e.code ? e.code.replace('Key', '').toLowerCase() : e.target.innerText.toLowerCase();
+  }
+
   const updateWord = (e) => {
     if (e.type === 'touchstart' || e.type === 'keydown') {
-      const currentChar = e.code ? e.code.replace('Key', '').toLowerCase() : e.target.innerText.toLowerCase();
+      const currentChar = getCurrentChar(e);
       word.current = word.current ? word.current + currentChar : currentChar;
-
-      console.log(word.current);
 
       if (word.current === 'fuck') {
         playSound(tracks, 'coin');
@@ -368,12 +371,29 @@ export default function Keyboard(props) {
     }
   }
 
+  const meEgg = (e) => {
+    if (e.type === 'touchstart' || e.type === 'keydown') {
+      const currentChar = getCurrentChar(e);
+      if (me.current === 32) {
+        playSound(tracks, 'coin');
+        me.current = 0;
+      }
+
+      if (currentChar === 'm') {
+        me.current = me.current ? me.current + 1 : 1;
+      }
+
+      console.log(me.current);
+    }
+  }
+
   const onDocumentKey = (e) => {
     if (e.repeat) { return }
 
     const chars = ['f', 'u', 'c', 'k', 'o', 'y', 'm', 't', 'space'];
 
     updateWord(e);
+    meEgg(e);
 
     const keysPressed = new Set(keys.map(k => k.current.name));
     const validChars = new Set(chars);

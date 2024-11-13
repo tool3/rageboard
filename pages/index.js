@@ -6,8 +6,8 @@ import Head from 'next/head';
 import React, { Suspense, useState } from 'react';
 import Debug from '../components/Debug';
 import Keyboard from '../components/Keyboard';
-import Layover from '../components/Layover';
-
+import MobileKeyboard from '../components/MobileKeyboard';
+import Tile from '../components/Tile';
 
 function Loader() {
   const { progress } = useProgress();
@@ -51,8 +51,10 @@ export default function IndexPage() {
       {fps ? <Stats /> : null}
       <Debug active={active} setActive={setActive} />
 
+      <Tile />
+
       <Suspense fallback={null}>
-        <Layover />
+        <MobileKeyboard />
       </Suspense>
 
       <Canvas

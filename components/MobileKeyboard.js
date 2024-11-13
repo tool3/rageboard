@@ -1,7 +1,7 @@
 import { useControls } from "leva";
 import { useEffect, useState } from "react";
 
-const Layover = () => {
+const MobileKeyboard = () => {
     const [loading, setLoading] = useState(true);
     const sendEvent = (e, type) => {
         const element = e.target;
@@ -39,4 +39,4 @@ const Layover = () => {
     ) : null;
 }
 
-export default Layover;
+export default MobileKeyboard;

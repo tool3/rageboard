@@ -2,7 +2,7 @@ import { Plane, Text, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import { Howl } from 'howler';
 import { useControls } from 'leva';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Color, FrontSide, MeshStandardMaterial } from 'three';
 import Key1 from '../components/sounds/key1.mp3';
 import Key2 from '../components/sounds/key2.mp3';
@@ -128,7 +128,15 @@ const Model = (props) => {
               material={themes[theme].base}
               position={[-0.03, -3.15, 0.05]}
             />
-            <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI / 2, 0, Math.PI]} position={[0, 0.25, 0]}>4432</Text>
+
+            <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI / 2, 0, Math.PI]} position={[0, 0.27, 0]}>4432</Text>
+
+            <Text fontSize={0.1} color={'lightgray'} rotation={[0, -Math.PI / 2, 0]} position={[-7.52, 1, 0]}>1234 6+7</Text>
+            <Text fontSize={0.1} color={'lightgray'} rotation={[0, Math.PI / 2, 0]} position={[7.45, 1, 0]}>placeholder</Text>
+
+            <Text fontSize={0.1} color={'lightgray'} rotation={[0, 0, 0]} position={[0, 1, 6.05 ]}>4x13</Text>
+            <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI, 0, Math.PI]} position={[0, 1, -5.93 ]}>placeholder</Text>
+            
             {backlit ? <Plane rotation={[Math.PI / 2, Math.PI, 0]} position={[-0.06, 2.52, 0.1]} material={new MeshStandardMaterial({ color: themes[theme].backlit, emissive: themes[theme].backlit, emissiveIntensity: 2 })} args={[13.3, 10.2]} /> : null}
           </group>
           <mesh
@@ -297,7 +305,6 @@ export default function Keyboard(props) {
   const me = { value: useRef(), completed: false }
   const bye = { value: useRef(), completed: false }
 
-  const easterEggs = ['word', 'me', 'bye'];
   const keyMap = {};
 
   useEffect(() => {
@@ -439,7 +446,7 @@ export default function Keyboard(props) {
 
   const easterEgg = (e, egg, ref) => {
     const currentChar = getCurrentChar(e);
-    console.log({ ref });
+
     if (e.type === 'keydown' || e.type === 'touchstart' && !ref.completed) {
       keyMap[currentChar] = true;
       egg(ref, currentChar);
@@ -447,8 +454,6 @@ export default function Keyboard(props) {
       keyMap[currentChar] = false;
     }
   }
-
-
 
   const onDocumentKey = (e) => {
     if (e.repeat) { return }

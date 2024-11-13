@@ -27,7 +27,7 @@ const Model = (props) => {
       base: materials.base,
       key: materials.key,
       key_orange: materials.key_orange,
-      key_red: materials.key_red,
+      key_red: new MeshStandardMaterial({ ...materials.key_red }),
     },
     uniform: {
       backlit: 'white',
@@ -35,9 +35,9 @@ const Model = (props) => {
       invertText: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
       bottom_base: materials.bottom_base,
       base: materials.base,
-      key: new MeshStandardMaterial({ ...materials.key, color: 'white' }),
-      key_orange: new MeshStandardMaterial({ ...materials.key_orange, color: 'white' }),
-      key_red: new MeshStandardMaterial({ ...materials.key_red, color: 'white', roughness: 1 }),
+      key: new MeshStandardMaterial({ ...materials.key }),
+      key_orange: new MeshStandardMaterial({ ...materials.key_orange, color: materials.key.color, }),
+      key_red: new MeshStandardMaterial({ ...materials.key_red, color: materials.key.color, }),
     },
     metal: {
       backlit: 'white',
@@ -45,9 +45,9 @@ const Model = (props) => {
       invertText: new MeshStandardMaterial({ ...materials.key, color: 'white' }),
       bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, metalness: 1, roughness: 0 }),
       base: new MeshStandardMaterial({ ...materials.base, metalness: 1, roughness: 0 }),
-      key: new MeshStandardMaterial({ ...materials.key, metalness: 1, roughness: 0 }),
-      key_orange: new MeshStandardMaterial({ ...materials.key_orange, metalness: 1, roughness: 0 }),
-      key_red: new MeshStandardMaterial({ ...materials.key_red, metalness: 1, roughness: 0 }),
+      key: new MeshStandardMaterial({ ...materials.key, color: 'brown', metalness: 1, roughness: 0 }),
+      key_orange: new MeshStandardMaterial({ ...materials.key_orange, color: 'brown', metalness: 1, roughness: 0 }),
+      key_red: new MeshStandardMaterial({ ...materials.key_red, color: 'orangered', metalness: 1, roughness: 0 }),
     },
     hack: {
       backlit: '#66FF00',
@@ -60,12 +60,12 @@ const Model = (props) => {
       key_red: new MeshStandardMaterial({ ...materials.key_red, metalness: 1, roughness: 0, color: '#1a1d25' }),
     },
     kawaii: {
-      backlit: 'lightpink',
+      backlit: 'pink',
       text: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
       invertText: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
       bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, color: 'violet' }),
       base: new MeshStandardMaterial({ ...materials.base, color: '#D68D96' }),
-      key: new MeshStandardMaterial({ ...materials.key, color: 'yellow' }),
+      key: new MeshStandardMaterial({ ...materials.key, color: '#d7913c' }),
       key_orange: new MeshStandardMaterial({ ...materials.key_orange, color: 'cyan' }),
       key_red: new MeshStandardMaterial({ ...materials.key_red, color: 'lime' }),
     },
@@ -128,15 +128,17 @@ const Model = (props) => {
               material={themes[theme].base}
               position={[-0.03, -3.15, 0.05]}
             />
+            {theme !== 'default' ? (
+              <>
+                <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI / 2, 0, Math.PI]} position={[0, 0.27, 0]}>4432</Text>
 
-            <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI / 2, 0, Math.PI]} position={[0, 0.27, 0]}>4432</Text>
+                <Text fontSize={0.1} color={'lightgray'} rotation={[0, -Math.PI / 2, 0]} position={[-7.52, 1, 0]}>1234 6+7</Text>
+                <Text fontSize={0.1} color={'lightgray'} rotation={[0, Math.PI / 2, 0]} position={[7.45, 1, 0]}>placeholder</Text>
 
-            <Text fontSize={0.1} color={'lightgray'} rotation={[0, -Math.PI / 2, 0]} position={[-7.52, 1, 0]}>1234 6+7</Text>
-            <Text fontSize={0.1} color={'lightgray'} rotation={[0, Math.PI / 2, 0]} position={[7.45, 1, 0]}>placeholder</Text>
-
-            <Text fontSize={0.1} color={'lightgray'} rotation={[0, 0, 0]} position={[0, 1, 6.05 ]}>4x13</Text>
-            <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI, 0, Math.PI]} position={[0, 1, -5.93 ]}>placeholder</Text>
-            
+                <Text fontSize={0.1} color={'lightgray'} rotation={[0, 0, 0]} position={[0, 1, 6.05]}>4x13</Text>
+                <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI, 0, Math.PI]} position={[0, 1, -5.93]}>placeholder</Text>
+              </>
+            ) : null}
             {backlit ? <Plane rotation={[Math.PI / 2, Math.PI, 0]} position={[-0.06, 2.52, 0.1]} material={new MeshStandardMaterial({ color: themes[theme].backlit, emissive: themes[theme].backlit, emissiveIntensity: 2 })} args={[13.3, 10.2]} /> : null}
           </group>
           <mesh
@@ -423,23 +425,18 @@ export default function Keyboard(props) {
 
   const meEgg = (ref, currentChar) => {
     const me = ref.value;
+    if (currentChar === 'm') {
+      me.current = me.current ? me.current + 1 : 1;
 
-    if (me.completed) {
-      return;
-    }
+      if (me.current === 3) {
+        playSound(tracks, 'coin');
+      }
 
-    me.current = me.current ? me.current + currentChar : currentChar;
-
-    if (me.current === 3) {
-      playSound(tracks, 'coin');
-    }
-
-    if (me.current === 13) {
-      playSound(tracks, 'complete');
-      ref.completed = true;
-    }
-
-    if (me.current.length > 4) {
+      if (me.current === 13) {
+        playSound(tracks, 'complete');
+        ref.completed = true;
+      }
+    } else {
       me.current = 0;
     }
   }

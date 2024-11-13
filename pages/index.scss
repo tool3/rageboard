@@ -228,15 +228,6 @@ body {
     }
   }
 
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 100;
-    }
-  }
-  
 
   @media screen and (min-width: 600px) {
     display: none;
@@ -249,13 +240,55 @@ body {
   position: absolute;
   display: flex;
   flex-direction: column;
-  margin: .5rem;
-  padding: .5rem;
+  margin: 10px;
   z-index: 2;
-  border: 1px solid orangered;
-  border-radius: 1rem;
-
-
-  background-color: #1e1e1e;
+  border-radius: 10px;
+  box-shadow: 0 0 9px 0 #00000088;
+  width: 280px;
+  height: 168px;
+  animation: fade-in .6s ease-in-out;
+  
   color: orangered;
+  
+
+  .tile-header {
+    background-color: #292d39;
+    border-radius: 10px;
+    padding: 10px 0 0 0;
+    height: 4.8rem;
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .tile-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #181c20;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: -1rem;
+    height: 100%;
+    font-family: ui-monospace, SFMono-Regular, Menlo, 'Roboto Mono', monospace;
+    font-size: 11px;
+    color: #8c92a4;
+
+    div > kbd {
+      border: .5px solid white;
+      border-radius: 5px;
+      padding: 2px 5px;
+      background-color: #1e1e1e;
+      color: white;
+
+    }
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 100;
+  }
 }

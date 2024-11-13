@@ -2,10 +2,12 @@ export default function Tile() {
     return (
         <div className="tile">
             <div className="tile-header">
-                <h3>RAGE BOARD</h3>
+                <div>RAGE BOARD</div>
             </div>
+
             <div className="tile-content">
-                <p>Tile content</p>
+                <div><kbd>shift</kbd> <kbd>d</kbd> for debugger</div>
+                <div>3 finger tap on mobile</div>
             </div>
         </div>
     )

@@ -386,7 +386,7 @@ export default function Keyboard(props) {
 
     if ((word.current === 'fuckym' || word.current === 'fuckmy') && (keyMap['y'] && keyMap['m'])) {
       playSound(tracks, 'complete');
-      word.current = '';
+      ref.completed = true;
     }
 
     if (word.current.length > 6) {
@@ -409,7 +409,6 @@ export default function Keyboard(props) {
     }
 
     if (bye.current === 'kkcu') {
-      playSound(tracks, 'coin');
       playSound(tracks, 'complete');
       ref.completed = true;
     }
@@ -429,20 +428,19 @@ export default function Keyboard(props) {
     }
 
     if (me.current === 13) {
-      playSound(tracks, 'coin');
       playSound(tracks, 'complete');
+      ref.completed = true;
     }
 
     if (me.current.length > 4) {
       me.current = 0;
-      me.completed = true;
     }
   }
 
   const easterEgg = (e, egg, ref) => {
     const currentChar = getCurrentChar(e);
-
-    if (e.type === 'keydown' || e.type === 'touchstart') {
+    console.log({ ref });
+    if (e.type === 'keydown' || e.type === 'touchstart' && !ref.completed) {
       keyMap[currentChar] = true;
       egg(ref, currentChar);
     } else {

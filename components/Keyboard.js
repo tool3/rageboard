@@ -8,6 +8,8 @@ import Key1 from '../components/sounds/key1.mp3';
 import Key2 from '../components/sounds/key2.mp3';
 import SpaceSound from '../components/sounds/space.mp3';
 import Coin from '../components/sounds/coin.mp3';
+import Complete from '../components/sounds/complete.mp3';
+import Victory from '../components/sounds/victory.mp3';
 
 const Model = (props) => {
   const { onDocumentKey, nodes, materials, keys, theme } = props;
@@ -18,6 +20,7 @@ const Model = (props) => {
 
   const themes = {
     default: {
+      backlit: 'white',
       text: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
       invertText: new MeshStandardMaterial({ ...materials.key, color: 'white' }),
       bottom_base: materials.bottom_base,
@@ -27,6 +30,7 @@ const Model = (props) => {
       key_red: materials.key_red,
     },
     uniform: {
+      backlit: 'white',
       text: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
       invertText: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
       bottom_base: materials.bottom_base,
@@ -36,6 +40,7 @@ const Model = (props) => {
       key_red: new MeshStandardMaterial({ ...materials.key_red, color: 'white', roughness: 1 }),
     },
     metal: {
+      backlit: 'white',
       text: new MeshStandardMaterial({ ...materials.text }),
       invertText: new MeshStandardMaterial({ ...materials.key, color: 'white' }),
       bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, metalness: 1, roughness: 0 }),
@@ -45,6 +50,7 @@ const Model = (props) => {
       key_red: new MeshStandardMaterial({ ...materials.key_red, metalness: 1, roughness: 0 }),
     },
     hack: {
+      backlit: '#66FF00',
       text: new MeshStandardMaterial({ ...materials.text, color: '#66FF00' }),
       invertText: new MeshStandardMaterial({ ...materials.key, color: '#66FF00' }),
       bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, metalness: 1, roughness: 0, color: '#1e1e1e' }),
@@ -54,21 +60,23 @@ const Model = (props) => {
       key_red: new MeshStandardMaterial({ ...materials.key_red, metalness: 1, roughness: 0, color: '#1a1d25' }),
     },
     kawaii: {
+      backlit: 'lightpink',
       text: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
       invertText: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
       bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, color: 'violet' }),
       base: new MeshStandardMaterial({ ...materials.base, color: '#D68D96' }),
-      key: new MeshStandardMaterial({ ...materials.key, color: 'hotpink' }),
+      key: new MeshStandardMaterial({ ...materials.key, color: 'yellow' }),
       key_orange: new MeshStandardMaterial({ ...materials.key_orange, color: 'cyan' }),
       key_red: new MeshStandardMaterial({ ...materials.key_red, color: 'lime' }),
     },
     blackops: {
-      text: new MeshStandardMaterial({ ...materials.text, color: '#ff5b00', emissive: '#ff5b00', emissiveIntensity: 2 }),
-      invertText: new MeshStandardMaterial({ ...materials.key, color: '#ff5b00', emissive: '#ff5b00', emissiveIntensity: 2 }),
+      backlit: '#ec6f00',
+      text: new MeshStandardMaterial({ ...materials.text, color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 2 }),
+      invertText: new MeshStandardMaterial({ ...materials.key, color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 2 }),
       bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, metalness: 1, roughness: 0, color: '#1e1e1e' }),
-      base: new MeshStandardMaterial({ ...materials.base, metalness: 1, roughness: 0, color: '#00040d' }),
+      base: new MeshStandardMaterial({ ...materials.base, metalness: 1, roughness: 0 }),
       key: new MeshStandardMaterial({ ...materials.key, metalness: 1, roughness: 0, color: '#1a1d25', }),
-      key_orange: new MeshStandardMaterial({ ...materials.key_orange, metalness: 1, roughness: 0, color: '#ff5b00', }),
+      key_orange: new MeshStandardMaterial({ ...materials.key_orange, metalness: 1, roughness: 0, color: '#1a1d25' }),
       key_red: new MeshStandardMaterial({ ...materials.key_red, metalness: 1, roughness: 0, color: '#1a1d25' }),
     }
   }
@@ -103,7 +111,6 @@ const Model = (props) => {
   }, []);
 
   const dirLight = useRef(null);
-
   return keys.length ? (
     <>
       <group ref={group} {...props} dispose={null} rotation={[-5, 0.4, 4.3]}>
@@ -121,8 +128,8 @@ const Model = (props) => {
               material={themes[theme].base}
               position={[-0.03, -3.15, 0.05]}
             />
-            <Text fontSize={0.1} rotation={[Math.PI / 2, 0, Math.PI]} position={[0, 0.25, 0]}>Can you find all easter eggs?</Text>
-            {backlit ? <Plane rotation={[Math.PI / 2, Math.PI, 0]} position={[-0.06, 2.52, 0.1]} material={new MeshStandardMaterial({ color: 'white', emissive: 'white', emissiveIntensity: 2 })} args={[13.3, 10.2]} /> : null}
+            <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI / 2, 0, Math.PI]} position={[0, 0.25, 0]}>4432</Text>
+            {backlit ? <Plane rotation={[Math.PI / 2, Math.PI, 0]} position={[-0.06, 2.52, 0.1]} material={new MeshStandardMaterial({ color: themes[theme].backlit, emissive: themes[theme].backlit, emissiveIntensity: 2 })} args={[13.3, 10.2]} /> : null}
           </group>
           <mesh
             name="Cube001"
@@ -285,8 +292,13 @@ const Model = (props) => {
 export default function Keyboard(props) {
   const { theme } = props;
   const { nodes, materials } = useGLTF('/models/keyboard-v3.glb');
-  const word = useRef();
-  const me = useRef();
+
+  const word = { value: useRef(), completed: false }
+  const me = { value: useRef(), completed: false }
+  const bye = { value: useRef(), completed: false }
+
+  const easterEggs = ['word', 'me', 'bye'];
+  const keyMap = {};
 
   useEffect(() => {
     dispatchEvent(new Event('rendered'));
@@ -331,7 +343,16 @@ export default function Keyboard(props) {
       format: ['mp3'],
       preload: true
     }),
-
+    complete: new Howl({
+      src: [Complete],
+      format: ['mp3'],
+      preload: true
+    }),
+    victory: new Howl({
+      src: [Victory],
+      format: ['mp3'],
+      preload: true
+    }),
   };
 
   async function playSound(tracks, key) {
@@ -355,45 +376,86 @@ export default function Keyboard(props) {
     return e.code ? e.code.replace('Key', '').toLowerCase() : e.target.innerText.toLowerCase();
   }
 
-  const updateWord = (e) => {
-    if (e.type === 'touchstart' || e.type === 'keydown') {
-      const currentChar = getCurrentChar(e);
-      word.current = word.current ? word.current + currentChar : currentChar;
+  const wordEgg = (ref, currentChar) => {
+    const word = ref.value;
+    word.current = word.current ? word.current + currentChar : currentChar;
 
-      if (word.current === 'fuck') {
-        playSound(tracks, 'coin');
-        word.current = '';
-      }
+    if (word.current === 'fuck') {
+      playSound(tracks, 'coin');
+    }
 
-      if (word.current.length > 4) {
-        word.current = '';
-      }
+    if ((word.current === 'fuckym' || word.current === 'fuckmy') && (keyMap['y'] && keyMap['m'])) {
+      playSound(tracks, 'complete');
+      word.current = '';
+    }
+
+    if (word.current.length > 6) {
+      word.current = '';
     }
   }
 
-  const meEgg = (e) => {
-    if (e.type === 'touchstart' || e.type === 'keydown') {
-      const currentChar = getCurrentChar(e);
-      if (me.current === 32) {
-        playSound(tracks, 'coin');
-        me.current = 0;
-      }
+  const byeEgg = (ref, currentChar) => {
+    const bye = ref.value;
 
-      if (currentChar === 'm') {
-        me.current = me.current ? me.current + 1 : 1;
-      }
+    if (bye.current?.length > 4 || ref.completed) {
+      bye.current = '';
+      return;
+    }
 
-      console.log(me.current);
+    bye.current = bye.current ? bye.current + currentChar : currentChar;
+
+    if (bye.current === 'kk') {
+      playSound(tracks, 'coin');
+    }
+
+    if (bye.current === 'kkcu') {
+      playSound(tracks, 'coin');
+      playSound(tracks, 'complete');
+      ref.completed = true;
     }
   }
+
+  const meEgg = (ref, currentChar) => {
+    const me = ref.value;
+
+    if (me.completed) {
+      return;
+    }
+
+    me.current = me.current ? me.current + currentChar : currentChar;
+
+    if (me.current === 3) {
+      playSound(tracks, 'coin');
+    }
+
+    if (me.current === 13) {
+      playSound(tracks, 'coin');
+      playSound(tracks, 'complete');
+    }
+
+    if (me.current.length > 4) {
+      me.current = 0;
+      me.completed = true;
+    }
+  }
+
+  const easterEgg = (e, egg, ref) => {
+    const currentChar = getCurrentChar(e);
+
+    if (e.type === 'keydown' || e.type === 'touchstart') {
+      keyMap[currentChar] = true;
+      egg(ref, currentChar);
+    } else {
+      keyMap[currentChar] = false;
+    }
+  }
+
+
 
   const onDocumentKey = (e) => {
     if (e.repeat) { return }
 
     const chars = ['f', 'u', 'c', 'k', 'o', 'y', 'm', 't', 'space'];
-
-    updateWord(e);
-    meEgg(e);
 
     const keysPressed = new Set(keys.map(k => k.current.name));
     const validChars = new Set(chars);
@@ -405,6 +467,10 @@ export default function Keyboard(props) {
     const isValidEnd = e.type === 'keyup' || e.type === 'touchend';
 
     const prop = (e.type === 'keydown' || e.type === 'keyup') ? getSplitKey(e, isSpace) : (e.type === 'mobile-key-press' ? e.key : e.target.innerText);
+
+    easterEgg(e, wordEgg, word);
+    easterEgg(e, byeEgg, bye);
+    easterEgg(e, meEgg, me);
 
     if (isValidStart && validPress(prop)) {
       if (isSpace) {

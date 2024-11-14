@@ -132,9 +132,9 @@ const Model = (props) => {
                 <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI / 2, 0, Math.PI]} position={[0, 0.27, 0]}>4432</Text>
 
                 <Text fontSize={0.1} color={'lightgray'} rotation={[0, -Math.PI / 2, 0]} position={[-7.52, 1, 0]}>1234 6+7</Text>
-                <Text fontSize={0.1} color={'lightgray'} rotation={[0, Math.PI / 2, 0]} position={[7.45, 1, 0]}>placeholder</Text>
+                <Text fontSize={0.1} color={'lightgray'} rotation={[0, Math.PI / 2, 0]} position={[7.45, 1, 0]}>9556</Text>
 
-                <Text fontSize={0.1} color={'lightgray'} rotation={[0, 0, 0]} position={[0, 1, 6.05]}>4x13</Text>
+                <Text fontSize={0.1} color={'lightgray'} rotation={[0, 0, 0]} position={[0, 1, 6.05]}>7x13</Text>
                 <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI, 0, Math.PI]} position={[0, 1, -5.93]}>placeholder</Text>
               </>
             ) : null}

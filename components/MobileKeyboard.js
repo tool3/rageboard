@@ -10,10 +10,10 @@ const MobileKeyboard = () => {
     }
 
     useEffect(() => {
-        addEventListener('rendered', (e) => { setLoading(false) });
+        document.addEventListener('rendered', (e) => { setLoading(false) });
 
         return () => {
-            removeEventListener('rendered', (e) => { setLoading(true) });
+            document.removeEventListener('rendered', (e) => { setLoading(true) });
         }
     }, [])
 

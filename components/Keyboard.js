@@ -39,7 +39,7 @@ const Model = (props) => {
       key_red: new MeshStandardMaterial({ ...materials.key_red, color: materials.key.color, }),
     },
     metal: {
-      backlit: { color: '#8B0000', emissive: '#8B0000', emissiveIntensity: 1 },
+      backlit: { color: '#8B0000', emissive: '#8B0000', emissiveIntensity: 2 },
       text: new MeshStandardMaterial({ ...materials.text }),
       invertText: new MeshStandardMaterial({ ...materials.key, color: 'white' }),
       bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, color: '#1e1e1e', metalness: 1, roughness: 0 }),
@@ -59,7 +59,7 @@ const Model = (props) => {
       key_red: new MeshStandardMaterial({ ...materials.key_red, metalness: 1, roughness: 0, color: '#1a1d25' }),
     },
     kawaii: {
-      backlit: { color: 'pink', emissive: 'pink', emissiveIntensity: 2 },
+      backlit: { color: 'blue', emissive: 'hotpink', emissiveIntensity: 2 },
       text: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
       invertText: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
       bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, color: '#F2BFCA' }),
@@ -69,7 +69,7 @@ const Model = (props) => {
       key_red: new MeshStandardMaterial({ ...materials.key_red, color: 'violet' }),
     },
     blackops: {
-      backlit: { color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 2 },
+      backlit: { color: 'orangered', emissive: '#ec6f00', emissiveIntensity: 2 },
       text: new MeshStandardMaterial({ ...materials.text, color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 2 }),
       invertText: new MeshStandardMaterial({ ...materials.key, color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 2 }),
       bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, metalness: 1, roughness: 0, color: '#1e1e1e' }),
@@ -366,7 +366,7 @@ export default function Keyboard(props) {
 
   function wiggle() {
     gsap.to(group.current.rotation, {
-      z: 4.05,
+      z: 4.08,
       ease: 'power3',
       repeat: 3,
       delay: 0,

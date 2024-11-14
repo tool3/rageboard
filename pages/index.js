@@ -22,7 +22,7 @@ function Loader() {
 
 export default function IndexPage() {
   const [active, setActive] = useState(false);
-  const { fps, background, theme, bloom } = useControls({
+  const { fps, background, theme } = useControls({
     fps: false,
     background: '#a39d97',
     theme: {
@@ -36,12 +36,14 @@ export default function IndexPage() {
         blackops: 'blackops',
       },
     },
-    bloom: {
-      intensity: 1,
-      luminanceThreshold: 0.5,
-      luminanceSmoothing: 0.9,
-    }
   });
+
+  const bloom = useControls('bloom', {
+    enabled: true,
+    intensity: 1,
+    luminanceThreshold: 0.5,
+    luminanceSmoothing: 0.9,
+  }, { collapsed: true, order: 1 })
 
   return (
     <>
@@ -77,7 +79,7 @@ export default function IndexPage() {
         <OrbitControls target={[0, 0, 0]} />
 
         <EffectComposer>
-          <Bloom intensity={bloom.intensity} luminanceThreshold={0.5} luminanceSmoothing={0.9} height={300} />
+          {bloom.enabled ? <Bloom intensity={bloom.intensity} luminanceThreshold={0.5} luminanceSmoothing={0.9} height={300} /> : null}
           <Vignette eskil offset={0} darkness={0.8} />
         </EffectComposer>
       </Canvas>

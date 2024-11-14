@@ -12,15 +12,14 @@ import Complete from '../components/sounds/complete.mp3';
 import Victory from '../components/sounds/victory.mp3';
 
 const Model = (props) => {
-  const { onDocumentKey, nodes, materials, keys, theme } = props;
+  const { onDocumentKey, nodes, materials, keys, theme, group } = props;
   const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = keys;
-  const group = useRef();
 
   const { backlit } = useControls({ backlit: false })
 
   const themes = {
     default: {
-      backlit: 'white',
+      backlit: { color: 'white', emissive: 'white', emissiveIntensity: 2 },
       text: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
       invertText: new MeshStandardMaterial({ ...materials.key, color: 'white' }),
       bottom_base: materials.bottom_base,
@@ -30,7 +29,7 @@ const Model = (props) => {
       key_red: new MeshStandardMaterial({ ...materials.key_red }),
     },
     uniform: {
-      backlit: 'white',
+      backlit: { color: 'white', emissive: 'white', emissiveIntensity: 2 },
       text: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
       invertText: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
       bottom_base: materials.bottom_base,
@@ -40,17 +39,17 @@ const Model = (props) => {
       key_red: new MeshStandardMaterial({ ...materials.key_red, color: materials.key.color, }),
     },
     metal: {
-      backlit: 'white',
+      backlit: { color: '#8B0000', emissive: '#8B0000', emissiveIntensity: 1 },
       text: new MeshStandardMaterial({ ...materials.text }),
       invertText: new MeshStandardMaterial({ ...materials.key, color: 'white' }),
-      bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, metalness: 1, roughness: 0 }),
+      bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, color: '#1e1e1e', metalness: 1, roughness: 0 }),
       base: new MeshStandardMaterial({ ...materials.base, metalness: 1, roughness: 0 }),
       key: new MeshStandardMaterial({ ...materials.key, color: 'brown', metalness: 1, roughness: 0 }),
       key_orange: new MeshStandardMaterial({ ...materials.key_orange, color: 'brown', metalness: 1, roughness: 0 }),
       key_red: new MeshStandardMaterial({ ...materials.key_red, color: 'orangered', metalness: 1, roughness: 0 }),
     },
     hack: {
-      backlit: '#66FF00',
+      backlit: { color: '#66FF00', emissive: '#66FF00', emissiveIntensity: 2 },
       text: new MeshStandardMaterial({ ...materials.text, color: '#66FF00' }),
       invertText: new MeshStandardMaterial({ ...materials.key, color: '#66FF00' }),
       bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, metalness: 1, roughness: 0, color: '#1e1e1e' }),
@@ -60,17 +59,17 @@ const Model = (props) => {
       key_red: new MeshStandardMaterial({ ...materials.key_red, metalness: 1, roughness: 0, color: '#1a1d25' }),
     },
     kawaii: {
-      backlit: 'pink',
+      backlit: { color: 'pink', emissive: 'pink', emissiveIntensity: 2 },
       text: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
       invertText: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
-      bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, color: 'violet' }),
+      bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, color: '#F2BFCA' }),
       base: new MeshStandardMaterial({ ...materials.base, color: '#D68D96' }),
-      key: new MeshStandardMaterial({ ...materials.key, color: '#d7913c' }),
-      key_orange: new MeshStandardMaterial({ ...materials.key_orange, color: 'cyan' }),
-      key_red: new MeshStandardMaterial({ ...materials.key_red, color: 'lime' }),
+      key: new MeshStandardMaterial({ ...materials.key, color: '#D9A1C8' }),
+      key_orange: new MeshStandardMaterial({ ...materials.key_orange, color: 'white' }),
+      key_red: new MeshStandardMaterial({ ...materials.key_red, color: 'violet' }),
     },
     blackops: {
-      backlit: '#ec6f00',
+      backlit: { color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 2 },
       text: new MeshStandardMaterial({ ...materials.text, color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 2 }),
       invertText: new MeshStandardMaterial({ ...materials.key, color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 2 }),
       bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, metalness: 1, roughness: 0, color: '#1e1e1e' }),
@@ -139,7 +138,7 @@ const Model = (props) => {
                 <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI, 0, Math.PI]} position={[0, 1, -5.93]}>placeholder</Text>
               </>
             ) : null}
-            {backlit ? <Plane rotation={[Math.PI / 2, Math.PI, 0]} position={[-0.06, 2.52, 0.1]} material={new MeshStandardMaterial({ color: themes[theme].backlit, emissive: themes[theme].backlit, emissiveIntensity: 2 })} args={[13.3, 10.2]} /> : null}
+            {backlit ? <Plane rotation={[Math.PI / 2, Math.PI, 0]} position={[-0.06, 2.52, 0.1]} material={new MeshStandardMaterial({ ...themes[theme].backlit })} args={[13.3, 10.2]} /> : null}
           </group>
           <mesh
             name="Cube001"
@@ -302,6 +301,7 @@ const Model = (props) => {
 export default function Keyboard(props) {
   const { theme } = props;
   const { nodes, materials } = useGLTF('/models/keyboard-v3.glb');
+  const group = useRef();
 
   const word = { value: useRef(), completed: false }
   const me = { value: useRef(), completed: false }
@@ -364,6 +364,17 @@ export default function Keyboard(props) {
     }),
   };
 
+  function wiggle() {
+    gsap.to(group.current.rotation, {
+      z: 4.05,
+      ease: 'power3',
+      repeat: 3,
+      delay: 0,
+      yoyo: true,
+      duration: 0.04
+    });
+  }
+
   async function playSound(tracks, key) {
     tracks[key].play();
   }
@@ -382,7 +393,7 @@ export default function Keyboard(props) {
   }
 
   const getCurrentChar = (e) => {
-    return e.code ? e.code.replace('Key', '').toLowerCase() : e.target.innerText.toLowerCase();
+    return e.code ? e.code.replace('Key', '').toLowerCase() : e.target?.innerText?.toLowerCase();
   }
 
   const wordEgg = (ref, currentChar) => {
@@ -395,10 +406,11 @@ export default function Keyboard(props) {
 
     if ((word.current === 'fuckym' || word.current === 'fuckmy') && (keyMap['y'] && keyMap['m'])) {
       playSound(tracks, 'complete');
+      wiggle();
       ref.completed = true;
     }
 
-    if (word.current.length > 6) {
+    if (word.current?.length > 6) {
       word.current = '';
     }
   }
@@ -419,6 +431,7 @@ export default function Keyboard(props) {
 
     if (bye.current === 'kkcu') {
       playSound(tracks, 'complete');
+      wiggle()
       ref.completed = true;
     }
   }
@@ -434,6 +447,7 @@ export default function Keyboard(props) {
 
       if (me.current === 13) {
         playSound(tracks, 'complete');
+        wiggle();
         ref.completed = true;
       }
     } else {
@@ -507,7 +521,7 @@ export default function Keyboard(props) {
     nodes[node].receiveShadow = true;
   }
 
-  return <Model theme={theme} onDocumentKey={onDocumentKey} nodes={nodes} materials={materials} keys={keys} />
+  return <Model group={group} theme={theme} onDocumentKey={onDocumentKey} nodes={nodes} materials={materials} keys={keys} />
 
 }
 

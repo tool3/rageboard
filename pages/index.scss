@@ -264,7 +264,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background-color: #181c20;
+    background-color: #181c20;    
     padding: 1rem;
     border-radius: 10px;
     margin-top: -1rem;
@@ -284,6 +284,16 @@ body {
   }
 }
 
+.stats {
+  right: 0 !important;
+  left: unset !important;
+}
+
+.leva-c-kWgxhW  {
+  left: 10px;
+  top: 188px !important;
+}
+ 
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -292,3 +302,4 @@ body {
     opacity: 100;
   }
 }
+

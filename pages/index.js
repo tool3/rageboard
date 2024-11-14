@@ -48,7 +48,7 @@ export default function IndexPage() {
         <link rel="apple-touch-icon" href="/images/favicon.ico" sizes="any" />
       </Head>
       <Leva hidden={!active} />
-      {fps ? <Stats /> : null}
+      {fps ? <Stats className="stats" /> : null}
       <Debug active={active} setActive={setActive} />
 
       <Tile />

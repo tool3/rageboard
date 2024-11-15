@@ -1,6 +1,9 @@
-export default function Tile({ setSoundOn, sound }) {
+import { forwardRef } from "react";
+
+const Tile = forwardRef(({ sound }) => {
+    
     const changed = (e) => {
-        setSoundOn(e.target.checked);
+        sound.current = e.target.checked;
     }
 
     return (
@@ -21,12 +24,14 @@ export default function Tile({ setSoundOn, sound }) {
 
                 <div className="sound-control">
                     sounds
-                    <label class="switch">
-                        <input type="checkbox" checked={sound} onChange={changed} />
-                        <span class="slider" />
+                    <label className="switch">
+                        <input type="checkbox" onChange={changed} />
+                        <span className="slider" />
                     </label>
                 </div>
             </div>
         </div>
     )
-}
+});
+
+export default Tile;

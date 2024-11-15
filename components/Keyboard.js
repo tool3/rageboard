@@ -390,7 +390,7 @@ export default function Keyboard(props) {
   }
 
   async function playSound(tracks, key) {
-    if (sound) {
+    if (sound.current) {
       tracks[key].play();
     }
   }

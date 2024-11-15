@@ -3,7 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { Bloom, EffectComposer, Vignette } from '@react-three/postprocessing';
 import { Leva, useControls } from 'leva';
 import Head from 'next/head';
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useRef, useState } from 'react';
 import Debug from '../components/Debug';
 import Keyboard from '../components/Keyboard';
 import MobileKeyboard from '../components/MobileKeyboard';
@@ -22,7 +22,7 @@ function Loader() {
 
 export default function IndexPage() {
   const [active, setActive] = useState(false);
-  const [sound, setSoundOn] = useState(true);
+  const sound = useRef(false);
   const { fps, background, theme, backlit } = useControls({
     fps: false,
     background: '#a39d97',
@@ -65,7 +65,7 @@ export default function IndexPage() {
       {fps ? <Stats className="stats" /> : null}
       <Debug active={active} setActive={setActive} />
 
-      <Tile sound={sound} setSoundOn={setSoundOn} />
+      <Tile sound={sound} />
 
       <Suspense fallback={null}>
         <MobileKeyboard backlit={backlit} theme={theme} />

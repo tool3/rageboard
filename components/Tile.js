@@ -1,6 +1,6 @@
-export default function Tile() {
+export default function Tile({ setSoundOn, sound }) {
     const changed = (e) => {
-        console.log(e);
+        setSoundOn(e.target.checked);
     }
 
     return (
@@ -22,7 +22,7 @@ export default function Tile() {
                 <div className="sound-control">
                     sounds
                     <label class="switch">
-                        <input type="checkbox" onChange={changed} />
+                        <input type="checkbox" checked={sound} onChange={changed} />
                         <span class="slider" />
                     </label>
                 </div>

@@ -313,7 +313,7 @@ const Model = (props) => {
 }
 
 export default function Keyboard(props) {
-  const { theme, backlit } = props;
+  const { theme, backlit, sound } = props;
   const { nodes, materials } = useGLTF('/models/keyboard-v3.glb');
   const group = useRef();
 
@@ -390,7 +390,9 @@ export default function Keyboard(props) {
   }
 
   async function playSound(tracks, key) {
-    tracks[key].play();
+    if (sound) {
+      tracks[key].play();
+    }
   }
 
   const getSplitKey = (e, isSpace) => {

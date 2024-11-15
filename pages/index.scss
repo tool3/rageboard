@@ -240,6 +240,18 @@ body {
         border-color: #fa583a;
         color: white;
       }
+
+      &.backlit button {
+        border-color: white;
+        box-shadow: 0 0 7px 0 white;
+      }
+    }
+
+    &.uniform {
+      &.backlit button {
+        border-color: white;
+        box-shadow: 0 0 7px 0 white;
+      }
     }
 
     &.metal {

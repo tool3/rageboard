@@ -22,6 +22,7 @@ function Loader() {
 
 export default function IndexPage() {
   const [active, setActive] = useState(false);
+  const [sound, setSoundOn] = useState(true);
   const { fps, background, theme, backlit } = useControls({
     fps: false,
     background: '#a39d97',
@@ -64,7 +65,7 @@ export default function IndexPage() {
       {fps ? <Stats className="stats" /> : null}
       <Debug active={active} setActive={setActive} />
 
-      <Tile />
+      <Tile sound={sound} setSoundOn={setSoundOn} />
 
       <Suspense fallback={null}>
         <MobileKeyboard backlit={backlit} theme={theme} />
@@ -79,7 +80,7 @@ export default function IndexPage() {
 
         <Suspense fallback={<Loader />}>
           <color attach="background" args={[background]} />
-          <Keyboard backlit={backlit} theme={theme} />
+          <Keyboard sound={sound} backlit={backlit} theme={theme} />
           <Environment files="./textures/puresky.hdr" resolution={2048} />
         </Suspense>
         <OrbitControls target={[0, 0, 0]} />

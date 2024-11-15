@@ -25,7 +25,7 @@ const Tile = forwardRef(({ sound }) => {
                 <div className="sound-control">
                     sounds
                     <label className="switch">
-                        <input type="checkbox" onChange={changed} />
+                        <input type="checkbox" defaultChecked={sound.current} ref={sound} onChange={changed} />
                         <span className="slider" />
                     </label>
                 </div>

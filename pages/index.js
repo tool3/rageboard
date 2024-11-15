@@ -22,7 +22,7 @@ function Loader() {
 
 export default function IndexPage() {
   const [active, setActive] = useState(false);
-  const sound = useRef(false);
+  const sound = useRef(true);
   const { fps, background, theme, backlit } = useControls({
     fps: false,
     background: '#a39d97',

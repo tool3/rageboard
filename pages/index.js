@@ -22,9 +22,10 @@ function Loader() {
 
 export default function IndexPage() {
   const [active, setActive] = useState(false);
-  const { fps, background, theme } = useControls({
+  const { fps, background, theme, backlit } = useControls({
     fps: false,
     background: '#a39d97',
+    backlit: false,
     theme: {
       value: 'default',
       options: {
@@ -61,7 +62,7 @@ export default function IndexPage() {
       <Tile />
 
       <Suspense fallback={null}>
-        <MobileKeyboard theme={theme} />
+        <MobileKeyboard backlit={backlit} theme={theme} />
       </Suspense>
 
       <Canvas
@@ -73,7 +74,7 @@ export default function IndexPage() {
 
         <Suspense fallback={<Loader />}>
           <color attach="background" args={[background]} />
-          <Keyboard theme={theme} />
+          <Keyboard backlit={backlit} theme={theme} />
           <Environment files="./textures/puresky.hdr" resolution={2048} />
         </Suspense>
         <OrbitControls target={[0, 0, 0]} />

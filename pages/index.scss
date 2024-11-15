@@ -258,23 +258,31 @@ body {
         border-color: #A51909;
         color: white;
       }
+
+      &.backlit button {
+        border-color: #A51909;
+      }
     }
 
     &.hack {
       &.first button {
         background-color: #1A2639;
         border-color: #1A2639;
-        color: lime;
+        color: #D5F396;
       }
       &.second button {
         background-color: #0A1220;
         border-color: #0A1220;
-        color: lime;
+        color: #D5F396;
       }
       &.third button {
         background-color: #03060E;
         border-color: #03060E;
-        color: lime;
+        color: #D5F396;
+      }
+
+      &.backlit button {
+        border-color: #D5F396;
       }
     }
 
@@ -292,24 +300,34 @@ body {
         border-color: #FDC8EF;
         color: black;
       }
+
+      &.backlit button {
+        border-color: #FDC8EF;
+      }
     }
 
     &.blackops {
       &.first button {
         background-color: #02060E;
         border-color: #02060E;
-        color: #FCDB81;
+        color: #FFDC81;
       }
       &.second button {
         background-color: #02060E;
         border-color: #02060E;
-        color: #FCDB81;
+        color: #FFDC81;
       }
       &.third button {
         background-color: #02060E;
         border-color: #02060E;
-        color: #FCDB81;
+        color: #FFDC81;
       }
+
+      &.backlit button {
+        border-color: #FFDC81;
+      }
+
+      
     }
 
 

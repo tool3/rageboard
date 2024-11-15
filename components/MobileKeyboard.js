@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const MobileKeyboard = ({ theme }) => {
+const MobileKeyboard = ({ theme, backlit }) => {
     const [loading, setLoading] = useState(true);
     const sendEvent = (e, type) => {
         const element = e.target;
@@ -18,20 +18,20 @@ const MobileKeyboard = ({ theme }) => {
 
     return !loading ? (
         <div className="keyboard" pointerEvents='none'>
-            <div className={`keyboard-row first ${theme}`}>
+            <div className={`keyboard-row first ${theme} ${backlit ? 'backlit' : ''}`}>
                 <button onTouchStart={sendEvent} onTouchEnd={sendEvent}>f</button>
                 <button onTouchStart={sendEvent} onTouchEnd={sendEvent}>u</button>
                 <button onTouchStart={sendEvent} onTouchEnd={sendEvent}>c</button>
                 <button onTouchStart={sendEvent} onTouchEnd={sendEvent}>k</button>
             </div>
-            <div className={`keyboard-row second ${theme}`}>
+            <div className={`keyboard-row second ${theme} ${backlit ? 'backlit' : ''}`}>
                 <button onTouchStart={sendEvent} onTouchEnd={sendEvent}>o</button>
                 <button onTouchStart={sendEvent} onTouchEnd={sendEvent}>y</button>
                 <button onTouchStart={sendEvent} onTouchEnd={sendEvent}>m</button>
                 <button onTouchStart={(e) => sendEvent(e, 'touchstart')} onTouchEnd={(e) => sendEvent(e, 'touchend')}>t</button>
             </div>
 
-            <div className={`keyboard-row third ${theme}`}>
+            <div className={`keyboard-row third ${theme} ${backlit ? 'backlit' : ''}`}>
                 <button className="space" onTouchStart={sendEvent} onTouchEnd={sendEvent}>space</button>
             </div>
         </div>

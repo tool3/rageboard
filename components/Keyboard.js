@@ -12,10 +12,8 @@ import Complete from '../components/sounds/complete.mp3';
 import Victory from '../components/sounds/victory.mp3';
 
 const Model = (props) => {
-  const { onDocumentKey, nodes, materials, keys, theme, group } = props;
+  const { onDocumentKey, nodes, materials, keys, theme, backlit, group } = props;
   const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = keys;
-
-  const { backlit } = useControls({ backlit: false })
 
   const themes = {
     default: {
@@ -300,7 +298,7 @@ const Model = (props) => {
 }
 
 export default function Keyboard(props) {
-  const { theme } = props;
+  const { theme, backlit } = props;
   const { nodes, materials } = useGLTF('/models/keyboard-v3.glb');
   const group = useRef();
 
@@ -522,7 +520,7 @@ export default function Keyboard(props) {
     nodes[node].receiveShadow = true;
   }
 
-  return <Model group={group} theme={theme} onDocumentKey={onDocumentKey} nodes={nodes} materials={materials} keys={keys} />
+  return <Model backlit={backlit} group={group} theme={theme} onDocumentKey={onDocumentKey} nodes={nodes} materials={materials} keys={keys} />
 
 }
 

@@ -61,7 +61,7 @@ export default function IndexPage() {
       <Tile />
 
       <Suspense fallback={null}>
-        <MobileKeyboard />
+        <MobileKeyboard theme={theme} />
       </Suspense>
 
       <Canvas

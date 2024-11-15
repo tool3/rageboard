@@ -82,11 +82,11 @@ const Model = (props) => {
 
 
   useEffect(() => {
-    document.addEventListener('keydown', onDocumentKey);
-    document.addEventListener('keyup', onDocumentKey);
+    addEventListener('keydown', onDocumentKey);
+    addEventListener('keyup', onDocumentKey);
     return () => {
-      document.removeEventListener('keydown', onDocumentKey);
-      document.removeEventListener('keyup', onDocumentKey);
+      removeEventListener('keydown', onDocumentKey);
+      removeEventListener('keyup', onDocumentKey);
     };
   }, []);
 
@@ -110,7 +110,8 @@ const Model = (props) => {
   }, []);
 
   const dirLight = useRef(null);
-  return keys.length ? (
+
+  return (keys.length && keys.every(k => k.current !== undefined)) ? (
     <>
       <group ref={group} {...props} dispose={null} rotation={[-5, 0.4, 4.3]}>
         <directionalLight ref={dirLight} intensity={1} position={[-10, 20, 4]} />

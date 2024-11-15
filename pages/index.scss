@@ -218,14 +218,105 @@ body {
       box-shadow: inset 0 4px 11px 0 rgba(37,44,97,.15),0 1px 3px 0 rgba(93,100,148,.6);
       border-left-width: 1px;
       border-right-width: 1px;
-      border-color: rgba(214,214,231,1);
-
-      color: black;
+      border-color: white;
 
       &.space {
         width: 100%;
       }
     }
+
+
+    &.default {
+      &.first button {
+        border-color: white;
+      }
+      &.second button {
+        background: #FBAA61;
+        border-color: #FBAA61;
+        color: white;
+      }
+      &.third button {
+        background-color: #FA583A;
+        border-color: #FA583A;
+        color: white;
+      }
+    }
+
+    &.metal {
+      &.first button {
+        background-color: #580816;
+        border-color: #580816;
+        color: white;
+      }
+      &.second button {
+        background-color: #580816;
+        border-color: #580816;
+        color: white;
+      }
+      &.third button {
+        background-color: #A51909;
+        border-color: #A51909;
+        color: white;
+      }
+    }
+
+    &.hack {
+      &.first button {
+        background-color: #1A2639;
+        border-color: #1A2639;
+        color: lime;
+      }
+      &.second button {
+        background-color: #0A1220;
+        border-color: #0A1220;
+        color: lime;
+      }
+      &.third button {
+        background-color: #03060E;
+        border-color: #03060E;
+        color: lime;
+      }
+    }
+
+    &.kawaii {
+      &.first button {
+        background-color: #F7DCE7;
+        border-color: #F7DCE7;
+        color: black;
+      }
+      &.second button {
+        color: black;
+      }
+      &.third button {
+        background-color: #FDC8EF;
+        border-color: #FDC8EF;
+        color: black;
+      }
+    }
+
+    &.blackops {
+      &.first button {
+        background-color: #02060E;
+        border-color: #02060E;
+        color: #FCDB81;
+      }
+      &.second button {
+        background-color: #02060E;
+        border-color: #02060E;
+        color: #FCDB81;
+      }
+      &.third button {
+        background-color: #02060E;
+        border-color: #02060E;
+        color: #FCDB81;
+      }
+    }
+
+
+
+
+
+    
   }
 
 

@@ -58,6 +58,14 @@ export default function IndexPage() {
         <meta name="author" content="Tal Hayut" />
         <link rel="icon" href="/images/favicon.ico" sizes="any" />
         <link rel="apple-touch-icon" href="/images/favicon.ico" sizes="any" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-50Y8D0TG3M"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments)}
+          gtag('js', new Date());
+
+          gtag('config', 'G-50Y8D0TG3M');
+        </script>
       </Head>
       <Leva hidden={!active} />
       {fps ? <Stats className="stats" /> : null}

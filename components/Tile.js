@@ -1,4 +1,8 @@
 export default function Tile() {
+    const changed = (e) => {
+        console.log(e);
+    }
+
     return (
         <div className="tile">
             <div className="tile-header">
@@ -13,6 +17,14 @@ export default function Tile() {
                 <div className="instructions-mobile">
                     <div>3 finger tap for debugger</div>
                     <div>tap and drag to view model</div>
+                </div>
+
+                <div className="sound-control">
+                    sounds
+                    <label class="switch">
+                        <input type="checkbox" onChange={changed} />
+                        <span class="slider" />
+                    </label>
                 </div>
             </div>
         </div>

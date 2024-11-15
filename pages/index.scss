@@ -339,9 +339,9 @@ body {
 }
 
 .tile {
-  position: absolute;
   display: flex;
   flex-direction: column;
+  position: absolute;
   margin: 10px;
   z-index: 2;
   border-radius: 10px;
@@ -364,6 +364,7 @@ body {
   .tile-content {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     gap: 10px;
     background-color: #181c20;
     padding: 1rem;
@@ -411,6 +412,57 @@ body {
 .leva-c-kWgxhW {
   left: 10px;
   top: 188px !important;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 45px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  width: 15px;
+  left: 5px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: orangered;
+}
+
+input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+.sound-control {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 @keyframes fade-in {

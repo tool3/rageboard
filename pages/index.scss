@@ -248,6 +248,15 @@ body {
     }
 
     &.uniform {
+      &.first button {
+        color: black;
+      }
+      &.second button {
+        color: black;
+      }
+      &.third button {
+        color: black;
+      }
       &.backlit button {
         border-color: white;
         box-shadow: 0 0 7px 0 white;

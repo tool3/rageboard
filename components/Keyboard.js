@@ -21,11 +21,11 @@ const Model = (props) => {
     const { color, emissive, emissiveIntensity, roughness, metalness } = props || {};
     const newMaterial = baseMaterial.clone();
 
-    if (color) newMaterial.color = new Color(color);
-    if (emissive) newMaterial.emissive = new Color(emissive);
-    if (emissiveIntensity) newMaterial.emissiveIntensity = emissiveIntensity;
-    if (roughness) newMaterial.roughness = roughness;
-    if (metalness) newMaterial.metalness = metalness;
+    if (color !== undefined) newMaterial.color = new Color(color);
+    if (emissive !== undefined) newMaterial.emissive = new Color(emissive);
+    if (emissiveIntensity !== undefined) newMaterial.emissiveIntensity = emissiveIntensity;
+    if (roughness !== undefined) newMaterial.roughness = roughness;
+    if (metalness !== undefined) newMaterial.metalness = metalness;
 
     return newMaterial;
   }
@@ -88,7 +88,7 @@ const Model = (props) => {
       bottom_base: getMaterial({ metalness: 1, roughness: 0, color: '#1e1e1e' }),
       base: getMaterial({ color: '#1e1e1e', metalness: 1, roughness: 0 }),
       key: getMaterial({ metalness: 1, roughness: 0, color: '#1a1d25', }),
-      key_orange: getMaterial({ metalness: 1, roughness: 0, color: '#1a1d25' }),
+      key_orange: getMaterial({ color: '#1a1d25', metalness: 1, roughness: 0 }),
       key_red: getMaterial({ metalness: 1, roughness: 0, color: '#1a1d25' }),
     }
   }

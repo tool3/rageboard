@@ -11,15 +11,15 @@ import Coin from '../components/sounds/coin.mp3';
 import Complete from '../components/sounds/complete.mp3';
 import Victory from '../components/sounds/victory.mp3';
 
+const baseMaterial = new MeshStandardMaterial();
+
 const Model = (props) => {
   const { onDocumentKey, nodes, materials, keys, theme, backlit, group } = props;
   const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = keys;
 
-  const material = new MeshStandardMaterial({ ...materials.key });
-
   const getMaterial = (props) => {
     const { color, emissive, emissiveIntensity, roughness, metalness } = props || {};
-    const newMaterial = material.clone();
+    const newMaterial = baseMaterial.clone();
 
     if (color) newMaterial.color = new Color(color);
     if (emissive) newMaterial.emissive = new Color(emissive);

@@ -42,10 +42,10 @@ a:hover {
   color: #3f51b5;
 }
 
-@import url('https://rsms.me/inter/inter.css');
+@import url("https://rsms.me/inter/inter.css");
 @font-face {
-  font-family: 'Grotesque';
-  src: url('../public/fonts/BasementGrotesque-Black_v1.202.woff') format('woff');
+  font-family: "Grotesque";
+  src: url("../public/fonts/BasementGrotesque-Black_v1.202.woff") format("woff");
 }
 * {
   box-sizing: border-box;
@@ -86,10 +86,9 @@ body {
   overscroll-behavior-y: none;
   background-color: #101010;
   background: radial-gradient(circle at bottom center, #e0cfaa 0%, #a39d97 80%);
-  font-family: 'Grotesque', 'Inter var', sans-serif;
+  font-family: "Grotesque", "Inter var", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
-
 
 @keyframes glitch {
   0% {
@@ -199,7 +198,7 @@ body {
   top: 80%;
   left: 50%;
   transform: translate(-50%, -50%);
-  animation: fade-in .6s ease-in-out;
+  animation: fade-in 0.6s ease-in-out;
 
   z-index: 2;
   display: flex;
@@ -209,13 +208,14 @@ body {
   .keyboard-row {
     display: flex;
     gap: 1rem;
-  
+
     button {
       width: 3rem;
       height: 3rem;
-      border-radius: .5rem;
-      
-      box-shadow: inset 0 4px 11px 0 rgba(37,44,97,.15),0 1px 3px 0 rgba(93,100,148,.6);
+      border-radius: 0.5rem;
+
+      box-shadow: inset 0 4px 11px 0 rgba(37, 44, 97, 0.15),
+        0 1px 3px 0 rgba(93, 100, 148, 0.6);
       border-left-width: 1px;
       border-right-width: 1px;
       border-color: white;
@@ -225,20 +225,19 @@ body {
       }
     }
 
-
     &.default {
       &.first button {
         border-color: white;
         color: black;
       }
       &.second button {
-        background: #FBAA61;
-        border-color: #FBAA61;
+        background: #fbaa61;
+        border-color: #fbaa61;
         color: white;
       }
       &.third button {
-        background-color: #FA583A;
-        border-color: #FA583A;
+        background-color: #fa583a;
+        border-color: #fa583a;
         color: white;
       }
     }
@@ -255,96 +254,85 @@ body {
         color: white;
       }
       &.third button {
-        background-color: #A51909;
-        border-color: #A51909;
+        background-color: #a51909;
+        border-color: #a51909;
         color: white;
       }
 
       &.backlit button {
-        border-color: #A51909;
+        border-color: #a51909;
       }
     }
 
     &.hack {
       &.first button {
-        background-color: #1A2639;
-        border-color: #1A2639;
-        color: #D5F396;
+        background-color: #1a2639;
+        border-color: #1a2639;
+        color: #d5f396;
       }
       &.second button {
-        background-color: #0A1220;
-        border-color: #0A1220;
-        color: #D5F396;
+        background-color: #0a1220;
+        border-color: #0a1220;
+        color: #d5f396;
       }
       &.third button {
-        background-color: #03060E;
-        border-color: #03060E;
-        color: #D5F396;
+        background-color: #03060e;
+        border-color: #03060e;
+        color: #d5f396;
       }
 
       &.backlit button {
-        border-color: #D5F396;
+        border-color: #d5f396;
       }
     }
 
     &.kawaii {
       &.first button {
-        background-color: #F7DCE7;
-        border-color: #F7DCE7;
+        background-color: #f7dce7;
+        border-color: #f7dce7;
         color: black;
       }
       &.second button {
         color: black;
       }
       &.third button {
-        background-color: #FDC8EF;
-        border-color: #FDC8EF;
+        background-color: #fdc8ef;
+        border-color: #fdc8ef;
         color: black;
       }
 
       &.backlit button {
-        border-color: #FDC8EF;
+        border-color: #fdc8ef;
       }
     }
 
     &.blackops {
       &.first button {
-        background-color: #02060E;
-        border-color: #02060E;
-        color: #FFDC81;
+        background-color: #02060e;
+        border-color: #02060e;
+        color: #ffdc81;
       }
       &.second button {
-        background-color: #02060E;
-        border-color: #02060E;
-        color: #FFDC81;
+        background-color: #02060e;
+        border-color: #02060e;
+        color: #ffdc81;
       }
       &.third button {
-        background-color: #02060E;
-        border-color: #02060E;
-        color: #FFDC81;
+        background-color: #02060e;
+        border-color: #02060e;
+        color: #ffdc81;
       }
 
       &.backlit button {
-        border-color: #FFDC81;
+        border-color: #ffdc81;
       }
-
-      
     }
-
-
-
-
-
-    
   }
-
 
   @media screen and (min-width: 600px) {
     display: none;
   }
 }
-
-
 
 .tile {
   position: absolute;
@@ -356,10 +344,9 @@ body {
   box-shadow: 0 0 9px 0 #00000088;
   width: 280px;
   height: 168px;
-  animation: fade-in .6s ease-in-out;
-  
+  animation: fade-in 0.6s ease-in-out;
+
   color: orangered;
-  
 
   .tile-header {
     background-color: #292d39;
@@ -374,22 +361,40 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    background-color: #181c20;    
+    background-color: #181c20;
     padding: 1rem;
     border-radius: 10px;
     margin-top: -1rem;
     height: 100%;
-    font-family: ui-monospace, SFMono-Regular, Menlo, 'Roboto Mono', monospace;
+    font-family: ui-monospace, SFMono-Regular, Menlo, "Roboto Mono", monospace;
     font-size: 11px;
     color: #8c92a4;
 
-    div > kbd {
-      border: .5px solid white;
-      border-radius: 5px;
-      padding: 2px 5px;
-      background-color: #1e1e1e;
-      color: white;
+    .instructions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
 
+      div > kbd {
+        border: 0.5px solid white;
+        border-radius: 5px;
+        padding: 2px 5px;
+        background-color: #1e1e1e;
+        color: white;
+      }
+
+      @media screen and (max-width: 600px) {
+        display: none;
+      }
+    }
+
+    .instructions-mobile {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      @media screen and (min-width: 600px) {
+        display: none;
+      }
     }
   }
 }
@@ -399,11 +404,11 @@ body {
   left: unset !important;
 }
 
-.leva-c-kWgxhW  {
+.leva-c-kWgxhW {
   left: 10px;
   top: 188px !important;
 }
- 
+
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -412,4 +417,3 @@ body {
     opacity: 100;
   }
 }
-

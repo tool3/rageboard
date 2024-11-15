@@ -84,7 +84,7 @@ const Model = (props) => {
     blackops: {
       backlit: { color: 'orangered', emissive: '#ec6f00', emissiveIntensity: 2 },
       text: getMaterial({ color: '#EC6F00', emissive: '#EC6F00', emissiveIntensity: 2 }),
-      invertText: getMaterial({  color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 2 }),
+      invertText: getMaterial({ color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 2 }),
       bottom_base: getMaterial({ metalness: 1, roughness: 0, color: '#1e1e1e' }),
       base: getMaterial({ color: '#1e1e1e', metalness: 1, roughness: 0 }),
       key: getMaterial({ metalness: 1, roughness: 0, color: '#1a1d25', }),

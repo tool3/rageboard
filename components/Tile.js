@@ -6,8 +6,14 @@ export default function Tile() {
             </div>
 
             <div className="tile-content">
-                <div><kbd>shift</kbd> <kbd>d</kbd> for debugger</div>
-                <div>3 finger tap on mobile</div>
+                <div className="instructions">
+                    <div><kbd>shift</kbd> <kbd>d</kbd> for debugger</div>
+                    <div>click & drag to view model</div>
+                </div>
+                <div className="instructions-mobile">
+                    <div>3 finger tap for debugger</div>
+                    <div>tap and drag to view model</div>
+                </div>
             </div>
         </div>
     )

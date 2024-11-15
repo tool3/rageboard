@@ -25,7 +25,6 @@ export default function IndexPage() {
   const { fps, background, theme, backlit } = useControls({
     fps: false,
     background: '#a39d97',
-    backlit: false,
     theme: {
       value: 'default',
       options: {
@@ -37,6 +36,7 @@ export default function IndexPage() {
         blackops: 'blackops',
       },
     },
+    backlit: false,
   });
 
   const bloom = useControls('bloom', {
@@ -45,6 +45,10 @@ export default function IndexPage() {
     luminanceThreshold: 0.5,
     luminanceSmoothing: 0.9,
   }, { collapsed: true, order: 1 })
+
+  const vignette = useControls('vignette', {
+    enabled: true,
+  }, { collapsed: true, order: 2 })
 
   return (
     <>
@@ -81,7 +85,7 @@ export default function IndexPage() {
 
         <EffectComposer>
           {bloom.enabled ? <Bloom intensity={bloom.intensity} luminanceThreshold={0.5} luminanceSmoothing={0.9} height={300} /> : null}
-          <Vignette eskil offset={0} darkness={0.8} />
+          {vignette.enabled ? <Vignette eskil offset={0} darkness={0.8} /> : null}
         </EffectComposer>
       </Canvas>
     </>

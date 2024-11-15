@@ -15,11 +15,26 @@ const Model = (props) => {
   const { onDocumentKey, nodes, materials, keys, theme, backlit, group } = props;
   const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = keys;
 
+  const material = new MeshStandardMaterial({ ...materials.key });
+
+  const getMaterial = (props) => {
+    const { color, emissive, emissiveIntensity, roughness, metalness } = props || {};
+    const newMaterial = material.clone();
+
+    if (color) newMaterial.color = new Color(color);
+    if (emissive) newMaterial.emissive = new Color(emissive);
+    if (emissiveIntensity) newMaterial.emissiveIntensity = emissiveIntensity;
+    if (roughness) newMaterial.roughness = roughness;
+    if (metalness) newMaterial.metalness = metalness;
+
+    return newMaterial;
+  }
+
   const themes = {
     default: {
       backlit: { color: 'white', emissive: 'white', emissiveIntensity: 2 },
-      text: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
-      invertText: new MeshStandardMaterial({ ...materials.key, color: 'white' }),
+      text: getMaterial({ color: 'black' }),
+      invertText: getMaterial({ color: 'white' }),
       bottom_base: materials.bottom_base,
       base: materials.base,
       key: materials.key,
@@ -28,53 +43,53 @@ const Model = (props) => {
     },
     uniform: {
       backlit: { color: 'white', emissive: 'white', emissiveIntensity: 2 },
-      text: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
-      invertText: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
+      text: getMaterial({ color: 'black' }),
+      invertText: getMaterial({ color: 'black' }),
       bottom_base: materials.bottom_base,
       base: materials.base,
-      key: new MeshStandardMaterial({ ...materials.key }),
-      key_orange: new MeshStandardMaterial({ ...materials.key_orange, color: materials.key.color, }),
-      key_red: new MeshStandardMaterial({ ...materials.key_red, color: materials.key.color, }),
+      key: getMaterial(),
+      key_orange: getMaterial(),
+      key_red: getMaterial(),
     },
     metal: {
       backlit: { color: '#8B0000', emissive: '#8B0000', emissiveIntensity: 2 },
-      text: new MeshStandardMaterial({ ...materials.text }),
-      invertText: new MeshStandardMaterial({ ...materials.key, color: 'white' }),
-      bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, color: '#1e1e1e', metalness: 1, roughness: 0 }),
-      base: new MeshStandardMaterial({ ...materials.base, metalness: 1, roughness: 0 }),
-      key: new MeshStandardMaterial({ ...materials.key, color: 'brown', metalness: 1, roughness: 0 }),
-      key_orange: new MeshStandardMaterial({ ...materials.key_orange, color: 'brown', metalness: 1, roughness: 0 }),
-      key_red: new MeshStandardMaterial({ ...materials.key_red, color: 'orangered', metalness: 1, roughness: 0 }),
+      text: getMaterial(),
+      invertText: getMaterial({ color: 'white' }),
+      bottom_base: getMaterial({ color: '#1e1e1e', metalness: 1, roughness: 0 }),
+      base: getMaterial({ color: materials.base.color, metalness: 1, roughness: 0 }),
+      key: getMaterial({ color: 'brown', metalness: 1, roughness: 0 }),
+      key_orange: getMaterial({ color: 'brown', metalness: 1, roughness: 0 }),
+      key_red: getMaterial({ color: 'orangered', metalness: 1, roughness: 0 }),
     },
     hack: {
       backlit: { color: '#66FF00', emissive: '#66FF00', emissiveIntensity: 2 },
-      text: new MeshStandardMaterial({ ...materials.text, color: '#66FF00' }),
-      invertText: new MeshStandardMaterial({ ...materials.key, color: '#66FF00' }),
-      bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, metalness: 1, roughness: 0, color: '#1e1e1e' }),
-      base: new MeshStandardMaterial({ ...materials.base, metalness: 1, roughness: 0, color: '#00040d' }),
-      key: new MeshStandardMaterial({ ...materials.key, metalness: 1, roughness: 0, color: '#4d4f56', }),
-      key_orange: new MeshStandardMaterial({ ...materials.key_orange, metalness: 1, roughness: 0, color: '#33363d', }),
-      key_red: new MeshStandardMaterial({ ...materials.key_red, metalness: 1, roughness: 0, color: '#1a1d25' }),
+      text: getMaterial({ color: '#66FF00' }),
+      invertText: getMaterial({ color: '#66FF00' }),
+      bottom_base: getMaterial({ metalness: 1, roughness: 0, color: '#1e1e1e' }),
+      base: getMaterial({ metalness: 1, roughness: 0, color: '#00040d' }),
+      key: getMaterial({ metalness: 1, roughness: 0, color: '#4d4f56', }),
+      key_orange: getMaterial({ metalness: 1, roughness: 0, color: '#33363d', }),
+      key_red: getMaterial({ metalness: 1, roughness: 0, color: '#1a1d25' }),
     },
     kawaii: {
       backlit: { color: 'blue', emissive: 'hotpink', emissiveIntensity: 2 },
-      text: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
-      invertText: new MeshStandardMaterial({ ...materials.key, color: 'black' }),
-      bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, color: '#F2BFCA' }),
-      base: new MeshStandardMaterial({ ...materials.base, color: '#D68D96' }),
-      key: new MeshStandardMaterial({ ...materials.key, color: '#D9A1C8' }),
-      key_orange: new MeshStandardMaterial({ ...materials.key_orange, color: 'white' }),
-      key_red: new MeshStandardMaterial({ ...materials.key_red, color: 'violet' }),
+      text: getMaterial({ color: 'black' }),
+      invertText: getMaterial({ color: 'black' }),
+      bottom_base: getMaterial({ color: '#F2BFCA' }),
+      base: getMaterial({ color: '#D68D96' }),
+      key: getMaterial({ color: '#D9A1C8' }),
+      key_orange: getMaterial({ color: 'white' }),
+      key_red: getMaterial({ color: 'violet' }),
     },
     blackops: {
       backlit: { color: 'orangered', emissive: '#ec6f00', emissiveIntensity: 2 },
-      text: new MeshStandardMaterial({ ...materials.text, color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 2 }),
-      invertText: new MeshStandardMaterial({ ...materials.key, color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 2 }),
-      bottom_base: new MeshStandardMaterial({ ...materials.bottom_base, metalness: 1, roughness: 0, color: '#1e1e1e' }),
-      base: new MeshStandardMaterial({ ...materials.base, metalness: 1, roughness: 0 }),
-      key: new MeshStandardMaterial({ ...materials.key, metalness: 1, roughness: 0, color: '#1a1d25', }),
-      key_orange: new MeshStandardMaterial({ ...materials.key_orange, metalness: 1, roughness: 0, color: '#1a1d25' }),
-      key_red: new MeshStandardMaterial({ ...materials.key_red, metalness: 1, roughness: 0, color: '#1a1d25' }),
+      text: getMaterial({ color: '#EC6F00', emissive: '#EC6F00', emissiveIntensity: 2 }),
+      invertText: getMaterial({  color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 2 }),
+      bottom_base: getMaterial({ metalness: 1, roughness: 0, color: '#1e1e1e' }),
+      base: getMaterial({ color: '#1e1e1e', metalness: 1, roughness: 0 }),
+      key: getMaterial({ metalness: 1, roughness: 0, color: '#1a1d25', }),
+      key_orange: getMaterial({ metalness: 1, roughness: 0, color: '#1a1d25' }),
+      key_red: getMaterial({ metalness: 1, roughness: 0, color: '#1a1d25' }),
     }
   }
 
@@ -160,7 +175,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Text.geometry}
               material={themes[theme].invertText}
-              position={[0, 4.45, 0]}
+              position={[0, 4.4555, 0]}
             />
           </mesh>
           <mesh
@@ -176,7 +191,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Text001.geometry}
               material={themes[theme].invertText}
-              position={[0, 4.45, 0]}
+              position={[0, 4.4555, 0]}
             />
           </mesh>
           <mesh
@@ -192,7 +207,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Text002.geometry}
               material={themes[theme].invertText}
-              position={[0, 4.45, 0]}
+              position={[0, 4.4555, 0]}
             />
           </mesh>
           <mesh
@@ -208,7 +223,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Text003.geometry}
               material={themes[theme].invertText}
-              position={[0, 4.45, 0]}
+              position={[0, 4.4555, 0]}
             />
           </mesh>
           <mesh
@@ -224,7 +239,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Text004.geometry}
               material={themes[theme].invertText}
-              position={[0, 4.45, 0]}
+              position={[0, 4.4555, 0]}
             />
           </mesh>
           <mesh
@@ -240,7 +255,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Text005.geometry}
               material={themes[theme].text}
-              position={[0, 4.45, 0]}
+              position={[0, 4.4555, 0]}
             />
           </mesh>
           <mesh
@@ -256,7 +271,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Text006.geometry}
               material={themes[theme].text}
-              position={[0, 4.45, 0]}
+              position={[0, 4.4555, 0]}
             />
           </mesh>
           <mesh
@@ -272,7 +287,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Text007.geometry}
               material={themes[theme].text}
-              position={[0, 4.45, 0]}
+              position={[0, 4.4555, 0]}
             />
           </mesh>
           <mesh
@@ -288,7 +303,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Text008.geometry}
               material={themes[theme].text}
-              position={[0, 4.45, 0]}
+              position={[0, 4.4555, 0]}
             />
           </mesh>
         </group>
@@ -367,7 +382,7 @@ export default function Keyboard(props) {
     gsap.to(group.current.rotation, {
       z: 4.08,
       ease: 'power3',
-      repeat: 3,
+      repeat: 5,
       delay: 0,
       yoyo: true,
       duration: 0.04

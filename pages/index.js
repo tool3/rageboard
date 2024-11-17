@@ -8,7 +8,6 @@ import Debug from '../components/Debug';
 import Keyboard from '../components/Keyboard';
 import MobileKeyboard from '../components/MobileKeyboard';
 import Tile from '../components/Tile';
-import { Perf } from 'r3f-perf';
 
 function Loader() {
   const { progress } = useProgress();
@@ -78,7 +77,6 @@ export default function IndexPage() {
         orthographic
         camera={{ fov: 50, position: [20, -5, -20], zoom: 25 }}
         raycaster={{ computeOffsets: ({ clientX, clientY }) => ({ offsetX: clientX, offsetY: clientY }) }}>
-        <Perf />
 
         <Suspense fallback={<Loader />}>
           <color attach="background" args={[background]} />

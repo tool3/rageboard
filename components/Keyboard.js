@@ -34,7 +34,7 @@ const Model = (props) => {
     default: {
       backlit: { color: 'white', emissive: 'white', emissiveIntensity: 2 },
       text: getMaterial({ color: 'black' }),
-      invertText: getMaterial({ color: 'white' }),
+      invertText: materials.text,
       bottom_base: materials.bottom_base,
       base: materials.base,
       key: materials.key,
@@ -315,7 +315,7 @@ const Model = (props) => {
 export default function Keyboard(props) {
   const { theme, backlit, sound } = props;
   const { nodes, materials } = useGLTF('/models/keyboard_opt.glb', true);
-
+  console.log({ materials });
   const group = useRef();
 
   const word = { value: useRef(), completed: false }

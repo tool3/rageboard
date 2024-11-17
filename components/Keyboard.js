@@ -314,7 +314,7 @@ const Model = (props) => {
 
 export default function Keyboard(props) {
   const { theme, backlit, sound } = props;
-  const { nodes, materials } = useGLTF('/models/keyboard-v3.glb');
+  const { nodes, materials } = useGLTF('/models/keyboard_opt.glb');
   const group = useRef();
 
   const word = { value: useRef(), completed: false }
@@ -541,4 +541,4 @@ export default function Keyboard(props) {
 
 }
 
-useGLTF.preload('/models/keyboard-v3.glb');
+useGLTF.preload('/models/keyboard_opt.glb');

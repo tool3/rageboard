@@ -56,7 +56,7 @@ const Model = (props) => {
       text: getMaterial(),
       invertText: getMaterial({ color: 'white' }),
       bottom_base: getMaterial({ color: '#1e1e1e', metalness: 1, roughness: 0 }),
-      base: getMaterial({ color: materials.base.color, metalness: 1, roughness: 0 }),
+      base: getMaterial({ color: materials.base?.color, metalness: 1, roughness: 0 }),
       key: getMaterial({ color: 'brown', metalness: 1, roughness: 0 }),
       key_orange: getMaterial({ color: 'brown', metalness: 1, roughness: 0 }),
       key_red: getMaterial({ color: 'orangered', metalness: 1, roughness: 0 }),
@@ -314,7 +314,8 @@ const Model = (props) => {
 
 export default function Keyboard(props) {
   const { theme, backlit, sound } = props;
-  const { nodes, materials } = useGLTF('/models/keyboard_opt.glb');
+  const { nodes, materials } = useGLTF('/models/keyboard_opt.glb', true);
+
   const group = useRef();
 
   const word = { value: useRef(), completed: false }
@@ -541,4 +542,4 @@ export default function Keyboard(props) {
 
 }
 
-useGLTF.preload('/models/keyboard_opt.glb');
+useGLTF.preload('/models/keyboard_opt.glb', true);

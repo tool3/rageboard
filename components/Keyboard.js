@@ -11,13 +11,11 @@ import Coin from '../components/sounds/coin.mp3';
 import Complete from '../components/sounds/complete.mp3';
 import Victory from '../components/sounds/victory.mp3';
 
-const baseMaterial = new MeshStandardMaterial();
-
 const Model = (props) => {
   const { onDocumentKey, nodes, materials, keys, theme, backlit, group } = props;
   const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = keys;
 
-  const getMaterial = (props) => {
+  const getMaterial = (baseMaterial) => (props) => {
     const { color, emissive, emissiveIntensity, roughness, metalness } = props || {};
     const newMaterial = baseMaterial.clone();
 
@@ -30,66 +28,74 @@ const Model = (props) => {
     return newMaterial;
   }
 
+  const getTextMaterial = getMaterial(materials.text);
+  const getInvertTextMaterial = getMaterial(materials.text);
+  const getBottomBaseMaterial = getMaterial(materials.bottom_base);
+  const getBaseMaterial = getMaterial(materials.base);
+  const getKeyMaterial = getMaterial(materials.key);
+  const getKeyOrangeMaterial = getMaterial(materials.key_orange);
+  const getKeyRedMaterial = getMaterial(materials.key_red);
+
   const themes = {
     default: {
       backlit: { color: 'white', emissive: 'white', emissiveIntensity: 2 },
-      text: getMaterial({ color: 'black' }),
+      text: getTextMaterial({ color: 'black' }),
       invertText: materials.text,
       bottom_base: materials.bottom_base,
       base: materials.base,
       key: materials.key,
       key_orange: materials.key_orange,
-      key_red: new MeshStandardMaterial({ ...materials.key_red }),
+      key_red: materials.key_red,
     },
     uniform: {
       backlit: { color: 'white', emissive: 'white', emissiveIntensity: 2 },
-      text: getMaterial({ color: 'black' }),
-      invertText: getMaterial({ color: 'black' }),
+      text: getTextMaterial({ color: 'black' }),
+      invertText: getInvertTextMaterial({ color: 'black' }),
       bottom_base: materials.bottom_base,
       base: materials.base,
-      key: getMaterial(),
-      key_orange: getMaterial(),
-      key_red: getMaterial(),
+      key: getKeyMaterial({ color: 'white' }),
+      key_orange: getKeyOrangeMaterial({ color: 'white' }),
+      key_red: getKeyMaterial({ color: 'white' }),
     },
     metal: {
       backlit: { color: '#8B0000', emissive: '#8B0000', emissiveIntensity: 2 },
-      text: getMaterial(),
-      invertText: getMaterial({ color: 'white' }),
-      bottom_base: getMaterial({ color: '#1e1e1e', metalness: 1, roughness: 0 }),
-      base: getMaterial({ color: materials.base?.color, metalness: 1, roughness: 0 }),
-      key: getMaterial({ color: 'brown', metalness: 1, roughness: 0 }),
-      key_orange: getMaterial({ color: 'brown', metalness: 1, roughness: 0 }),
-      key_red: getMaterial({ color: 'orangered', metalness: 1, roughness: 0 }),
+      text: getTextMaterial(),
+      invertText: getInvertTextMaterial({ color: 'white' }),
+      bottom_base: getBottomBaseMaterial({ color: '#1e1e1e', metalness: 1, roughness: 0 }),
+      base: getBaseMaterial({ metalness: 1, roughness: 0 }),
+      key: getKeyMaterial({ color: 'brown', metalness: 1, roughness: 0 }),
+      key_orange: getKeyOrangeMaterial({ color: 'brown', metalness: 1, roughness: 0 }),
+      key_red: getKeyMaterial({ color: 'orangered', metalness: 1, roughness: 0 }),
     },
     hack: {
       backlit: { color: '#66FF00', emissive: '#66FF00', emissiveIntensity: 2 },
-      text: getMaterial({ color: '#66FF00' }),
-      invertText: getMaterial({ color: '#66FF00' }),
-      bottom_base: getMaterial({ metalness: 1, roughness: 0, color: '#1e1e1e' }),
-      base: getMaterial({ metalness: 1, roughness: 0, color: '#00040d' }),
-      key: getMaterial({ metalness: 1, roughness: 0, color: '#4d4f56', }),
-      key_orange: getMaterial({ metalness: 1, roughness: 0, color: '#33363d', }),
-      key_red: getMaterial({ metalness: 1, roughness: 0, color: '#1a1d25' }),
+      text: getTextMaterial({ color: '#66FF00' }),
+      invertText: getInvertTextMaterial({ color: '#66FF00' }),
+      bottom_base: getBottomBaseMaterial({ metalness: 1, roughness: 0, color: '#1e1e1e' }),
+      base: getBaseMaterial({ metalness: 1, roughness: 0, color: '#00040d' }),
+      key: getKeyMaterial({ metalness: 1, roughness: 0, color: '#4d4f56', }),
+      key_orange: getKeyOrangeMaterial({ metalness: 1, roughness: 0, color: '#33363d', }),
+      key_red: getKeyRedMaterial({ metalness: 1, roughness: 0, color: '#1a1d25' }),
     },
     kawaii: {
       backlit: { color: 'blue', emissive: 'hotpink', emissiveIntensity: 2 },
-      text: getMaterial({ color: 'black' }),
-      invertText: getMaterial({ color: 'black' }),
-      bottom_base: getMaterial({ color: '#F2BFCA' }),
-      base: getMaterial({ color: '#D68D96' }),
-      key: getMaterial({ color: '#D9A1C8' }),
-      key_orange: getMaterial({ color: 'white' }),
-      key_red: getMaterial({ color: 'violet' }),
+      text: getTextMaterial({ color: 'black' }),
+      invertText: getInvertTextMaterial({ color: 'black' }),
+      bottom_base: getBottomBaseMaterial({ color: '#F2BFCA' }),
+      base: getBaseMaterial({ color: '#D68D96' }),
+      key: getKeyMaterial({ color: '#D9A1C8' }),
+      key_orange: getKeyOrangeMaterial({ color: 'white' }),
+      key_red: getKeyRedMaterial({ color: 'violet' }),
     },
     blackops: {
       backlit: { color: 'orangered', emissive: '#ec6f00', emissiveIntensity: 2 },
-      text: getMaterial({ color: '#EC6F00', emissive: '#EC6F00', emissiveIntensity: 2 }),
-      invertText: getMaterial({ color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 2 }),
-      bottom_base: getMaterial({ metalness: 1, roughness: 0, color: '#1e1e1e' }),
-      base: getMaterial({ color: '#1e1e1e', metalness: 1, roughness: 0 }),
-      key: getMaterial({ metalness: 1, roughness: 0, color: '#1a1d25', }),
-      key_orange: getMaterial({ color: '#1a1d25', metalness: 1, roughness: 0 }),
-      key_red: getMaterial({ metalness: 1, roughness: 0, color: '#1a1d25' }),
+      text: getTextMaterial({ color: '#EC6F00', emissive: '#EC6F00', emissiveIntensity: 2 }),
+      invertText: getInvertTextMaterial({ color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 2 }),
+      bottom_base: getBottomBaseMaterial({ metalness: 1, roughness: 0, color: '#1e1e1e' }),
+      base: getBaseMaterial({ color: '#1e1e1e', metalness: 1, roughness: 0 }),
+      key: getKeyMaterial({ metalness: 1, roughness: 0, color: '#1a1d25', }),
+      key_orange: getKeyOrangeMaterial({ color: '#1a1d25', metalness: 1, roughness: 0 }),
+      key_red: getKeyRedMaterial({ metalness: 1, roughness: 0, color: '#1a1d25' }),
     }
   }
 
@@ -314,7 +320,7 @@ const Model = (props) => {
 
 export default function Keyboard(props) {
   const { theme, backlit, sound } = props;
-  const { nodes, materials } = useGLTF('/models/keyboard_opt.glb', true);
+  const { nodes, materials } = useGLTF('/models/k5.glb', true);
 
   const group = useRef();
 
@@ -542,4 +548,4 @@ export default function Keyboard(props) {
 
 }
 
-useGLTF.preload('/models/keyboard_opt.glb', true);
+useGLTF.preload('/models/k5.glb', true);

@@ -24,7 +24,7 @@ export default function IndexPage() {
   const [active, setActive] = useState(false);
   const sound = useRef(true);
   const { fps, background, theme, backlit } = useControls({
-    fps: false,
+    fps: { value: false, color: 'red' },
     background: '#a39d97',
     theme: {
       value: 'default',

@@ -486,6 +486,13 @@ input:checked + .slider:before {
   align-items: center;
 }
 
+input:checked + label {
+  background-color: orangered !important;
+  & :hover {
+    border-radius: white !important;
+  }
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;

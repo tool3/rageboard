@@ -160,7 +160,7 @@ const Model = (props) => {
                 <Text fontSize={0.1} color={'lightgray'} rotation={[0, Math.PI / 2, 0]} position={[7.45, 1, 0]}>9556</Text>
 
                 <Text fontSize={0.1} color={'lightgray'} rotation={[0, 0, 0]} position={[0, 1, 6.05]}>7x13</Text>
-                <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI, 0, Math.PI]} position={[0, 1, -5.93]}>placeholder</Text>
+                <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI, 0, Math.PI]} position={[0, 1, -5.93]}>9+5+6</Text>
               </>
             ) : null}
             {backlit ? <Plane rotation={[Math.PI / 2, Math.PI, 0]} position={[-0.06, 2.52, 0.1]} material={new MeshStandardMaterial({ ...themes[theme].backlit })} args={[13.3, 10.2]} /> : null}
@@ -420,6 +420,10 @@ export default function Keyboard(props) {
     return e.code ? e.code.replace('Key', '').toLowerCase() : e.target?.innerText?.toLowerCase();
   }
 
+  const word = { value: useRef(), completed: false }
+  const me = { value: useRef(), completed: false }
+  const bye = { value: useRef(), completed: false }
+  const takeoff = { value: useRef(), completed: false }
 
   const easterEggs = {
     even: {
@@ -433,40 +437,46 @@ export default function Keyboard(props) {
       completed: false,
       midway: (value) => value.current === 'kk',
       complete: (value) => value.current === 'kkcu',
-      assign: (value, currentChar) => value.current ? value.current + currentChar : currentChar,
-      reset: (value) => value.current?.length > 4 && !value.current.startsWith('fuck')
+      assign: (value, currentChar) => ['k', 'c', 'u'].includes(currentChar) ? (value.current ? value.current + currentChar : currentChar) : '',
+      reset: (value) => value.current?.length > 4
     },
     narcissist: {
       completed: false,
       midway: (value) => value.current === 3,
       complete: (value) => value.current === 13,
-      assign: (value, currentChar) => value.current ? value.current + 1 : 1,
+      assign: (value, currentChar) => currentChar === 'm' ? (value.current ? value.current + 1 : 1) : 0,
       reset: (value) => value.current?.length > 4
+    },
+    takeoff: {
+      completed: false,
+      midway: (value) => value.current === 'spaceoo',
+      complete: (value) =>  value.current === 'spaceooy',
+      assign: (value, currentChar) => value.current ? value.current + currentChar : currentChar,
+      reset: (value) => value.current.length > 8
     }
   }
 
-  const word = { value: useRef(), completed: false }
-  const me = { value: useRef(), completed: false }
-  const bye = { value: useRef(), completed: false }
 
   const easterEgg = (name, ref, currentChar) => {
-    const { midway, complete, assign, reset } = easterEggs[name];
-    const value = ref.value;
+    if (!ref.completed) {
+      const { midway, complete, assign, reset } = easterEggs[name];
+      const value = ref.value;
 
-    value.current = assign(value, currentChar);
+      value.current = assign(value, currentChar);
 
-    if (midway(value)) {
-      playSound(tracks, 'coin');
-    }
+      if (midway(value)) {
+        playSound(tracks, 'coin');
+      }
 
-    if (complete(value)) {
-      playSound(tracks, 'complete');
-      wiggle();
-      ref.completed = true;
-    }
+      if (complete(value)) {
+        playSound(tracks, 'complete');
+        wiggle();
+        ref.completed = true;
+      }
 
-    if (reset(value)) {
-      value.current = '';
+      if (reset(value)) {
+        value.current = '';
+      }
     }
   }
 
@@ -489,8 +499,8 @@ export default function Keyboard(props) {
       easterEgg('even', word, currentChar);
       easterEgg('bye', bye, currentChar);
       easterEgg('narcissist', me, currentChar);
+      easterEgg('takeoff', takeoff, currentChar);
     }
-
 
     const chars = ['f', 'u', 'c', 'k', 'o', 'y', 'm', 't', 'space'];
 
@@ -504,10 +514,6 @@ export default function Keyboard(props) {
     const isValidEnd = e.type === 'keyup' || e.type === 'touchend';
 
     const prop = (e.type === 'keydown' || e.type === 'keyup') ? getSplitKey(e, isSpace) : (e.type === 'mobile-key-press' ? e.key : e.target.innerText);
-
-    // easterEgg(e, wordEgg, word);
-    // easterEgg(e, byeEgg, bye);
-    // easterEgg(e, meEgg, me);
 
     if (isValidStart && validPress(prop)) {
       if (isSpace) {

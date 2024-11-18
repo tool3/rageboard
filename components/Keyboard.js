@@ -12,7 +12,7 @@ import Complete from '../components/sounds/complete.mp3';
 import Victory from '../components/sounds/victory.mp3';
 
 const Model = (props) => {
-  const { onDocumentKey, nodes, materials, keys, theme, backlit, group } = props;
+  const { updateKeyMap, onDocumentKey, nodes, materials, keys, theme, backlit, group } = props;
   const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = keys;
 
   const getMaterial = (baseMaterial) => (props) => {
@@ -99,12 +99,17 @@ const Model = (props) => {
     }
   }
 
-
   useEffect(() => {
+    addEventListener('keydown', updateKeyMap);
+    addEventListener('keyup', updateKeyMap);
+
     addEventListener('keydown', onDocumentKey);
     addEventListener('keyup', onDocumentKey);
     return () => {
+      removeEventListener('keydown', updateKeyMap);
       removeEventListener('keydown', onDocumentKey);
+
+      removeEventListener('keyup', updateKeyMap);
       removeEventListener('keyup', onDocumentKey);
     };
   }, []);
@@ -324,10 +329,6 @@ export default function Keyboard(props) {
 
   const group = useRef();
 
-  const word = { value: useRef(), completed: false }
-  const me = { value: useRef(), completed: false }
-  const bye = { value: useRef(), completed: false }
-
   const keyMap = {};
 
   useEffect(() => {
@@ -419,71 +420,62 @@ export default function Keyboard(props) {
     return e.code ? e.code.replace('Key', '').toLowerCase() : e.target?.innerText?.toLowerCase();
   }
 
-  const wordEgg = (ref, currentChar) => {
-    const word = ref.value;
-    word.current = word.current ? word.current + currentChar : currentChar;
 
-    if (word.current === 'fuck') {
+  const easterEggs = {
+    even: {
+      completed: false,
+      midway: (value) => value.current === 'fuck',
+      complete: (value) => value.current === 'fuckym' || value.current === 'fuckmy' && (keyMap['m'] && keyMap['y']),
+      assign: (value, currentChar) => value.current ? value.current + currentChar : currentChar,
+      reset: (value) => value.current?.length > 4 && !value.current.startsWith('fuck')
+    },
+    bye: {
+      completed: false,
+      midway: (value) => value.current === 'kk',
+      complete: (value) => value.current === 'kkcu',
+      assign: (value, currentChar) => value.current ? value.current + currentChar : currentChar,
+      reset: (value) => value.current?.length > 4 && !value.current.startsWith('fuck')
+    },
+    narcissist: {
+      completed: false,
+      midway: (value) => value.current === 3,
+      complete: (value) => value.current === 13,
+      assign: (value, currentChar) => value.current ? value.current + 1 : 1,
+      reset: (value) => value.current?.length > 4
+    }
+  }
+
+  const word = { value: useRef(), completed: false }
+  const me = { value: useRef(), completed: false }
+  const bye = { value: useRef(), completed: false }
+
+  const easterEgg = (name, ref, currentChar) => {
+    const { midway, complete, assign, reset } = easterEggs[name];
+    const value = ref.value;
+
+    value.current = assign(value, currentChar);
+
+    if (midway(value)) {
       playSound(tracks, 'coin');
     }
 
-    if ((word.current === 'fuckym' || word.current === 'fuckmy') && (keyMap['y'] && keyMap['m'])) {
+    if (complete(value)) {
       playSound(tracks, 'complete');
       wiggle();
       ref.completed = true;
     }
 
-    if (word.current?.length > 6) {
-      word.current = '';
+    if (reset(value)) {
+      value.current = '';
     }
   }
 
-  const byeEgg = (ref, currentChar) => {
-    const bye = ref.value;
-
-    if (bye.current?.length > 4 || ref.completed) {
-      bye.current = '';
-      return;
-    }
-
-    bye.current = bye.current ? bye.current + currentChar : currentChar;
-
-    if (bye.current === 'kk') {
-      playSound(tracks, 'coin');
-    }
-
-    if (bye.current === 'kkcu') {
-      playSound(tracks, 'complete');
-      wiggle()
-      ref.completed = true;
-    }
-  }
-
-  const meEgg = (ref, currentChar) => {
-    const me = ref.value;
-    if (currentChar === 'm') {
-      me.current = me.current ? me.current + 1 : 1;
-
-      if (me.current === 3) {
-        playSound(tracks, 'coin');
-      }
-
-      if (me.current === 13) {
-        playSound(tracks, 'complete');
-        wiggle();
-        ref.completed = true;
-      }
-    } else {
-      me.current = 0;
-    }
-  }
-
-  const easterEgg = (e, egg, ref) => {
+  const updateKeyMap = (e) => {
+    if (e.repeat) { return }
     const currentChar = getCurrentChar(e);
-
-    if (e.type === 'keydown' || e.type === 'touchstart' && !ref.completed) {
+    if (e.type === 'keydown' || e.type === 'touchstart') {
       keyMap[currentChar] = true;
-      egg(ref, currentChar);
+
     } else {
       keyMap[currentChar] = false;
     }
@@ -491,6 +483,14 @@ export default function Keyboard(props) {
 
   const onDocumentKey = (e) => {
     if (e.repeat) { return }
+    const currentChar = getCurrentChar(e);
+
+    if (e.type === 'keydown' || e.type === 'touchstart') {
+      easterEgg('even', word, currentChar);
+      easterEgg('bye', bye, currentChar);
+      easterEgg('narcissist', me, currentChar);
+    }
+
 
     const chars = ['f', 'u', 'c', 'k', 'o', 'y', 'm', 't', 'space'];
 
@@ -505,9 +505,9 @@ export default function Keyboard(props) {
 
     const prop = (e.type === 'keydown' || e.type === 'keyup') ? getSplitKey(e, isSpace) : (e.type === 'mobile-key-press' ? e.key : e.target.innerText);
 
-    easterEgg(e, wordEgg, word);
-    easterEgg(e, byeEgg, bye);
-    easterEgg(e, meEgg, me);
+    // easterEgg(e, wordEgg, word);
+    // easterEgg(e, byeEgg, bye);
+    // easterEgg(e, meEgg, me);
 
     if (isValidStart && validPress(prop)) {
       if (isSpace) {
@@ -544,7 +544,7 @@ export default function Keyboard(props) {
     nodes[node].receiveShadow = true;
   }
 
-  return <Model backlit={backlit} group={group} theme={theme} onDocumentKey={onDocumentKey} nodes={nodes} materials={materials} keys={keys} />
+  return <Model backlit={backlit} onDocumentKey={onDocumentKey} updateKeyMap={updateKeyMap} group={group} theme={theme} onDocumentKey={onDocumentKey} nodes={nodes} materials={materials} keys={keys} />
 
 }
 

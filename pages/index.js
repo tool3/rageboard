@@ -8,6 +8,7 @@ import Debug from '../components/Debug';
 import Keyboard from '../components/Keyboard';
 import MobileKeyboard from '../components/MobileKeyboard';
 import Tile from '../components/Tile';
+import Script from 'next/script';
 
 function Loader() {
   const { progress } = useProgress();

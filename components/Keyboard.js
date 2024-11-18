@@ -1,14 +1,13 @@
 import { Plane, Text, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import { Howl } from 'howler';
-import { useControls } from 'leva';
 import React, { useEffect, useRef } from 'react';
 import { Color, FrontSide, MeshStandardMaterial } from 'three';
+import Coin from '../components/sounds/coin.mp3';
+import Complete from '../components/sounds/complete.mp3';
 import Key1 from '../components/sounds/key1.mp3';
 import Key2 from '../components/sounds/key2.mp3';
 import SpaceSound from '../components/sounds/space.mp3';
-import Coin from '../components/sounds/coin.mp3';
-import Complete from '../components/sounds/complete.mp3';
 import Victory from '../components/sounds/victory.mp3';
 
 const Model = (props) => {
@@ -126,7 +125,7 @@ const Model = (props) => {
     gsap.from(group.current.position, {
       y: -10,
       z: -10,
-      ease: 'power2',
+      ease: 'power3',
       repeat: 0,
       duration: 1,
       delay: 0.2
@@ -325,7 +324,7 @@ const Model = (props) => {
 
 export default function Keyboard(props) {
   const { theme, backlit, sound } = props;
-  const { nodes, materials } = useGLTF('/models/k5.glb', true);
+  const { nodes, materials } = useGLTF('/models/keyboard_opt.glb', true);
 
   const group = useRef();
 
@@ -554,4 +553,4 @@ export default function Keyboard(props) {
 
 }
 
-useGLTF.preload('/models/k5.glb', true);
+useGLTF.preload('/models/keyboard_opt.glb', true);

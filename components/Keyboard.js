@@ -37,7 +37,7 @@ const Model = (props) => {
 
   const themes = {
     default: {
-      backlit: { color: 'white', emissive: 'white', emissiveIntensity: 2 },
+      backlit: { color: 'white', emissive: 'white', emissiveIntensity: 4 },
       text: getTextMaterial({ color: 'black' }),
       invertText: materials.text,
       bottom_base: materials.bottom_base,
@@ -47,7 +47,7 @@ const Model = (props) => {
       key_red: materials.key_red,
     },
     uniform: {
-      backlit: { color: 'white', emissive: 'white', emissiveIntensity: 2 },
+      backlit: { color: 'white', emissive: 'white', emissiveIntensity: 4 },
       text: getTextMaterial({ color: 'black' }),
       invertText: getInvertTextMaterial({ color: 'black' }),
       bottom_base: materials.bottom_base,
@@ -57,7 +57,7 @@ const Model = (props) => {
       key_red: getKeyMaterial({ color: 'white' }),
     },
     metal: {
-      backlit: { color: '#8B0000', emissive: '#8B0000', emissiveIntensity: 2 },
+      backlit: { color: '#8B0000', emissive: '#8B0000', emissiveIntensity: 4 },
       text: getTextMaterial(),
       invertText: getInvertTextMaterial({ color: 'white' }),
       bottom_base: getBottomBaseMaterial({ color: '#1e1e1e', metalness: 1, roughness: 0 }),
@@ -67,7 +67,7 @@ const Model = (props) => {
       key_red: getKeyMaterial({ color: 'orangered', metalness: 1, roughness: 0 }),
     },
     hack: {
-      backlit: { color: '#66FF00', emissive: '#66FF00', emissiveIntensity: 2 },
+      backlit: { color: '#66FF00', emissive: '#66FF00', emissiveIntensity: 4 },
       text: getTextMaterial({ color: '#66FF00' }),
       invertText: getInvertTextMaterial({ color: '#66FF00' }),
       bottom_base: getBottomBaseMaterial({ metalness: 1, roughness: 0, color: '#1e1e1e' }),
@@ -77,7 +77,7 @@ const Model = (props) => {
       key_red: getKeyRedMaterial({ metalness: 1, roughness: 0, color: '#1a1d25' }),
     },
     kawaii: {
-      backlit: { color: 'blue', emissive: 'hotpink', emissiveIntensity: 2 },
+      backlit: { color: 'blue', emissive: 'hotpink', emissiveIntensity: 4 },
       text: getTextMaterial({ color: 'black' }),
       invertText: getInvertTextMaterial({ color: 'black' }),
       bottom_base: getBottomBaseMaterial({ color: '#F2BFCA' }),
@@ -87,7 +87,7 @@ const Model = (props) => {
       key_red: getKeyRedMaterial({ color: 'violet' }),
     },
     blackops: {
-      backlit: { color: 'orangered', emissive: '#ec6f00', emissiveIntensity: 2 },
+      backlit: { color: 'orangered', emissive: '#ec6f00', emissiveIntensity: 4 },
       text: getTextMaterial({ color: '#EC6F00', emissive: '#EC6F00', emissiveIntensity: 2 }),
       invertText: getInvertTextMaterial({ color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 2 }),
       bottom_base: getBottomBaseMaterial({ metalness: 1, roughness: 0, color: '#1e1e1e' }),

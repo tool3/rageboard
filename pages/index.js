@@ -99,7 +99,7 @@ export default function IndexPage() {
           <Keyboard sound={sound} backlit={backlit} theme={theme} />
           <Environment files="./textures/puresky.hdr" resolution={2048} />
         </Suspense>
-        <OrbitControls target={[0, 0, 0]} />
+        <OrbitControls minZoom={10} maxZoom={100} target={[0, 0, 0]} />
 
         <EffectComposer>
           {bloom.enabled ? <Bloom intensity={bloom.intensity} luminanceThreshold={0.5} luminanceSmoothing={0.9} height={300} /> : null}

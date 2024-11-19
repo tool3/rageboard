@@ -560,7 +560,7 @@ export default function Keyboard(props) {
     nodes[node].receiveShadow = true;
   }
 
-  return <Model backlit={backlit} onDocumentKey={onDocumentKey} updateKeyMap={updateKeyMap} group={group} theme={theme} onDocumentKey={onDocumentKey} nodes={nodes} materials={materials} keys={keys} />
+  return <Model backlit={backlit} onDocumentKey={onDocumentKey} updateKeyMap={updateKeyMap} group={group} theme={theme} nodes={nodes} materials={materials} keys={keys} />
 
 }
 

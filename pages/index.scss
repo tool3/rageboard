@@ -369,7 +369,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 0 9px 0 #00000088;
   width: 280px;
-  height: 168px;
+  height: 225px;
   animation: fade-in 0.6s ease-in-out;
 
   color: orangered;
@@ -433,7 +433,7 @@ body {
 
 .leva-c-kWgxhW {
   left: 10px;
-  top: 188px !important;
+  top: 245px !important;
 }
 
 .switch {
@@ -481,16 +481,33 @@ input:checked + .slider:before {
   transform: translateX(20px);
 }
 
-.sound-control {
+.control-set {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+
+  .control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 input:checked + label {
   background-color: orangered !important;
-  & :hover {
-    border-radius: white !important;
+  &:hover {
+    outline: 1px solid orangered;
+  }
+}
+
+input + label {
+  background-color: #373c4b !important
+}
+
+input + label {
+  background-color: unset;
+  &:hover {
+    outline: 1px solid orangered;
   }
 }
 
@@ -510,7 +527,7 @@ input:checked + label {
       cursor: pointer;
       transform: scale(1.05);
       text-decoration: underline;
-    };
+    }
   }
 }
 

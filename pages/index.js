@@ -10,6 +10,7 @@ import MobileKeyboard from '../components/MobileKeyboard';
 import Tile from '../components/Tile';
 import Script from 'next/script';
 import Credits from '../components/Credit';
+// import { Perf } from 'r3f-perf';
 
 function Loader() {
   const { progress } = useProgress();
@@ -100,6 +101,7 @@ export default function IndexPage() {
 
         <Suspense fallback={<Loader />}>
           <color attach="background" args={[background]} />
+          {/* <Perf align="top-right" /> */}
           <Keyboard sound={sound} backlit={backlit} theme={theme} />
           <Environment files="./textures/puresky.hdr" resolution={2048} />
         </Suspense>

@@ -1,7 +1,7 @@
 import { Plane, Text, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import { Howl } from 'howler';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { Color, FrontSide, MeshStandardMaterial } from 'three';
 import Coin from '../components/sounds/coin.mp3';
 import Complete from '../components/sounds/complete.mp3';
@@ -16,7 +16,7 @@ const Model = (props) => {
   const { updateKeyMap, onDocumentKey, nodes, materials, keys, theme, backlit, group } = props;
   const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = keys;
 
-  const getMaterial = (baseMaterial) => (props) => {
+  const getMaterial = (baseMaterial) => useMemo(() => (props) => {
     const { color, emissive, emissiveIntensity, roughness, metalness } = props || {};
     const newMaterial = baseMaterial.clone();
 
@@ -27,7 +27,7 @@ const Model = (props) => {
     if (metalness !== undefined) newMaterial.metalness = metalness;
 
     return newMaterial;
-  }
+  }, [baseMaterial]);
 
   const getTextMaterial = getMaterial(materials.text);
   const getInvertTextMaterial = getMaterial(materials.text);
@@ -452,14 +452,14 @@ export default function Keyboard(props) {
     takeoff: {
       completed: false,
       midway: (value) => value.current === 'spaceoo',
-      complete: (value) =>  value.current === 'spaceooy',
+      complete: (value) => value.current === 'spaceooy',
       assign: (value, currentChar) => value.current ? value.current + currentChar : currentChar,
       reset: (value) => value.current.length > 8
     },
     nomood: {
       completed: false,
       midway: (value) => value.current === 'kfuck',
-      complete: (value) =>  value.current === 'kfuckot' || value.current === 'kfuckto',
+      complete: (value) => value.current === 'kfuckot' || value.current === 'kfuckto',
       assign: (value, currentChar) => value.current ? value.current + currentChar : currentChar,
       reset: (value) => value.current.length > 8
     }

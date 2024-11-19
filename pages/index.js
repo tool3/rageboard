@@ -10,7 +10,7 @@ import MobileKeyboard from '../components/MobileKeyboard';
 import Tile from '../components/Tile';
 import Script from 'next/script';
 import Credits from '../components/Credit';
-// import { Perf } from 'r3f-perf';
+import { Perf } from 'r3f-perf';
 
 function Loader() {
   const { progress } = useProgress();
@@ -81,29 +81,30 @@ export default function IndexPage() {
         `}
         </Script>
       </Head>
+
+
       <Leva hidden={!active} />
       {fps ? <Stats className="stats" /> : null}
-
       <Debug active={active} setActive={setActive} />
+      <Credits />
 
       <Tile backslit={backlit} setBacklit={setBacklit} sound={sound} />
-      <Credits />
 
       <Suspense fallback={null}>
         <MobileKeyboard backlit={backlit} theme={theme} />
       </Suspense>
 
       <Canvas
-        shadows
         orthographic
-        camera={{ fov: 50, position: [20, -5, -20], zoom: 25 }}
-        raycaster={{ computeOffsets: ({ clientX, clientY }) => ({ offsetX: clientX, offsetY: clientY }) }}>
+        camera={{ frustumCulled: true, fov: 50, position: [20, -5, -20], zoom: 25, }}>
 
         <Suspense fallback={<Loader />}>
           <color attach="background" args={[background]} />
-          {/* <Perf align="top-right" /> */}
+
+          <Perf align="top-right" />
+          
           <Keyboard sound={sound} backlit={backlit} theme={theme} />
-          <Environment files="./textures/puresky.hdr" resolution={2048} />
+          <Environment files="./textures/puresky.hdr" resolution={1024} />
         </Suspense>
         <OrbitControls minZoom={10} maxZoom={100} target={[0, 0, 0]} />
 

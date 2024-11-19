@@ -16,7 +16,7 @@ const Model = (props) => {
   const { updateKeyMap, onDocumentKey, nodes, materials, keys, theme, backlit, group } = props;
   const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = keys;
 
-  const getMaterial = (baseMaterial) => useMemo(() => (props) => {
+  const getMaterial = (baseMaterial) => (props) => {
     const { color, emissive, emissiveIntensity, roughness, metalness } = props || {};
     const newMaterial = baseMaterial.clone();
 
@@ -27,15 +27,15 @@ const Model = (props) => {
     if (metalness !== undefined) newMaterial.metalness = metalness;
 
     return newMaterial;
-  }, [baseMaterial]);
+  };
 
-  const getTextMaterial = getMaterial(materials.text);
-  const getInvertTextMaterial = getMaterial(materials.text);
-  const getBottomBaseMaterial = getMaterial(materials.bottom_base);
-  const getBaseMaterial = getMaterial(materials.base);
-  const getKeyMaterial = getMaterial(materials.key);
-  const getKeyOrangeMaterial = getMaterial(materials.key_orange);
-  const getKeyRedMaterial = getMaterial(materials.key_red);
+  const getTextMaterial = useMemo(() => getMaterial(materials.text), []);
+  const getInvertTextMaterial = useMemo(() => getMaterial(materials.text), []);
+  const getBottomBaseMaterial = useMemo(() => getMaterial(materials.bottom_base), []);
+  const getBaseMaterial = useMemo(() => getMaterial(materials.base), []);
+  const getKeyMaterial = useMemo(() => getMaterial(materials.key), []);
+  const getKeyOrangeMaterial = useMemo(() => getMaterial(materials.key_orange), []);
+  const getKeyRedMaterial = useMemo(() => getMaterial(materials.key_red), []);
 
   const themes = {
     default: {

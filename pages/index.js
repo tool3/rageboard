@@ -23,14 +23,19 @@ function Loader() {
   );
 }
 
+function FPS({ fps }) {
+  return fps ? <Stats className="stats" /> : null
+}
+
 export default function IndexPage() {
   const [active, setActive] = useState(false);
 
   const sound = useRef(true);
   const [backlit, setBacklit] = useState(false);
 
-  const { fps, background, theme } = useControls({
+  const { fps, perf, background, theme } = useControls({
     fps: { value: false, color: 'red' },
+    perf: false,
     background: '#655b5b',
     theme: {
       value: 'default',
@@ -84,7 +89,7 @@ export default function IndexPage() {
 
 
       <Leva hidden={!active} />
-      {fps ? <Stats className="stats" /> : null}
+      <FPS fps={fps} />
       <Debug active={active} setActive={setActive} />
       <Credits />
 
@@ -101,8 +106,8 @@ export default function IndexPage() {
         <Suspense fallback={<Loader />}>
           <color attach="background" args={[background]} />
 
-          <Perf align="top-right" />
-          
+          {perf ? <Perf align="top-right" /> : null}
+
           <Keyboard sound={sound} backlit={backlit} theme={theme} />
           <Environment files="./textures/puresky.hdr" resolution={1024} />
         </Suspense>

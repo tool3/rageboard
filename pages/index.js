@@ -9,6 +9,7 @@ import Keyboard from '../components/Keyboard';
 import MobileKeyboard from '../components/MobileKeyboard';
 import Tile from '../components/Tile';
 import Script from 'next/script';
+import Credits from '../components/Credit';
 
 function Loader() {
   const { progress } = useProgress();
@@ -23,8 +24,11 @@ function Loader() {
 
 export default function IndexPage() {
   const [active, setActive] = useState(false);
+
   const sound = useRef(true);
-  const { fps, background, theme, backlit } = useControls({
+  const [backlit, setBacklit] = useState(false);
+
+  const { fps, background, theme } = useControls({
     fps: { value: false, color: 'red' },
     background: '#655b5b',
     theme: {
@@ -37,8 +41,7 @@ export default function IndexPage() {
         kawaii: 'kawaii',
         blackops: 'blackops',
       },
-    },
-    backlit: false,
+    }
   });
 
   const bloom = useControls('bloom', {
@@ -82,7 +85,8 @@ export default function IndexPage() {
 
       <Debug active={active} setActive={setActive} />
 
-      <Tile sound={sound} />
+      <Tile backslit={backlit} setBacklit={setBacklit} sound={sound} />
+      <Credits />
 
       <Suspense fallback={null}>
         <MobileKeyboard backlit={backlit} theme={theme} />

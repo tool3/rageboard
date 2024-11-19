@@ -1,10 +1,15 @@
 import { forwardRef } from "react";
 
-const Tile = forwardRef(({ sound }) => {
-    
+const Tile = forwardRef(({ sound, backlit, setBacklit }) => {
+
     const changed = (e) => {
         sound.current = e.target.checked;
     }
+
+    const backlitChanged = (e) => {
+        setBacklit(e.target.checked)
+    }
+
 
     return (
         <div className="tile">
@@ -26,6 +31,13 @@ const Tile = forwardRef(({ sound }) => {
                     sounds
                     <label className="switch">
                         <input type="checkbox" defaultChecked={sound.current} ref={sound} onChange={changed} />
+                        <span className="slider" />
+                    </label>
+                </div>
+                <div className="sound-control">
+                    backlit
+                    <label className="switch">
+                        <input type="checkbox" defaultChecked={backlit} onChange={backlitChanged} />
                         <span className="slider" />
                     </label>
                 </div>

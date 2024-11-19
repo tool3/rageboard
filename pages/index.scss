@@ -494,6 +494,26 @@ input:checked + label {
   }
 }
 
+.credits {
+  position: absolute;
+  display: flex;
+  bottom: 0;
+  right: 0;
+  padding: 10px;
+  font-size: 10px;
+  z-index: 2;
+
+  a {
+    all: unset;
+    padding-left: 3px;
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.05);
+      text-decoration: underline;
+    };
+  }
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;

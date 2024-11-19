@@ -10,6 +10,8 @@ import Key2 from '../components/sounds/key2.mp3';
 import SpaceSound from '../components/sounds/space.mp3';
 import Victory from '../components/sounds/victory.mp3';
 
+const MODEL = '/models/keyboard_opt_mf.glb';
+
 const Model = (props) => {
   const { updateKeyMap, onDocumentKey, nodes, materials, keys, theme, backlit, group } = props;
   const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = keys;
@@ -159,7 +161,7 @@ const Model = (props) => {
                 <Text fontSize={0.1} color={'lightgray'} rotation={[0, Math.PI / 2, 0]} position={[7.45, 1, 0]}>9556</Text>
 
                 <Text fontSize={0.1} color={'lightgray'} rotation={[0, 0, 0]} position={[0, 1, 6.05]}>7x13</Text>
-                <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI, 0, Math.PI]} position={[0, 1, -5.93]}>9+5+6</Text>
+                <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI, 0, Math.PI]} position={[0, 1, -5.93]}>4 1234 5+8</Text>
               </>
             ) : null}
             {backlit ? <Plane rotation={[Math.PI / 2, Math.PI, 0]} position={[-0.06, 2.52, 0.1]} material={new MeshStandardMaterial({ ...themes[theme].backlit })} args={[13.3, 10.2]} /> : null}
@@ -324,7 +326,7 @@ const Model = (props) => {
 
 export default function Keyboard(props) {
   const { theme, backlit, sound } = props;
-  const { nodes, materials } = useGLTF('/models/keyboard_opt.glb', true);
+  const { nodes, materials } = useGLTF(MODEL, true);
 
   const group = useRef();
 
@@ -423,6 +425,7 @@ export default function Keyboard(props) {
   const me = { value: useRef(), completed: false }
   const bye = { value: useRef(), completed: false }
   const takeoff = { value: useRef(), completed: false }
+  const nomood = { value: useRef(), completed: false }
 
   const easterEggs = {
     even: {
@@ -450,6 +453,13 @@ export default function Keyboard(props) {
       completed: false,
       midway: (value) => value.current === 'spaceoo',
       complete: (value) =>  value.current === 'spaceooy',
+      assign: (value, currentChar) => value.current ? value.current + currentChar : currentChar,
+      reset: (value) => value.current.length > 8
+    },
+    nomood: {
+      completed: false,
+      midway: (value) => value.current === 'kfuck',
+      complete: (value) =>  value.current === 'kfuckot' || value.current === 'kfuckto',
       assign: (value, currentChar) => value.current ? value.current + currentChar : currentChar,
       reset: (value) => value.current.length > 8
     }
@@ -499,6 +509,7 @@ export default function Keyboard(props) {
       easterEgg('bye', bye, currentChar);
       easterEgg('narcissist', me, currentChar);
       easterEgg('takeoff', takeoff, currentChar);
+      easterEgg('nomood', nomood, currentChar);
     }
 
     const chars = ['f', 'u', 'c', 'k', 'o', 'y', 'm', 't', 'space'];
@@ -553,4 +564,4 @@ export default function Keyboard(props) {
 
 }
 
-useGLTF.preload('/models/keyboard_opt.glb', true);
+useGLTF.preload(MODEL, true);

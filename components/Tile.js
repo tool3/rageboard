@@ -1,7 +1,7 @@
 import { forwardRef, useState } from "react";
 
 const Tile = forwardRef(({ sound, backlit, setBacklit }, ref) => {
-    const [collapsed, setCollapsed] = useState(true);
+    const [collapsed, setCollapsed] = useState(false);
 
 
     const changed = (e) => {
@@ -13,7 +13,7 @@ const Tile = forwardRef(({ sound, backlit, setBacklit }, ref) => {
     }
 
 
-    const contentClassName = collapsed ? 'tile-content' : 'tile-content expanded';
+    const contentClassName = collapsed ? 'tile-content' : 'tile-content expanded opac';
     const headerClassName = collapsed ? 'tile-header' : 'tile-header rounded';
     const tileClassName = collapsed ? 'tile transparent' : 'tile';
 
@@ -24,7 +24,7 @@ const Tile = forwardRef(({ sound, backlit, setBacklit }, ref) => {
                     <div>RAGE BOARD</div>
                 </div>
 
-                <div className={contentClassName} style={{ height: collapsed ? '0px' : '100%' }}>
+                <div className={contentClassName} >
                     <div className="instructions">
                         <div><kbd>shift</kbd> <kbd>d</kbd> for debugger</div>
                         <div>click & drag to view model</div>

@@ -10,7 +10,7 @@ import Key2 from '../components/sounds/key2.mp3';
 import SpaceSound from '../components/sounds/space.mp3';
 import Victory from '../components/sounds/victory.mp3';
 
-const MODEL = '/models/keyboard_opt_mf.glb';
+const MODEL = '/models/k_opt_2_c8.glb';
 
 const Model = (props) => {
   const { updateKeyMap, onDocumentKey, nodes, materials, keys, theme, backlit, group } = props;

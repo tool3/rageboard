@@ -1,6 +1,6 @@
 import { Environment, Html, OrbitControls, Stats, useProgress } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { Bloom, EffectComposer, Vignette } from '@react-three/postprocessing';
+// import { Bloom, EffectComposer, Vignette } from '@react-three/postprocessing';
 import { Leva, useControls } from 'leva';
 import Head from 'next/head';
 import React, { Suspense, useRef, useState } from 'react';
@@ -35,7 +35,7 @@ export default function IndexPage() {
 
   const { fps, perf, background, theme } = useControls({
     fps: { value: false, color: 'red' },
-    perf: false,
+    perf: true,
     background: '#655b5b',
     theme: {
       value: 'default',
@@ -93,7 +93,7 @@ export default function IndexPage() {
       <Debug active={active} setActive={setActive} />
       <Credits />
 
-      <Tile backslit={backlit}  setBacklit={setBacklit} sound={sound} />
+      <Tile backslit={backlit} setBacklit={setBacklit} sound={sound} />
 
       <Suspense fallback={null}>
         <MobileKeyboard backlit={backlit} theme={theme} />
@@ -113,10 +113,10 @@ export default function IndexPage() {
         </Suspense>
         <OrbitControls minZoom={10} maxZoom={100} target={[0, 0, 0]} />
 
-        <EffectComposer>
+        {/* <EffectComposer>
           {bloom.enabled ? <Bloom intensity={bloom.intensity} luminanceThreshold={0.5} luminanceSmoothing={0.9} height={300} /> : null}
-          {vignette.enabled ? <Vignette eskil offset={0} darkness={0.8} /> : null}
-        </EffectComposer>
+          {vignette.enabled ? <Vignette eskil={false} offset={0} darkness={0.8} /> : null}
+        </EffectComposer> */}
       </Canvas>
     </>
   );

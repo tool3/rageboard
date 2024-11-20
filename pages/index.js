@@ -93,7 +93,7 @@ export default function IndexPage() {
       <Debug active={active} setActive={setActive} />
       <Credits />
 
-      <Tile backslit={backlit} setBacklit={setBacklit} sound={sound} />
+      <Tile backslit={backlit}  setBacklit={setBacklit} sound={sound} />
 
       <Suspense fallback={null}>
         <MobileKeyboard backlit={backlit} theme={theme} />

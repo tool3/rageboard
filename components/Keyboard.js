@@ -325,7 +325,7 @@ const Model = (props) => {
 }
 
 export default function Keyboard(props) {
-  const { theme, backlit, sound } = props;
+  const { theme, backlit, sound, challenges } = props;
   const { nodes, materials } = useGLTF(MODEL, true);
 
   const group = useRef();
@@ -454,14 +454,14 @@ export default function Keyboard(props) {
       midway: (value) => value.current === 'spaceoo',
       complete: (value) => value.current === 'spaceooy',
       assign: (value, currentChar) => value.current ? value.current + currentChar : currentChar,
-      reset: (value) => value.current.length > 8
+      reset: (value) => value.current?.length > 8
     },
     nomood: {
       completed: false,
       midway: (value) => value.current === 'kfuck',
       complete: (value) => value.current === 'kfuckot' || value.current === 'kfuckto',
       assign: (value, currentChar) => value.current ? value.current + currentChar : currentChar,
-      reset: (value) => value.current.length > 8
+      reset: (value) => value.current?.length > 8
     }
   }
 
@@ -504,7 +504,7 @@ export default function Keyboard(props) {
     if (e.repeat) { return }
     const currentChar = getCurrentChar(e);
 
-    if (e.type === 'keydown' || e.type === 'touchstart') {
+    if (challenges && (e.type === 'keydown' || e.type === 'touchstart')) {
       easterEgg('even', word, currentChar);
       easterEgg('bye', bye, currentChar);
       easterEgg('narcissist', me, currentChar);

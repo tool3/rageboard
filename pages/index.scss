@@ -360,67 +360,97 @@ body {
   }
 }
 
-.tile {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  margin: 10px;
-  z-index: 2;
-  border-radius: 10px;
-  box-shadow: 0 0 9px 0 #00000088;
-  width: 280px;
-  height: 225px;
-  animation: fade-in 0.6s ease-in-out;
+.tile-wrapper {
+  height: 100%;
 
-  color: orangered;
-
-  .tile-header {
+  .tile {
     background-color: #292d39;
-    border-radius: 10px;
-    padding: 10px 0 0 0;
-    height: 4.8rem;
-    font-size: 1rem;
-    text-align: center;
-  }
-
-  .tile-content {
+    box-shadow: 0 0 9px 0 #00000088;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 10px;
-    background-color: #181c20;
-    padding: 1rem;
+    position: absolute;
+    margin: 10px;
+    z-index: 2;
     border-radius: 10px;
-    margin-top: -1rem;
-    height: 100%;
-    font-family: ui-monospace, SFMono-Regular, Menlo, "Roboto Mono", monospace;
-    font-size: 11px;
-    color: #8c92a4;
+    width: 280px;
+    height: 300px;
+    animation: fade-in 0.6s ease-in-out;
+    transition: box-shadow .2s ease-in-out;
+    color: orangered;
 
-    .instructions {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    &.transparent {
+      background-color: unset;
+      box-shadow: none;
+    }
 
-      div > kbd {
-        border: 0.5px solid white;
-        border-radius: 5px;
-        padding: 2px 5px;
-        background-color: #1e1e1e;
-        color: white;
-      }
+    .tile-header {
+      background-color: #292d39;
+      border-radius: 10px;
 
-      @media screen and (max-width: 600px) {
-        display: none;
+      padding: 10px 0 0 0;
+      height: 2.8rem;
+      font-size: 1rem;
+      text-align: center;
+
+      &.rounded {
+        border-radius: 10px 10px 0 0;
       }
     }
 
-    .instructions-mobile {
+    .tile-content {
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 0 9px 0 #00000088;
       gap: 10px;
-      @media screen and (min-width: 600px) {
-        display: none;
+      background-color: #181c20;
+      border-radius: 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, "Roboto Mono", monospace;
+      font-size: 11px;
+      color: #8c92a4;
+      padding: 1rem;
+
+      transition-delay: 0.1s;
+      pointer-events: none;
+      opacity: 0;
+
+      overflow: hidden;
+      height: 0;
+      transition: 0.2s ease-in-out;
+
+      &.expanded {
+        height: 100%;
+        transition: height 0.2s ease-in-out;
+        pointer-events: all;
+        padding: 1rem;
+        opacity: 1;
+      }
+
+      .instructions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+
+        div > kbd {
+          border: 0.5px solid white;
+          border-radius: 5px;
+          padding: 2px 5px;
+          background-color: #1e1e1e;
+          color: white;
+        }
+
+        @media screen and (max-width: 600px) {
+          display: none;
+        }
+      }
+
+      .instructions-mobile {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        @media screen and (min-width: 600px) {
+          display: none;
+        }
       }
     }
   }
@@ -433,7 +463,7 @@ body {
 
 .leva-c-kWgxhW {
   left: 10px;
-  top: 245px !important;
+  top: 320px !important;
 }
 
 .switch {
@@ -501,7 +531,7 @@ input:checked + label {
 }
 
 input + label {
-  background-color: #373c4b !important
+  background-color: #373c4b !important;
 }
 
 input + label {

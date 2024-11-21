@@ -373,7 +373,7 @@ body {
     z-index: 2;
     border-radius: 10px;
     width: 280px;
-    height: 300px;
+    height: 250px;
     animation: fade-in 0.6s ease-in-out;
     transition: box-shadow;
 
@@ -425,7 +425,7 @@ body {
     
 
       &.expanded {
-        transition: max-height 0.2s ease-in-out;
+        transition: max-height 0.3s ease-in-out;
         max-height: 100%;
         pointer-events: all;
         padding: 1rem;

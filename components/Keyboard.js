@@ -89,7 +89,7 @@ const Model = (props) => {
       key_red: getKeyRedMaterial({ color: 'violet' }),
     },
     blackops: {
-      backlit: { color: 'orangered', emissive: '#ec6f00', emissiveIntensity: 4 },
+      backlit: { color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 4 },
       text: getTextMaterial({ color: '#EC6F00', emissive: '#EC6F00', emissiveIntensity: 2 }),
       invertText: getInvertTextMaterial({ color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 2 }),
       bottom_base: getBottomBaseMaterial({ metalness: 1, roughness: 0, color: '#1e1e1e' }),
@@ -134,15 +134,9 @@ const Model = (props) => {
     });
   }, []);
 
-  const dirLight = useRef(null);
-
   return (keys.length && keys.every(k => k.current !== undefined)) ? (
     <>
       <group ref={group} {...props} dispose={null} rotation={[-5, 0.4, 4.3]}>
-        <directionalLight ref={dirLight} intensity={1} position={[-10, 20, 4]} />
-        <pointLight intensity={1} position={[0, 0, -10]} color={'red'} />
-        <pointLight intensity={1} position={[-20, -20, 10]} color={'red'} />
-
         <group name="Scene">
           <group>
             <mesh
@@ -164,7 +158,7 @@ const Model = (props) => {
                 <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI, 0, Math.PI]} position={[0, 1, -5.93]}>4 1234 5+8</Text>
               </>
             ) : null}
-            {backlit ? <Plane rotation={[Math.PI / 2, Math.PI, 0]} position={[-0.06, 2.52, 0.1]} material={new MeshStandardMaterial({ ...themes[theme].backlit })} args={[13.3, 10.2]} /> : null}
+            {backlit ? <Plane rotation={[Math.PI / 2, Math.PI, 0]} position={[-0.06, 2.53, 0.1]} material={new MeshStandardMaterial({ ...themes[theme].backlit })} args={[13.3, 10.2]} /> : null}
           </group>
           <mesh
             name="Cube001"
@@ -325,7 +319,7 @@ const Model = (props) => {
 }
 
 export default function Keyboard(props) {
-  const { theme, backlit, sound, challenges } = props;
+  const { theme, backlit, sound } = props;
   const { nodes, materials } = useGLTF(MODEL, true);
 
   const group = useRef();
@@ -504,7 +498,7 @@ export default function Keyboard(props) {
     if (e.repeat) { return }
     const currentChar = getCurrentChar(e);
 
-    if (challenges && (e.type === 'keydown' || e.type === 'touchstart')) {
+    if ((e.type === 'keydown' || e.type === 'touchstart')) {
       easterEgg('even', word, currentChar);
       easterEgg('bye', bye, currentChar);
       easterEgg('narcissist', me, currentChar);
@@ -560,7 +554,21 @@ export default function Keyboard(props) {
     nodes[node].receiveShadow = true;
   }
 
-  return <Model backlit={backlit} onDocumentKey={onDocumentKey} updateKeyMap={updateKeyMap} group={group} theme={theme} nodes={nodes} materials={materials} keys={keys} />
+  const dirLight = useRef(null);
+
+
+  return (
+    <>
+      <Model backlit={backlit} onDocumentKey={onDocumentKey} updateKeyMap={updateKeyMap} group={group} theme={theme} nodes={nodes} materials={materials} keys={keys} />
+      <group rotation={[-5, 0.4, 4.3]}>
+        <directionalLight ref={dirLight} intensity={1} position={[-10, 20, 4]} />
+        <pointLight intensity={1} position={[0, 0, -10]} color={'red'} />
+        <pointLight intensity={1} position={[-20, -20, 10]} color={'red'} />
+      </group>
+
+    </>
+  )
+
 
 }
 

@@ -1,6 +1,6 @@
 import { Environment, Html, OrbitControls, Stats, useProgress } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-// import { Bloom, EffectComposer, Vignette } from '@react-three/postprocessing';
+import { Bloom, EffectComposer, Vignette } from '@react-three/postprocessing';
 import { Leva, useControls } from 'leva';
 import Head from 'next/head';
 import React, { Suspense, useRef, useState } from 'react';
@@ -52,7 +52,7 @@ export default function IndexPage() {
 
   const bloom = useControls('bloom', {
     enabled: true,
-    intensity: 1,
+    intensity: .2,
     luminanceThreshold: 0.5,
     luminanceSmoothing: 0.9,
   }, { collapsed: true, order: 1 })
@@ -113,10 +113,11 @@ export default function IndexPage() {
         </Suspense>
         <OrbitControls minZoom={10} maxZoom={100} target={[0, 0, 0]} />
 
-        {/* <EffectComposer>
+
+        <EffectComposer autoClear>
           {bloom.enabled ? <Bloom intensity={bloom.intensity} luminanceThreshold={0.5} luminanceSmoothing={0.9} height={300} /> : null}
-          {vignette.enabled ? <Vignette eskil={false} offset={0} darkness={0.8} /> : null}
-        </EffectComposer> */}
+          {/* {vignette.enabled ? <Vignette eskil={false} offset={0} darkness={0.8} /> : null} */}
+        </EffectComposer>
       </Canvas>
     </>
   );

@@ -35,7 +35,7 @@ export default function IndexPage() {
 
   const { fps, perf, background, theme } = useControls({
     fps: { value: false, color: 'red' },
-    perf: true,
+    perf: false,
     background: '#655b5b',
     theme: {
       value: 'default',

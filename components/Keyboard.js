@@ -68,9 +68,6 @@ const Model = (props) => {
   const getKeyOrangeMaterial = useMemo(() => getMaterial(materials.key_orange), []);
   const getKeyRedMaterial = useMemo(() => getMaterial(materials.key_red), []);
 
-  const instancedKey = makeInstanced(nodes.Key_T?.geometry,);
-  console.log({ instancedKey });
-
   const themes = {
     default: {
       backlit: { color: 'white', emissive: 'white', emissiveIntensity: 4 },

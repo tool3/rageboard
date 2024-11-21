@@ -594,7 +594,7 @@ export default function Keyboard(props) {
       <group rotation={[-5, 0.4, 4.3]}>
         <directionalLight ref={dirLight} intensity={1} position={[-10, 20, 4]} />
         <pointLight intensity={1} position={[0, 0, -10]} color={'red'} />
-        <pointLight intensity={1} position={[-20, -20, 10]} color={'red'} />
+        {/* <pointLight intensity={1} position={[-20, -20, 10]} color={'red'} /> */}
       </group>
 
     </>

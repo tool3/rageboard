@@ -589,8 +589,8 @@ export default function Keyboard(props) {
   const dirLight = useRef(null);
   const dirLight1 = useRef(null);
 
-  useHelper(dirLight, DirectionalLightHelper);
-  useHelper(dirLight1, DirectionalLightHelper);
+  // useHelper(dirLight, DirectionalLightHelper);
+  // useHelper(dirLight1, DirectionalLightHelper);
 
   return (
     <>

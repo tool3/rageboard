@@ -34,8 +34,8 @@ export default function IndexPage() {
   const [backlit, setBacklit] = useState(false);
 
   const { fps, perf, background, theme } = useControls({
-    fps: { value: true, color: 'red' },
-    perf: false,
+    fps: { value: false, color: 'red' },
+    perf: true,
     background: '#655b5b',
     theme: {
       value: 'default',
@@ -109,7 +109,7 @@ export default function IndexPage() {
           {perf ? <Perf align="top-right" /> : null}
 
           <Keyboard sound={sound} backlit={backlit} theme={theme} />
-          <Environment files="./textures/puresky.hdr" resolution={1024} />
+          <Environment backgroundRotation={45} files="./textures/puresky.hdr" resolution={340} />
         </Suspense>
         <OrbitControls minZoom={10} maxZoom={100} target={[0, 0, 0]} />
 

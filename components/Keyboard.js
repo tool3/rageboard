@@ -1,14 +1,15 @@
-import { Plane, Text, useGLTF } from '@react-three/drei';
+import { Plane, SpotLight, Text, useGLTF, useHelper } from '@react-three/drei';
 import gsap from 'gsap';
 import { Howl } from 'howler';
 import React, { useEffect, useMemo, useRef } from 'react';
-import { Color, FrontSide, InstancedMesh, Matrix4, MeshStandardMaterial, Quaternion, Vector3 } from 'three';
+import { Color, DirectionalLightHelper, FrontSide, InstancedMesh, Matrix4, Mesh, MeshStandardMaterial, Quaternion, SpotLightHelper, Vector3 } from 'three';
 import Coin from '../components/sounds/coin.mp3';
 import Complete from '../components/sounds/complete.mp3';
 import Key1 from '../components/sounds/key1.mp3';
 import Key2 from '../components/sounds/key2.mp3';
 import SpaceSound from '../components/sounds/space.mp3';
 import Victory from '../components/sounds/victory.mp3';
+import { useFrame } from '@react-three/fiber';
 
 const MODEL = '/models/k_opt_2_c8.glb';
 
@@ -586,14 +587,18 @@ export default function Keyboard(props) {
   }
 
   const dirLight = useRef(null);
+  const dirLight1 = useRef(null);
 
+  useHelper(dirLight, DirectionalLightHelper);
+  useHelper(dirLight1, DirectionalLightHelper);
 
   return (
     <>
       <Model backlit={backlit} onDocumentKey={onDocumentKey} updateKeyMap={updateKeyMap} group={group} theme={theme} nodes={nodes} materials={materials} keys={keys} />
       <group rotation={[-5, 0.4, 4.3]}>
-        <directionalLight ref={dirLight} intensity={1} position={[-10, 20, 4]} />
-        <pointLight intensity={1} position={[0, 0, -10]} color={'red'} />
+        {/* <directionalLight ref={dirLight} intensity={1} position={[-10, 20, 4]} /> */}
+        <directionalLight args={[1, 1, 1]}  position={[10, 10, -20]} intensity={2} ref={dirLight} color={'hotpink'} />
+        <directionalLight args={[1, 1, 1]} position={[-15, 10, 20]} intensity={2} ref={dirLight1} color={'cyan'} />
         {/* <pointLight intensity={1} position={[-20, -20, 10]} color={'red'} /> */}
       </group>
 

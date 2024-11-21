@@ -2,7 +2,7 @@ import { Plane, Text, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import { Howl } from 'howler';
 import React, { useEffect, useMemo, useRef } from 'react';
-import { Color, FrontSide, MeshStandardMaterial } from 'three';
+import { Color, FrontSide, InstancedMesh, Matrix4, MeshStandardMaterial, Quaternion, Vector3 } from 'three';
 import Coin from '../components/sounds/coin.mp3';
 import Complete from '../components/sounds/complete.mp3';
 import Key1 from '../components/sounds/key1.mp3';
@@ -11,6 +11,37 @@ import SpaceSound from '../components/sounds/space.mp3';
 import Victory from '../components/sounds/victory.mp3';
 
 const MODEL = '/models/k_opt_2_c8.glb';
+
+const randomizeMatrix = function () {
+  const position = new Vector3();
+  const quaternion = new Quaternion();
+  const scale = new Vector3();
+
+  return function (matrix) {
+    position.x = Math.random() * 40 - 20;
+    position.y = Math.random() * 40 - 20;
+    position.z = Math.random() * 40 - 20;
+
+    quaternion.random();
+
+    scale.x = scale.y = scale.z = Math.random() * 1;
+
+    matrix.compose(position, quaternion, scale);
+
+  };
+}();
+
+function makeInstanced(geometry, material, count = 1) {
+  const matrix = new Matrix4();
+  const mesh = new InstancedMesh(geometry, material, 4);
+
+  for (let i = 0; i < count; i++) {
+    randomizeMatrix(matrix);
+    mesh.setMatrixAt(i, matrix);
+  }
+
+  return mesh;
+}
 
 const Model = (props) => {
   const { updateKeyMap, onDocumentKey, nodes, materials, keys, theme, backlit, group } = props;
@@ -36,6 +67,9 @@ const Model = (props) => {
   const getKeyMaterial = useMemo(() => getMaterial(materials.key), []);
   const getKeyOrangeMaterial = useMemo(() => getMaterial(materials.key_orange), []);
   const getKeyRedMaterial = useMemo(() => getMaterial(materials.key_red), []);
+
+  const instancedKey = makeInstanced(nodes.Key_T?.geometry,);
+  console.log({ instancedKey });
 
   const themes = {
     default: {
@@ -565,6 +599,7 @@ export default function Keyboard(props) {
         <pointLight intensity={1} position={[0, 0, -10]} color={'red'} />
         <pointLight intensity={1} position={[-20, -20, 10]} color={'red'} />
       </group>
+
     </>
   )
 

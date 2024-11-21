@@ -109,7 +109,7 @@ export default function IndexPage() {
           {perf ? <Perf align="top-right" /> : null}
 
           <Keyboard sound={sound} backlit={backlit} theme={theme} />
-          <Environment backgroundRotation={45} files="./textures/puresky.hdr" resolution={340} />
+          <Environment backgroundRotation={45} files="./textures/small_harbour_sunset_1k.hdr" resolution={340} />
         </Suspense>
         <OrbitControls minZoom={10} maxZoom={100} target={[0, 0, 0]} />
 

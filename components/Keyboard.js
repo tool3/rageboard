@@ -11,7 +11,7 @@ import Key2 from '../components/sounds/key2.mp3';
 import SpaceSound from '../components/sounds/space.mp3';
 import Victory from '../components/sounds/victory.mp3';
 
-const MODEL = '/models/k_opt_2_c8.glb';
+const MODEL = '/models/keyboard_0.001.glb';
 
 const randomizeMatrix = function () {
   const position = new Vector3();
@@ -613,8 +613,8 @@ export default function Keyboard(props) {
       <Model backlit={backlit} onDocumentKey={onDocumentKey} updateKeyMap={updateKeyMap} group={group} theme={theme} nodes={nodes} materials={materials} keys={keys} />
       <group rotation={[-5, 0.4, 4.3]}>
         {/* <directionalLight ref={dirLight} intensity={1} position={[-10, 20, 4]} /> */}
-        <directionalLight args={[1, 1, 1]} position={[10, 10, -20]} intensity={4} ref={dirLight} color={'hotpink'} />
-        <directionalLight args={[1, 1, 1]} position={[-15, 10, 20]} intensity={2} ref={dirLight1} color={'cyan'} />
+        <directionalLight args={[1, 1, 1]} position={[0, -10, -10]} intensity={2} ref={dirLight1} color={'cyan'} />
+        <directionalLight args={[1, 1, 1]} position={[0, -10, 10]} intensity={4} ref={dirLight} color={'hotpink'} />
         {/* <pointLight intensity={1} position={[-20, -20, 10]} color={'red'} /> */}
       </group>
 

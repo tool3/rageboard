@@ -597,7 +597,7 @@ export default function Keyboard(props) {
       <Model backlit={backlit} onDocumentKey={onDocumentKey} updateKeyMap={updateKeyMap} group={group} theme={theme} nodes={nodes} materials={materials} keys={keys} />
       <group rotation={[-5, 0.4, 4.3]}>
         {/* <directionalLight ref={dirLight} intensity={1} position={[-10, 20, 4]} /> */}
-        <directionalLight args={[1, 1, 1]}  position={[10, 10, -20]} intensity={2} ref={dirLight} color={'hotpink'} />
+        <directionalLight args={[1, 1, 1]}  position={[10, 10, -20]} intensity={4} ref={dirLight} color={'hotpink'} />
         <directionalLight args={[1, 1, 1]} position={[-15, 10, 20]} intensity={2} ref={dirLight1} color={'cyan'} />
         {/* <pointLight intensity={1} position={[-20, -20, 10]} color={'red'} /> */}
       </group>

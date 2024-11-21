@@ -86,9 +86,9 @@ const Model = (props) => {
       invertText: getInvertTextMaterial({ color: 'black' }),
       bottom_base: materials.bottom_base,
       base: materials.base,
-      key: getKeyMaterial({ color: 'white' }),
-      key_orange: getKeyOrangeMaterial({ color: 'white' }),
-      key_red: getKeyMaterial({ color: 'white' }),
+      key: getKeyMaterial(),
+      key_orange: getKeyOrangeMaterial({ color: materials.key.color }),
+      key_red: getKeyMaterial(),
     },
     metal: {
       backlit: { color: '#8B0000', emissive: '#8B0000', emissiveIntensity: 4 },

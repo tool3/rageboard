@@ -5,7 +5,7 @@ const Credits = () => {
 
     return (
         <div className="credits">
-            Made without rage by <a target="_blank" href="https://github.com/tool3">Tal Hayut</a>
+            Made with no rage by <a target="_blank" href="https://github.com/tool3">Tal Hayut</a>
         </div>
     )
 };

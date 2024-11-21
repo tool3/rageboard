@@ -565,7 +565,6 @@ export default function Keyboard(props) {
         <pointLight intensity={1} position={[0, 0, -10]} color={'red'} />
         <pointLight intensity={1} position={[-20, -20, 10]} color={'red'} />
       </group>
-
     </>
   )
 

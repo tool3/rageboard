@@ -34,8 +34,8 @@ export default function IndexPage() {
   const [backlit, setBacklit] = useState(false);
 
   const { fps, perf, background, theme } = useControls({
-    fps: { value: false, color: 'red' },
-    perf: true,
+    fps: { value: true, color: 'red' },
+    perf: false,
     background: '#655b5b',
     theme: {
       value: 'default',

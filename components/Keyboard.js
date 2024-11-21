@@ -1,15 +1,15 @@
-import { Plane, SpotLight, Text, useGLTF, useHelper } from '@react-three/drei';
+import { Plane, Text, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import { Howl } from 'howler';
 import React, { useEffect, useMemo, useRef } from 'react';
-import { Color, DirectionalLightHelper, FrontSide, InstancedMesh, Matrix4, Mesh, MeshStandardMaterial, Quaternion, SpotLightHelper, Vector3 } from 'three';
+import { Color, FrontSide, InstancedMesh, Matrix4, MeshStandardMaterial, Quaternion, Vector3 } from 'three';
+import Cheering from '../components/sounds/cheering.mp3';
 import Coin from '../components/sounds/coin.mp3';
 import Complete from '../components/sounds/complete.mp3';
 import Key1 from '../components/sounds/key1.mp3';
 import Key2 from '../components/sounds/key2.mp3';
 import SpaceSound from '../components/sounds/space.mp3';
 import Victory from '../components/sounds/victory.mp3';
-import { useFrame } from '@react-three/fiber';
 
 const MODEL = '/models/k_opt_2_c8.glb';
 
@@ -358,16 +358,6 @@ export default function Keyboard(props) {
 
   const keyMap = {};
 
-  useEffect(() => {
-    dispatchEvent(new Event('rendered'));
-    document.addEventListener('touchstart', onDocumentKey);
-    document.addEventListener('touchend', onDocumentKey);
-    return () => {
-      document.removeEventListener('touchstart', onDocumentKey);
-      document.removeEventListener('touchend', onDocumentKey);
-    };
-  }, []);
-
   const keys = [
     useRef(nodes.F_Key),
     useRef(nodes.U_Key),
@@ -411,7 +401,22 @@ export default function Keyboard(props) {
       format: ['mp3'],
       preload: true
     }),
+    cheering: new Howl({
+      src: [Cheering],
+      format: ['mp3'],
+      preload: true
+    }),
   };
+
+  useEffect(() => {
+    dispatchEvent(new Event('rendered'));
+    document.addEventListener('touchstart', onDocumentKey);
+    document.addEventListener('touchend', onDocumentKey);
+    return () => {
+      document.removeEventListener('touchstart', onDocumentKey);
+      document.removeEventListener('touchend', onDocumentKey);
+    };
+  }, []);
 
   function wiggle() {
     gsap.to(group.current.rotation, {
@@ -424,7 +429,7 @@ export default function Keyboard(props) {
     });
   }
 
-  async function playSound(tracks, key) {
+  function playSound(tracks, key) {
     if (sound.current) {
       tracks[key].play();
     }
@@ -447,11 +452,13 @@ export default function Keyboard(props) {
     return e.code ? e.code.replace('Key', '').toLowerCase() : e.target?.innerText?.toLowerCase();
   }
 
-  const word = { value: useRef(), completed: false }
-  const me = { value: useRef(), completed: false }
-  const bye = { value: useRef(), completed: false }
-  const takeoff = { value: useRef(), completed: false }
-  const nomood = { value: useRef(), completed: false }
+  const word = { value: useRef(), completed: false };
+  const me = { value: useRef(), completed: false };
+  const bye = { value: useRef(), completed: false };
+  const takeoff = { value: useRef(), completed: false };
+  const nomood = { value: useRef(), completed: false };
+
+  const eggRefs = [word, me, bye, takeoff, nomood];
 
   const easterEggs = {
     even: {
@@ -492,6 +499,8 @@ export default function Keyboard(props) {
   }
 
 
+  const allCompleted = () => Object.values(eggRefs).every(e => e.completed);
+
   const easterEgg = (name, ref, currentChar) => {
     if (!ref.completed) {
       const { midway, complete, assign, reset } = easterEggs[name];
@@ -507,6 +516,13 @@ export default function Keyboard(props) {
         playSound(tracks, 'complete');
         wiggle();
         ref.completed = true;
+        const event = new CustomEvent('easterEgg', { detail: { name } });
+        dispatchEvent(event);
+        const completed = allCompleted();
+        console.log({ completed });
+        if (completed) {
+          playSound(tracks, 'cheering');
+        }
       }
 
       if (reset(value)) {
@@ -597,7 +613,7 @@ export default function Keyboard(props) {
       <Model backlit={backlit} onDocumentKey={onDocumentKey} updateKeyMap={updateKeyMap} group={group} theme={theme} nodes={nodes} materials={materials} keys={keys} />
       <group rotation={[-5, 0.4, 4.3]}>
         {/* <directionalLight ref={dirLight} intensity={1} position={[-10, 20, 4]} /> */}
-        <directionalLight args={[1, 1, 1]}  position={[10, 10, -20]} intensity={4} ref={dirLight} color={'hotpink'} />
+        <directionalLight args={[1, 1, 1]} position={[10, 10, -20]} intensity={4} ref={dirLight} color={'hotpink'} />
         <directionalLight args={[1, 1, 1]} position={[-15, 10, 20]} intensity={2} ref={dirLight1} color={'cyan'} />
         {/* <pointLight intensity={1} position={[-20, -20, 10]} color={'red'} /> */}
       </group>

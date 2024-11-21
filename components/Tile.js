@@ -1,8 +1,8 @@
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 
 const Tile = forwardRef(({ sound, backlit, setBacklit }, ref) => {
     const [collapsed, setCollapsed] = useState(false);
-
+    const [challenges, setChallenges] = useState([]);
 
     const changed = (e) => {
         sound.current = e.target.checked;
@@ -12,10 +12,20 @@ const Tile = forwardRef(({ sound, backlit, setBacklit }, ref) => {
         setBacklit(e.target.checked)
     }
 
+    useEffect(() => {
+        addEventListener('easterEgg', (e) => setChallenges([...challenges, e.detail.name]));
+
+        return () => {
+            removeEventListener('easterEgg', (e) => setChallenges([]));
+        }
+    }, [challenges])
+
 
     const contentClassName = collapsed ? 'tile-content' : 'tile-content expanded opac';
     const headerClassName = collapsed ? 'tile-header' : 'tile-header rounded';
     const tileClassName = collapsed ? 'tile transparent' : 'tile';
+
+    const chals = challenges?.map(name => <div className="challenge" key={name}>{name}</div>);
 
     return (
         <div className="tile-wrapper">
@@ -34,6 +44,10 @@ const Tile = forwardRef(({ sound, backlit, setBacklit }, ref) => {
                         <div>3 finger tap for debugger</div>
                         <div>tap and drag to view model</div>
                         <div>pinch to zoom </div>
+                    </div>
+
+                    <div className="challenges">
+                        {chals}
                     </div>
 
                     <div className="control-set">

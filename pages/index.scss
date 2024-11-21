@@ -566,6 +566,11 @@ input + label {
   }
 }
 
+.challenges {
+  display: flex;
+  gap: 1rem;
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;

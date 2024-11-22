@@ -545,6 +545,10 @@ input + label {
   border-radius: 40px;
 }
 
+.overlay {
+  z-index: 3;
+}
+
 @keyframes fade-in {
   from {
     opacity: 0;

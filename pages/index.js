@@ -24,7 +24,7 @@ function Loader() {
   const { progress } = useProgress();
 
   return (
-    <Html center>
+    <Html center className='overlay'>
       <div className="title">RAGE BOARD</div>
       <div className="loading">{progress.toFixed(2)} % loaded</div>
     </Html>

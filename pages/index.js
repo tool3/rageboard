@@ -1,16 +1,24 @@
 import { Environment, Html, OrbitControls, Stats, useProgress } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { Bloom, EffectComposer, Vignette } from '@react-three/postprocessing';
+import { Bloom, EffectComposer } from '@react-three/postprocessing';
 import { Leva, useControls } from 'leva';
 import Head from 'next/head';
-import React, { Suspense, useRef, useState } from 'react';
+import Script from 'next/script';
+import { Perf } from 'r3f-perf';
+import React, { Suspense, useCallback, useRef, useState } from 'react';
+import Credits from '../components/Credit';
 import Debug from '../components/Debug';
 import Keyboard from '../components/Keyboard';
 import MobileKeyboard from '../components/MobileKeyboard';
+import Cheering from '../components/sounds/cheering.mp3';
+import Coin from '../components/sounds/coin.mp3';
+import Complete from '../components/sounds/complete.mp3';
+import Key1 from '../components/sounds/key1.mp3';
+import Key2 from '../components/sounds/key2.mp3';
+import SpaceSound from '../components/sounds/space.mp3';
+import Victory from '../components/sounds/victory.mp3';
 import Tile from '../components/Tile';
-import Script from 'next/script';
-import Credits from '../components/Credit';
-import { Perf } from 'r3f-perf';
+import { Howl } from 'howler';
 
 function Loader() {
   const { progress } = useProgress();
@@ -31,7 +39,47 @@ export default function IndexPage() {
   const [active, setActive] = useState(false);
 
   const sound = useRef(true);
+  const [sounds, setSounds] = useState(true);
   const [backlit, setBacklit] = useState(false);
+
+
+  const tracks = {
+    key1: new Howl({
+      src: [Key1],
+      format: ['mp3'],
+      preload: true
+    }),
+    key2: new Howl({
+      src: [Key2],
+      format: ['mp3'],
+      preload: true
+    }),
+    space: new Howl({
+      src: [SpaceSound],
+      format: ['mp3'],
+      preload: true
+    }),
+    coin: new Howl({
+      src: [Coin],
+      format: ['mp3'],
+      preload: true
+    }),
+    complete: new Howl({
+      src: [Complete],
+      format: ['mp3'],
+      preload: true
+    }),
+    victory: new Howl({
+      src: [Victory],
+      format: ['mp3'],
+      preload: true
+    }),
+    cheering: new Howl({
+      src: [Cheering],
+      format: ['mp3'],
+      preload: true
+    }),
+  };
 
   const { fps, perf, background, theme } = useControls({
     fps: { value: false, color: 'red' },
@@ -60,6 +108,18 @@ export default function IndexPage() {
   const vignette = useControls('vignette', {
     enabled: true,
   }, { collapsed: true, order: 2 })
+
+  const setSoundOn = useCallback(() => {
+    sound.current = !sound.current;
+    setSounds(!sounds);
+  }, [sound.current])
+
+
+  function playSound(key) {
+    if (sound) {
+      tracks[key].play();
+    }
+  }
 
   return (
     <>
@@ -93,7 +153,7 @@ export default function IndexPage() {
       <Debug active={active} setActive={setActive} />
       <Credits />
 
-      <Tile backslit={backlit} setBacklit={setBacklit} sound={sound} />
+      <Tile backlit={backlit} setBacklit={setBacklit} sound={sounds} setSound={setSoundOn} />
 
       <Suspense fallback={null}>
         <MobileKeyboard backlit={backlit} theme={theme} />
@@ -108,7 +168,7 @@ export default function IndexPage() {
 
           {perf ? <Perf align="top-right" /> : null}
 
-          <Keyboard sound={sound} backlit={backlit} theme={theme} />
+          <Keyboard playSound={playSound} sound={sound} backlit={backlit} theme={theme} />
           <Environment backgroundRotation={45} files="./textures/small_harbour_sunset_1k.hdr" resolution={340} />
         </Suspense>
         <OrbitControls minZoom={10} maxZoom={100} target={[0, 0, 0]} />

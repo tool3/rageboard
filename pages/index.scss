@@ -370,13 +370,11 @@ body {
     flex-direction: column;
     position: absolute;
     margin: 10px;
-    z-index: 2;
+    z-index: 1;
     border-radius: 10px;
     width: 280px;
     height: 250px;
     animation: fade-in 0.6s ease-in-out;
-    transition: box-shadow;
-
     color: orangered;
 
     &.transparent {
@@ -388,7 +386,7 @@ body {
     .tile-header {
       background-color: #292d39;
       border-radius: 10px;
-
+      min-height: 2.8rem;
       padding: 10px 0 0 0;
       height: 2.8rem;
       font-size: 1rem;
@@ -414,20 +412,10 @@ body {
       font-family: ui-monospace, SFMono-Regular, Menlo, "Roboto Mono", monospace;
       font-size: 11px;
       color: #8c92a4;
-      padding: 0rem;
+      padding: 1rem;
 
       pointer-events: none;
-      opacity: 1;
-
       height: 100%;
-      max-height: 0px;
-
-      &.expanded {
-        transition: max-height 0.3s ease-in-out;
-        max-height: 100%;
-        pointer-events: all;
-        padding: 1rem;
-      }
 
       .instructions {
         display: flex;
@@ -467,51 +455,6 @@ body {
 .leva-c-kWgxhW {
   left: 10px;
   top: 320px !important;
-}
-
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 45px;
-  height: 20px;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: 0.4s;
-  border-radius: 34px;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 15px;
-  width: 15px;
-  left: 5px;
-  bottom: 2.5px;
-  background-color: white;
-  transition: 0.4s;
-  border-radius: 50%;
-}
-
-input:checked + .slider {
-  background-color: orangered;
-}
-
-input:checked + .slider:before {
-  transform: translateX(20px);
 }
 
 .control-set {
@@ -571,13 +514,35 @@ input + label {
   .challenge {
     width: 50px;
     height: 50px;
-    z-index: 2;
 
     &:hover {
       cursor: zoom-in;
-      transform: scale(2);
     }
   }
+}
+
+.switcher {
+  width: 50px;
+  height: 25px;
+  background-color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  justify-content: flex-start;
+  border-radius: 50px;
+  padding: 5px;
+  cursor: pointer;  
+  transition: .2s ease-in-out;
+}
+
+.switcher[data-isOn="true"] {
+  justify-content: flex-end;
+  background-color: orangered;
+}
+
+.handle {
+  width: 15px;
+  height: 15px;
+  background-color: white;
+  border-radius: 40px;
 }
 
 @keyframes fade-in {

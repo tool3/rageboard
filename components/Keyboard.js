@@ -1,15 +1,7 @@
 import { Plane, Text, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
-import { Howl } from 'howler';
 import React, { useEffect, useMemo, useRef } from 'react';
 import { Color, FrontSide, InstancedMesh, Matrix4, MeshStandardMaterial, Quaternion, Vector3 } from 'three';
-import Cheering from '../components/sounds/cheering.mp3';
-import Coin from '../components/sounds/coin.mp3';
-import Complete from '../components/sounds/complete.mp3';
-import Key1 from '../components/sounds/key1.mp3';
-import Key2 from '../components/sounds/key2.mp3';
-import SpaceSound from '../components/sounds/space.mp3';
-import Victory from '../components/sounds/victory.mp3';
 
 const MODEL = '/models/keyboard_0.001.glb';
 
@@ -351,8 +343,15 @@ const Model = (props) => {
 }
 
 export default function Keyboard(props) {
-  const { theme, backlit, sound } = props;
+  const { theme, backlit, playSound: playSounds, sound } = props;
   const { nodes, materials } = useGLTF(MODEL, true);
+
+
+  const playSound = (key) => {
+    if (sound.current) {
+      playSounds(key);
+    }
+  }
 
   const group = useRef();
 
@@ -369,44 +368,6 @@ export default function Keyboard(props) {
     useRef(nodes.This_key),
     useRef(nodes.Everything_key)
   ];
-
-  const tracks = {
-    key1: new Howl({
-      src: [Key1],
-      format: ['mp3'],
-      preload: true
-    }),
-    key2: new Howl({
-      src: [Key2],
-      format: ['mp3'],
-      preload: true
-    }),
-    space: new Howl({
-      src: [SpaceSound],
-      format: ['mp3'],
-      preload: true
-    }),
-    coin: new Howl({
-      src: [Coin],
-      format: ['mp3'],
-      preload: true
-    }),
-    complete: new Howl({
-      src: [Complete],
-      format: ['mp3'],
-      preload: true
-    }),
-    victory: new Howl({
-      src: [Victory],
-      format: ['mp3'],
-      preload: true
-    }),
-    cheering: new Howl({
-      src: [Cheering],
-      format: ['mp3'],
-      preload: true
-    }),
-  };
 
   useEffect(() => {
     dispatchEvent(new Event('rendered'));
@@ -427,12 +388,6 @@ export default function Keyboard(props) {
       yoyo: true,
       duration: 0.04
     });
-  }
-
-  function playSound(tracks, key) {
-    if (sound.current) {
-      tracks[key].play();
-    }
   }
 
   const getSplitKey = (e, isSpace) => {
@@ -509,20 +464,20 @@ export default function Keyboard(props) {
       value.current = assign(value, currentChar);
 
       if (midway(value)) {
-        playSound(tracks, 'coin');
+        playSound('coin');
       }
 
       if (complete(value)) {
-        playSound(tracks, 'complete');
+        playSound('complete');
         wiggle();
         ref.completed = true;
-        
+
         const event = new CustomEvent('easterEgg', { detail: { name } });
         dispatchEvent(event);
 
         const completed = allCompleted();
         if (completed) {
-          playSound(tracks, 'cheering');
+          playSound('cheering');
         }
       }
 
@@ -570,10 +525,10 @@ export default function Keyboard(props) {
 
     if (isValidStart && validPress(prop)) {
       if (isSpace) {
-        playSound(tracks, 'space');
+        playSound('space');
       } else {
         const sounds = ['key1', 'key2'];
-        playSound(tracks, sounds[Math.floor(Math.random() * sounds.length)]);
+        playSound(sounds[Math.floor(Math.random() * sounds.length)]);
       }
 
       const key = getKeyPress(keys, prop);

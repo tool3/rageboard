@@ -232,13 +232,13 @@ body {
         color: black;
       }
       &.second button {
-        background: #FA713B;
-        border-color: #FA713B;
+        background: #fa713b;
+        border-color: #fa713b;
         color: white;
       }
       &.third button {
-        background-color: #E7392F;
-        border-color: #E7392F;
+        background-color: #e7392f;
+        border-color: #e7392f;
         color: white;
       }
 
@@ -422,7 +422,6 @@ body {
       overflow: hidden;
       height: 100%;
       max-height: 0px;
-    
 
       &.expanded {
         transition: max-height 0.3s ease-in-out;
@@ -568,7 +567,18 @@ input + label {
 
 .challenges {
   display: flex;
-  gap: 1rem;
+  padding: 0;
+
+  .challenge {
+    width: 50px;
+    height: 50px;
+    z-index: 2;
+
+    &:hover {
+      cursor: zoom-in;
+      transform: scale(2);
+    }
+  }
 }
 
 @keyframes fade-in {

@@ -25,7 +25,10 @@ const Tile = forwardRef(({ sound, backlit, setBacklit }, ref) => {
     const headerClassName = collapsed ? 'tile-header' : 'tile-header rounded';
     const tileClassName = collapsed ? 'tile transparent' : 'tile';
 
-    const chals = challenges?.map(name => <div className="challenge" key={name}>{name}</div>);
+    const chals = challenges?.map(name => {
+        const className = `challenge ${name}` ;
+        return <img src={`/images/challenges/${name}.png`}  className={className} key={name} />
+    });
 
     return (
         <div className="tile-wrapper">

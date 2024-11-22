@@ -516,10 +516,11 @@ export default function Keyboard(props) {
         playSound(tracks, 'complete');
         wiggle();
         ref.completed = true;
+        
         const event = new CustomEvent('easterEgg', { detail: { name } });
         dispatchEvent(event);
+
         const completed = allCompleted();
-        console.log({ completed });
         if (completed) {
           playSound(tracks, 'cheering');
         }

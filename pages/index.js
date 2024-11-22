@@ -1,6 +1,6 @@
 import { Environment, Html, OrbitControls, Stats, useProgress } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { Bloom, EffectComposer } from '@react-three/postprocessing';
+// import { Bloom, EffectComposer } from '@react-three/postprocessing';
 import { Leva, useControls } from 'leva';
 import Head from 'next/head';
 import Script from 'next/script';
@@ -175,7 +175,7 @@ export default function IndexPage() {
 
 
         {/* <EffectComposer autoClear> */}
-          {bloom.enabled ? <Bloom intensity={bloom.intensity} luminanceThreshold={0.5} luminanceSmoothing={0.9} height={300} /> : null}
+          {/* {bloom.enabled ? <Bloom intensity={bloom.intensity} luminanceThreshold={0.5} luminanceSmoothing={0.9} height={300} /> : null} */}
           {/* {vignette.enabled ? <Vignette eskil={false} offset={0} darkness={0.8} /> : null} */}
         {/* </EffectComposer> */}
       </Canvas>

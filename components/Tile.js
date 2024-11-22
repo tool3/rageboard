@@ -2,13 +2,11 @@ import { forwardRef, useEffect, useState } from "react";
 import { motion } from "motion/react"
 
 const Slider = ({ isOn, toggleSwitch }) => {
-
     const spring = {
         type: "spring",
         stiffness: 700,
         damping: 30,
     };
-
 
     return (
         <div className="switcher" data-isOn={isOn} onClick={() => toggleSwitch(!isOn)}>

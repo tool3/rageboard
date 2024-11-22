@@ -174,10 +174,10 @@ export default function IndexPage() {
         <OrbitControls minZoom={10} maxZoom={100} target={[0, 0, 0]} />
 
 
-        <EffectComposer autoClear>
+        {/* <EffectComposer autoClear> */}
           {bloom.enabled ? <Bloom intensity={bloom.intensity} luminanceThreshold={0.5} luminanceSmoothing={0.9} height={300} /> : null}
           {/* {vignette.enabled ? <Vignette eskil={false} offset={0} darkness={0.8} /> : null} */}
-        </EffectComposer>
+        {/* </EffectComposer> */}
       </Canvas>
     </>
   );

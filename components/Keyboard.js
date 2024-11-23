@@ -1,7 +1,7 @@
 import { Plane, Text, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import React, { useEffect, useMemo, useRef } from 'react';
-import { Color, FrontSide, InstancedMesh, Matrix4, MeshBasicMaterial, MeshStandardMaterial, Quaternion, Vector3 } from 'three';
+import { Color, InstancedMesh, Matrix4, MeshStandardMaterial, Quaternion, Vector3 } from 'three';
 
 const MODEL = '/models/keyboard_0.001.glb';
 
@@ -68,8 +68,8 @@ const Model = (props) => {
       backlit: { color: 'white', emissive: 'white', emissiveIntensity: 4 },
       text: getTextMaterial({ color: 'black' }),
       invertText: getTextMaterial({ color: 'white' }),
-      bottom_base: materials.bottom_base,
-      base: materials.base,
+      bottom_base: getBottomBaseMaterial({ roughness: 0.2 }),
+      base: getBaseMaterial({ roughness: 0.2 }),
       key: getKeyMaterial({ roughness: 0.2 }),
       key_orange: getKeyOrangeMaterial({ roughness: 0.2 }),
       key_red: getKeyRedMaterial({ roughness: 0.2 }),
@@ -86,7 +86,7 @@ const Model = (props) => {
     },
     metal: {
       backlit: { color: '#8B0000', emissive: '#8B0000', emissiveIntensity: 4 },
-      text: getTextMaterial(),
+      text: getTextMaterial({ color: 'white' }),
       invertText: getInvertTextMaterial({ color: 'white' }),
       bottom_base: getBottomBaseMaterial({ color: '#1e1e1e', metalness: 1, roughness: 0 }),
       base: getBaseMaterial({ metalness: 1, roughness: 0 }),
@@ -348,7 +348,6 @@ export default function Keyboard(props) {
   const { theme, backlit, playSound: playSounds, sound } = props;
   const { nodes, materials } = useGLTF(MODEL, true);
 
-
   const playSound = (key) => {
     if (sound.current) {
       playSounds(key);
@@ -420,6 +419,7 @@ export default function Keyboard(props) {
   const easterEggs = {
     even: {
       completed: false,
+      letters: new Set(['f', 'u', 'c', 'k', 'y', 'm']),
       midway: (value) => value.current === 'fuck',
       complete: (value) => value.current === 'fuckym' || value.current === 'fuckmy' && (keyMap['m'] && keyMap['y']),
       assign: (value, currentChar) => value.current ? value.current + currentChar : currentChar,
@@ -427,20 +427,23 @@ export default function Keyboard(props) {
     },
     bye: {
       completed: false,
+      letters: new Set(['k', 'c', 'u']),
       midway: (value) => value.current === 'kk',
       complete: (value) => value.current === 'kkcu',
-      assign: (value, currentChar) => ['k', 'c', 'u'].includes(currentChar) ? (value.current ? value.current + currentChar : currentChar) : '',
+      assign: (value, currentChar) => value.current ? value.current + currentChar : currentChar,
       reset: (value) => value.current?.length > 4
     },
     narcissist: {
       completed: false,
+      letters: new Set(['m']),
       midway: (value) => value.current === 3,
       complete: (value) => value.current === 13,
-      assign: (value, currentChar) => currentChar === 'm' ? (value.current ? value.current + 1 : 1) : 0,
+      assign: (value) => value.current ? value.current + 1 : 1,
       reset: (value) => value.current?.length > 4
     },
     takeoff: {
       completed: false,
+      letters: new Set(['space', 'o', 'y']),
       midway: (value) => value.current === 'spaceoo',
       complete: (value) => value.current === 'spaceooy',
       assign: (value, currentChar) => value.current ? value.current + currentChar : currentChar,
@@ -448,6 +451,7 @@ export default function Keyboard(props) {
     },
     nomood: {
       completed: false,
+      letters: new Set(['k', 'f', 'u', 'c', 'o', 't']),
       midway: (value) => value.current === 'kfuck',
       complete: (value) => value.current === 'kfuckot' || value.current === 'kfuckto',
       assign: (value, currentChar) => value.current ? value.current + currentChar : currentChar,
@@ -460,10 +464,10 @@ export default function Keyboard(props) {
 
   const easterEgg = (name, ref, currentChar) => {
     if (!ref.completed) {
-      const { midway, complete, assign, reset } = easterEggs[name];
+      const { midway, complete, assign, reset, letters } = easterEggs[name];
       const value = ref.value;
 
-      value.current = assign(value, currentChar);
+      value.current = letters.has(currentChar) ? assign(value, currentChar) : '';
 
       if (midway(value)) {
         playSound('coin');
@@ -542,24 +546,6 @@ export default function Keyboard(props) {
       if (key) key.current.position.set(0, 0, 0);
     }
   };
-
-  // Object.keys(materials).map((key) => {
-  //   let material = materials[key];
-
-  //   // material = new MeshStandardMaterial({ color: material.color });
-  //   // material.side = FrontSide;
-
-  //   if (material.name === 'text') {
-  //     material.color = new Color('white');
-  //   }
-
-  //   material.roughness = 0.2;
-  // });
-
-  for (const node in nodes) {
-    nodes[node].castShadow = true;
-    nodes[node].receiveShadow = true;
-  }
 
   const dirLight = useRef(null);
   const dirLight1 = useRef(null);

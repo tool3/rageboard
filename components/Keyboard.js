@@ -1,7 +1,7 @@
 import { Plane, Text, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import React, { useEffect, useMemo, useRef } from 'react';
-import { Color, FrontSide, InstancedMesh, Matrix4, MeshStandardMaterial, Quaternion, Vector3 } from 'three';
+import { Color, FrontSide, InstancedMesh, Matrix4, MeshBasicMaterial, MeshStandardMaterial, Quaternion, Vector3 } from 'three';
 
 const MODEL = '/models/keyboard_0.001.glb';
 
@@ -40,6 +40,8 @@ const Model = (props) => {
   const { updateKeyMap, onDocumentKey, nodes, materials, keys, theme, backlit, group } = props;
   const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = keys;
 
+  // const baseMaterial = useMemo(() => new MeshStandardMaterial({ color: 'white', roughness: 0.2, metalness: 0.2 }), []);
+
   const getMaterial = (baseMaterial) => (props) => {
     const { color, emissive, emissiveIntensity, roughness, metalness } = props || {};
     const newMaterial = baseMaterial.clone();
@@ -65,12 +67,12 @@ const Model = (props) => {
     default: {
       backlit: { color: 'white', emissive: 'white', emissiveIntensity: 4 },
       text: getTextMaterial({ color: 'black' }),
-      invertText: materials.text,
+      invertText: getTextMaterial({ color: 'white' }),
       bottom_base: materials.bottom_base,
       base: materials.base,
-      key: materials.key,
-      key_orange: materials.key_orange,
-      key_red: materials.key_red,
+      key: getKeyMaterial({ roughness: 0.2 }),
+      key_orange: getKeyOrangeMaterial({ roughness: 0.2 }),
+      key_red: getKeyRedMaterial({ roughness: 0.2 }),
     },
     uniform: {
       backlit: { color: 'white', emissive: 'white', emissiveIntensity: 4 },
@@ -541,17 +543,18 @@ export default function Keyboard(props) {
     }
   };
 
-  Object.keys(materials).map((key) => {
-    let material = materials[key];
-    material.side = FrontSide;
+  // Object.keys(materials).map((key) => {
+  //   let material = materials[key];
 
-    if (material.name === 'text') {
-      material.color = new Color('white');
-    }
+  //   // material = new MeshStandardMaterial({ color: material.color });
+  //   // material.side = FrontSide;
 
-    material.roughness = 0.2;
+  //   if (material.name === 'text') {
+  //     material.color = new Color('white');
+  //   }
 
-  });
+  //   material.roughness = 0.2;
+  // });
 
   for (const node in nodes) {
     nodes[node].castShadow = true;

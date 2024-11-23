@@ -45,12 +45,12 @@ const Tile = forwardRef(({ sound, setSound, backlit, setBacklit }, ref) => {
 
     return (
         <div className="tile-wrapper">
-            <motion.div initial={{ height: '200px' }} animate={{ height: "0px" }} transition={spring} className={tileClassName}>
+            <motion.div initial={{ height: '250px' }} animate={{ height: collapsed ? "0px": "250px" }} transition={spring} className={tileClassName}>
                 <div className={headerClassName} onClick={() => setCollapsed(!collapsed)}>
                     <div>RAGE BOARD</div>
                 </div>
                 <motion.div layout style={{ overflow: collapsed ? 'hidden' : 'visible' }}>
-                    <motion.div layout initial={{ opacity: 0 }} transition={spring} animate={{ opacity: 1 }} style={{ padding: '1rem', pointerEvents: 'all' }} className={contentClassName} >
+                    <motion.div layout transition={spring} style={{ padding: '1rem', pointerEvents: 'all' }} className={contentClassName} >
                         <motion.div animate={{ opacity: collapsed ? 0 : 1 }} initial={{ opacity: 0 }} style={{ height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }} >
                             <div className="instructions">
                                 <div><kbd>shift</kbd> <kbd>d</kbd> for debugger</div>

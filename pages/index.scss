@@ -361,7 +361,6 @@ body {
 }
 
 .tile-wrapper {
-  height: 100%;
 
   .tile {
     background-color: #292d39;
@@ -529,8 +528,8 @@ input + label {
   justify-content: flex-start;
   border-radius: 50px;
   padding: 5px;
-  cursor: pointer;  
-  transition: .2s ease-in-out;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
 }
 
 .switcher[data-isOn="true"] {
@@ -546,7 +545,13 @@ input + label {
 }
 
 .overlay {
-  z-index: 3;
+  z-index: 9;
+
+  .title-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 @keyframes fade-in {

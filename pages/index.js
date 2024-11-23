@@ -24,10 +24,22 @@ import { Bloom, EffectComposer } from '@react-three/postprocessing';
 function Loader() {
   const { progress } = useProgress();
 
+  const style = {
+    backdropFilter: 'blur(10px)',
+    width: '100vw',
+    height: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center'
+  }
+
   return (
-    <Html center className='overlay'>
-      <div className="title">RAGE BOARD</div>
-      <div className="loading">{progress.toFixed(2)} % loaded</div>
+    <Html style={style} center className='overlay'>
+      <div className="title-wrapper">
+        <div className="title">RAGE BOARD</div>
+        <div className="loading">{progress.toFixed(2)} % loaded</div>
+      </div>
     </Html>
   );
 }
@@ -176,8 +188,13 @@ export default function IndexPage() {
 
 
         <EffectComposer autoClear={false}>
-          {bloom.enabled ? <Bloom intensity={bloom.intensity} luminanceThreshold={bloom.luminanceThreshold} luminanceSmoothing={bloom.luminanceSmoothing} height={300} /> : null}
-          {/* {vignette.enabled ? <Vignette eskil={false} offset={0} darkness={0.8} /> : null} */}
+          {bloom.enabled ?
+            <Bloom
+              intensity={bloom.intensity}
+              luminanceThreshold={bloom.luminanceThreshold}
+              luminanceSmoothing={bloom.luminanceSmoothing}
+              height={300} /> :
+            null}
         </EffectComposer>
       </Canvas>
     </>

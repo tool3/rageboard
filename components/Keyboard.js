@@ -1,48 +1,15 @@
 import { Plane, Text, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import React, { useEffect, useMemo, useRef } from 'react';
-import { Color, InstancedMesh, Matrix4, MeshStandardMaterial, Quaternion, Vector3 } from 'three';
+import { Color, FrontSide, InstancedMesh, Matrix4, MeshStandardMaterial, Quaternion, Vector3 } from 'three';
 
 const MODEL = '/models/keyboard_0.001.glb';
 
-const randomizeMatrix = function () {
-  const position = new Vector3();
-  const quaternion = new Quaternion();
-  const scale = new Vector3();
-
-  return function (matrix) {
-    position.x = Math.random() * 40 - 20;
-    position.y = Math.random() * 40 - 20;
-    position.z = Math.random() * 40 - 20;
-
-    quaternion.random();
-
-    scale.x = scale.y = scale.z = Math.random() * 1;
-
-    matrix.compose(position, quaternion, scale);
-
-  };
-}();
-
-function makeInstanced(geometry, material, count = 1) {
-  const matrix = new Matrix4();
-  const mesh = new InstancedMesh(geometry, material, 4);
-
-  for (let i = 0; i < count; i++) {
-    randomizeMatrix(matrix);
-    mesh.setMatrixAt(i, matrix);
-  }
-
-  return mesh;
-}
-
 const Model = (props) => {
-  const { updateKeyMap, onDocumentKey, nodes, materials, keys, theme, backlit, group } = props;
+  const { updateKeyMap, onDocumentKey, nodes, materials, keys, backlit, group, theme } = props;
   const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = keys;
 
-  // const baseMaterial = useMemo(() => new MeshStandardMaterial({ color: 'white', roughness: 0.2, metalness: 0.2 }), []);
-
-  const getMaterial = (baseMaterial) => (props) => {
+  const getMaterial = (baseMaterial) => (props) => useMemo(() => {
     const { color, emissive, emissiveIntensity, roughness, metalness } = props || {};
     const newMaterial = baseMaterial.clone();
 
@@ -53,15 +20,15 @@ const Model = (props) => {
     if (metalness !== undefined) newMaterial.metalness = metalness;
 
     return newMaterial;
-  };
+  }, []);
 
-  const getTextMaterial = useMemo(() => getMaterial(materials.text), []);
-  const getInvertTextMaterial = useMemo(() => getMaterial(materials.text), []);
-  const getBottomBaseMaterial = useMemo(() => getMaterial(materials.bottom_base), []);
-  const getBaseMaterial = useMemo(() => getMaterial(materials.base), []);
-  const getKeyMaterial = useMemo(() => getMaterial(materials.key), []);
-  const getKeyOrangeMaterial = useMemo(() => getMaterial(materials.key_orange), []);
-  const getKeyRedMaterial = useMemo(() => getMaterial(materials.key_red), []);
+  const getTextMaterial = getMaterial(materials.text);
+  const getInvertTextMaterial = getMaterial(materials.text);
+  const getBottomBaseMaterial = getMaterial(materials.bottom_base);
+  const getBaseMaterial = getMaterial(materials.base);
+  const getKeyMaterial = getMaterial(materials.key);
+  const getKeyOrangeMaterial = getMaterial(materials.key_orange);
+  const getKeyRedMaterial = getMaterial(materials.key_red);
 
   const themes = {
     default: {
@@ -78,11 +45,11 @@ const Model = (props) => {
       backlit: { color: 'white', emissive: 'white', emissiveIntensity: 4 },
       text: getTextMaterial({ color: 'black' }),
       invertText: getInvertTextMaterial({ color: 'black' }),
-      bottom_base: materials.bottom_base,
-      base: materials.base,
-      key: getKeyMaterial(),
-      key_orange: getKeyOrangeMaterial({ color: materials.key.color }),
-      key_red: getKeyMaterial(),
+      bottom_base: getBottomBaseMaterial({ side: FrontSide }),
+      base: getBaseMaterial({ side: FrontSide }),
+      key: getKeyMaterial({ side: FrontSide }),
+      key_orange: getKeyOrangeMaterial({ color: materials.key.color, side: FrontSide }),
+      key_red: getKeyMaterial({ side: FrontSide }),
     },
     metal: {
       backlit: { color: '#8B0000', emissive: '#8B0000', emissiveIntensity: 4 },
@@ -421,7 +388,7 @@ export default function Keyboard(props) {
       completed: false,
       letters: new Set(['f', 'u', 'c', 'k', 'y', 'm']),
       midway: (value) => value.current === 'fuck',
-      complete: (value) => value.current === 'fuckym' || value.current === 'fuckmy' && (keyMap['m'] && keyMap['y']),
+      complete: (value) => (value.current === 'fuckym' || value.current === 'fuckmy') && (keyMap['m'] && keyMap['y']),
       assign: (value, currentChar) => value.current ? value.current + currentChar : currentChar,
       reset: (value) => value.current?.length > 4 && !value.current.startsWith('fuck')
     },
@@ -453,7 +420,7 @@ export default function Keyboard(props) {
       completed: false,
       letters: new Set(['k', 'f', 'u', 'c', 'o', 't']),
       midway: (value) => value.current === 'kfuck',
-      complete: (value) => value.current === 'kfuckot' || value.current === 'kfuckto',
+      complete: (value) => (value.current === 'kfuckot' || value.current === 'kfuckto') && (keyMap['o'] && keyMap['t']),
       assign: (value, currentChar) => value.current ? value.current + currentChar : currentChar,
       reset: (value) => value.current?.length > 8
     }
@@ -494,11 +461,9 @@ export default function Keyboard(props) {
   }
 
   const updateKeyMap = (e) => {
-    if (e.repeat) { return }
     const currentChar = getCurrentChar(e);
     if (e.type === 'keydown' || e.type === 'touchstart') {
       keyMap[currentChar] = true;
-
     } else {
       keyMap[currentChar] = false;
     }
@@ -550,12 +515,9 @@ export default function Keyboard(props) {
   const dirLight = useRef(null);
   const dirLight1 = useRef(null);
 
-  // useHelper(dirLight, DirectionalLightHelper);
-  // useHelper(dirLight1, DirectionalLightHelper);
-
   return (
     <>
-      <Model backlit={backlit} onDocumentKey={onDocumentKey} updateKeyMap={updateKeyMap} group={group} theme={theme} nodes={nodes} materials={materials} keys={keys} />
+      <Model backlit={backlit} onDocumentKey={onDocumentKey} updateKeyMap={updateKeyMap} theme={theme} group={group} nodes={nodes} materials={materials} keys={keys} />
       <group rotation={[-5, 0.4, 4.3]}>
         {/* <directionalLight ref={dirLight} intensity={1} position={[-10, 20, 4]} /> */}
         <directionalLight args={[1, 1, 1]} position={[0, -10, -10]} intensity={2} ref={dirLight1} color={'cyan'} />

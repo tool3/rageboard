@@ -1,5 +1,6 @@
+import { GoogleTagManager } from '@next/third-parties/google';
 import Head from "next/head";
-import Script from "next/script";
+
 
 export default function Layout({ children }) {
     <html lang="en">
@@ -10,23 +11,7 @@ export default function Layout({ children }) {
             <link rel="icon" href="/images/favicon.ico" sizes="any" />
             <link rel="apple-touch-icon" href="/images/favicon.ico" sizes="any" />
         </Head>
-        <body>
-            {children}
-        </body>
-        <Script
-            async
-            defer
-            src={`https://www.googletagmanager.com/gtag/js?id=G-50Y8D0TG3M`}
-            strategy="lazyOnload"
-        />
-        <Script async defer id="google-analytics" strategy="lazyOnload">
-            {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'G-50Y8D0TG3M');
-        `}
-        </Script>
+        <GoogleTagManager gtmId={'G-50Y8D0TG3M'} />
+        <body>{children}</body>
     </html>
 }

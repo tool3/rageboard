@@ -9,7 +9,7 @@ export default function Layout({ children }) {
             <meta name="description" content="rage keyboard made with threejs and blender" />
             <meta name="author" content="Tal Hayut" />
         </Head>
-        <GoogleAnalytics gtmId={'G-50Y8D0TG3M'} />
+        <GoogleAnalytics gaId={'G-50Y8D0TG3M'} />
         <body>{children}</body>
     </html>
 }

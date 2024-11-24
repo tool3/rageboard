@@ -9,7 +9,7 @@ const Slider = ({ isOn, toggleSwitch }) => {
     };
 
     return (
-        <div className="switcher" data-isOn={isOn} onClick={() => toggleSwitch(!isOn)}>
+        <div className="switcher" data-ison={isOn} onClick={() => toggleSwitch(!isOn)}>
             <motion.div className="handle" layout transition={spring} />
         </div>
     );

@@ -531,7 +531,7 @@ input + label {
   transition: 0.2s ease-in-out;
 }
 
-.switcher[data-isOn="true"] {
+.switcher[data-ison="true"] {
   justify-content: flex-end;
   background-color: orangered;
 }

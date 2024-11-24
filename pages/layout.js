@@ -1,4 +1,4 @@
-import { GoogleTagManager } from '@next/third-parties/google';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import Head from "next/head";
 
 
@@ -9,7 +9,7 @@ export default function Layout({ children }) {
             <meta name="description" content="rage keyboard made with threejs and blender" />
             <meta name="author" content="Tal Hayut" />
         </Head>
-        <GoogleTagManager gtmId={'G-50Y8D0TG3M'} />
+        <GoogleAnalytics gtmId={'G-50Y8D0TG3M'} />
         <body>{children}</body>
     </html>
 }

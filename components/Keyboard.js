@@ -1,7 +1,7 @@
 import { Plane, Text, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import React, { useEffect, useMemo, useRef } from 'react';
-import { Color, FrontSide, InstancedMesh, Matrix4, MeshStandardMaterial, Quaternion, Vector3 } from 'three';
+import { Color, FrontSide, MeshStandardMaterial } from 'three';
 
 const MODEL = '/models/keyboard_0.001.glb';
 
@@ -444,6 +444,7 @@ export default function Keyboard(props) {
         playSound('complete');
         wiggle();
         ref.completed = true;
+        easterEggs[name].completed = true;
 
         const event = new CustomEvent('easterEgg', { detail: { name } });
         dispatchEvent(event);

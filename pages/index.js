@@ -1,9 +1,8 @@
 import { Environment, Html, OrbitControls, Stats, useProgress } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-// import { Bloom, EffectComposer } from '@react-three/postprocessing';
+import { Bloom, EffectComposer } from '@react-three/postprocessing';
+import { Howl } from 'howler';
 import { Leva, useControls } from 'leva';
-import Head from 'next/head';
-import Script from 'next/script';
 import { Perf } from 'r3f-perf';
 import React, { Suspense, useCallback, useRef, useState } from 'react';
 import Credits from '../components/Credit';
@@ -18,8 +17,6 @@ import Key2 from '../components/sounds/key2.mp3';
 import SpaceSound from '../components/sounds/space.mp3';
 import Victory from '../components/sounds/victory.mp3';
 import Tile from '../components/Tile';
-import { Howl } from 'howler';
-import { Bloom, EffectComposer } from '@react-three/postprocessing';
 
 function Loader() {
   const { progress } = useProgress();
@@ -96,7 +93,7 @@ export default function IndexPage() {
 
   const { fps, perf, background, theme } = useControls({
     fps: { value: false, color: 'red' },
-    perf: true,
+    perf: false,
     background: '#655b5b',
     theme: {
       value: 'default',
@@ -115,7 +112,7 @@ export default function IndexPage() {
     enabled: true,
     intensity: .2,
     luminanceThreshold: 1,
-    luminanceSmoothing: 1,
+    luminanceSmoothing: 0.1,
   }, { collapsed: true, order: 1 })
 
   const vignette = useControls('vignette', {
@@ -160,7 +157,6 @@ export default function IndexPage() {
           <Environment backgroundRotation={45} files="./textures/small_harbour_sunset_1k.hdr" resolution={340} />
         </Suspense>z
         <OrbitControls minZoom={10} maxZoom={100} target={[0, 0, 0]} />
-
 
         <EffectComposer autoClear={false}>
           {bloom.enabled ?

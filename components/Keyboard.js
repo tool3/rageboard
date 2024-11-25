@@ -118,7 +118,7 @@ const Model = (props) => {
       delay: 0.2
     });
     gsap.from(group.current.position, {
-      y: -10,
+      y: -30,
       z: -10,
       ease: 'power3',
       repeat: 0,

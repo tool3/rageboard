@@ -115,10 +115,6 @@ export default function IndexPage() {
     luminanceSmoothing: 0.1,
   }, { collapsed: true, order: 1 })
 
-  const vignette = useControls('vignette', {
-    enabled: true,
-  }, { collapsed: true, order: 2 })
-
   const setSoundOn = useCallback(() => {
     sound.current = !sound.current;
     setSounds(!sounds);
@@ -146,6 +142,7 @@ export default function IndexPage() {
 
       <Canvas
         orthographic
+        gl={{ powerPreference: 'high-performance' }}
         camera={{ frustumCulled: true, fov: 50, position: [20, -5, -20], zoom: 25, }}>
 
         <Suspense fallback={<Loader />}>

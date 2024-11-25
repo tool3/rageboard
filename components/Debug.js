@@ -18,6 +18,10 @@ export default function Debug(props) {
     }
 
     useEffect(() => {
+
+    }, [])
+
+    useEffect(() => {
         window.addEventListener('keydown', toggle);
         window.addEventListener('touchstart', toggle);
 

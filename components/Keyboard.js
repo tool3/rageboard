@@ -523,7 +523,7 @@ export default function Keyboard(props) {
         {/* <directionalLight ref={dirLight} intensity={1} position={[-10, 20, 4]} /> */}
         <directionalLight args={[1, 1, 1]} position={[0, -10, -10]} intensity={2} ref={dirLight1} color={'cyan'} />
         <directionalLight args={[1, 1, 1]} position={[0, -10, 10]} intensity={4} ref={dirLight} color={'hotpink'} />
-        {/* <pointLight intensity={1} position={[-20, -20, 10]} color={'red'} /> */}
+        {/* <pointLight intensity={1} position={[-20, -20, 10]} color={'red'} /> */}ƒ
       </group>
 
     </>

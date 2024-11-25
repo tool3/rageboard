@@ -1,6 +1,5 @@
 import { Environment, Html, OrbitControls, Stats, useProgress } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { Bloom, EffectComposer } from '@react-three/postprocessing';
 import { Howl } from 'howler';
 import { Leva, useControls } from 'leva';
 import { Perf } from 'r3f-perf';
@@ -93,7 +92,7 @@ export default function IndexPage() {
 
   const { fps, perf, background, theme } = useControls({
     fps: { value: false, color: 'red' },
-    perf: false,
+    perf: true,
     background: '#655b5b',
     theme: {
       value: 'default',
@@ -142,7 +141,8 @@ export default function IndexPage() {
 
       <Canvas
         orthographic
-        gl={{ powerPreference: 'high-performance' }}
+        // dpr={[1, 2]}
+        // gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
         camera={{ frustumCulled: true, fov: 50, position: [20, -5, -20], zoom: 25, }}>
 
         <Suspense fallback={<Loader />}>
@@ -152,18 +152,18 @@ export default function IndexPage() {
 
           <Keyboard playSound={playSound} sound={sound} backlit={backlit} theme={theme} />
           <Environment backgroundRotation={45} files="./textures/small_harbour_sunset_1k.hdr" resolution={340} />
-        </Suspense>z
+        </Suspense>
         <OrbitControls minZoom={10} maxZoom={100} target={[0, 0, 0]} />
 
-        <EffectComposer autoClear={false}>
+        {/* <EffectComposer autoClear>
           {bloom.enabled ?
             <Bloom
               intensity={bloom.intensity}
               luminanceThreshold={bloom.luminanceThreshold}
               luminanceSmoothing={bloom.luminanceSmoothing}
-              height={300} /> :
+              height={1024} /> :
             null}
-        </EffectComposer>
+        </EffectComposer> */}
       </Canvas>
     </>
   );

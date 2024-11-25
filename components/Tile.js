@@ -45,7 +45,7 @@ const Tile = forwardRef(({ sound, setSound, backlit, setBacklit }, ref) => {
 
     return (
         <div className="tile-wrapper">
-            <motion.div initial={{ height: '250px' }} animate={{ height: collapsed ? "0px": "250px" }} transition={spring} className={tileClassName}>
+            <motion.div initial={{ height: '250px' }} animate={{ height: collapsed ? "0px" : "250px" }} transition={spring} className={tileClassName}>
                 <div className={headerClassName} onClick={() => setCollapsed(!collapsed)}>
                     <div>RAGE BOARD</div>
                 </div>

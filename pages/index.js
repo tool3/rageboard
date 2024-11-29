@@ -154,7 +154,7 @@ export default function IndexPage() {
           <Keyboard playSound={playSound} sound={sound} backlit={backlit} theme={theme} />
           <Environment files="./textures/small_harbour_sunset_1k.hdr" resolution={340} />
         </Suspense>
-        <OrbitControls minZoom={10} maxZoom={100} target={[0, 0, 0]} />
+        <OrbitControls dampingFactor={0.3} minZoom={10} maxZoom={100} target={[0, 0, 0]} />
 
         <EffectComposer multisampling={1} stencilBuffer={true}>
           {bloom.enabled ?

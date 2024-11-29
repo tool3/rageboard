@@ -393,10 +393,7 @@ export default function Keyboard(props) {
       completed: false,
       letters: new Set(['f', 'u', 'c', 'k', 'y', 'm']),
       midway: (value) => value.current === 'fuck',
-      complete: (value) => {
-        console.log({ current: value.current });
-        return value.current.startsWith('fuck') && (keyMap['m'] && keyMap['y'])
-      },
+      complete: (value) => value.current.startsWith('fuck') && (keyMap['m'] && keyMap['y']),
       assign: (value, currentChar) => value.current ? value.current + currentChar : currentChar,
       reset: (value) => value.current?.length > 4 && !value.current.startsWith('fuck')
     },

@@ -474,7 +474,7 @@ export default function Keyboard(props) {
     if (e.repeat) { return }
     const currentChar = getCurrentChar(e);
 
-    if ((e.type === 'keydown' || e.type === 'touchstart')) {
+    if (e.type === 'keydown' || e.type === 'touchstart') {
       easterEgg('even', word, currentChar);
       easterEgg('bye', bye, currentChar);
       easterEgg('narcissist', me, currentChar);

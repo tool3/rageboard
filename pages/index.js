@@ -16,6 +16,7 @@ import Key2 from '../components/sounds/key2.mp3';
 import SpaceSound from '../components/sounds/space.mp3';
 import Victory from '../components/sounds/victory.mp3';
 import Tile from '../components/Tile';
+import { Bloom, EffectComposer } from '@react-three/postprocessing';
 
 function Loader() {
   const { progress } = useProgress();
@@ -92,7 +93,7 @@ export default function IndexPage() {
 
   const { fps, perf, background, theme } = useControls({
     fps: { value: false, color: 'red' },
-    perf: true,
+    perf: false,
     background: '#655b5b',
     theme: {
       value: 'default',
@@ -141,8 +142,8 @@ export default function IndexPage() {
 
       <Canvas
         orthographic
-        // dpr={[1, 2]}
-        // gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
+        dpr={[1, 2]}
+        gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
         camera={{ frustumCulled: true, fov: 50, position: [20, -5, -20], zoom: 25, }}>
 
         <Suspense fallback={<Loader />}>
@@ -151,11 +152,11 @@ export default function IndexPage() {
           {perf ? <Perf align="top-right" /> : null}
 
           <Keyboard playSound={playSound} sound={sound} backlit={backlit} theme={theme} />
-          <Environment backgroundRotation={45} files="./textures/small_harbour_sunset_1k.hdr" resolution={340} />
+          <Environment files="./textures/small_harbour_sunset_1k.hdr" resolution={340} />
         </Suspense>
         <OrbitControls minZoom={10} maxZoom={100} target={[0, 0, 0]} />
 
-        {/* <EffectComposer autoClear>
+        <EffectComposer multisampling={0} stencilBuffer={true}>
           {bloom.enabled ?
             <Bloom
               intensity={bloom.intensity}
@@ -163,7 +164,7 @@ export default function IndexPage() {
               luminanceSmoothing={bloom.luminanceSmoothing}
               height={1024} /> :
             null}
-        </EffectComposer> */}
+        </EffectComposer>
       </Canvas>
     </>
   );

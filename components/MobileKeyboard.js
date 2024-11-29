@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 const MobileKeyboard = ({ theme, backlit }) => {
     const [loading, setLoading] = useState(true);
 
-    const sendEvent = (e, type) => {
+    const sendEvent = (e, type = 'touchstart') => {
         const element = e.target;
         const event = new TouchEvent(type, { key: e.target.innerText });
         element.dispatchEvent(event);
@@ -21,6 +21,7 @@ const MobileKeyboard = ({ theme, backlit }) => {
 
     return !loading ? (
         <div className="keyboard" pointerEvents='none'>
+
             <div className={`keyboard-row first ${theme} ${isBackLit ? 'backlit' : ''}`}>
                 <button onTouchStart={sendEvent} onTouchEnd={sendEvent}>f</button>
                 <button onTouchStart={sendEvent} onTouchEnd={sendEvent}>u</button>

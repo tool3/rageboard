@@ -156,7 +156,7 @@ export default function IndexPage() {
         </Suspense>
         <OrbitControls minZoom={10} maxZoom={100} target={[0, 0, 0]} />
 
-        <EffectComposer multisampling={0} stencilBuffer={true}>
+        <EffectComposer multisampling={1} stencilBuffer={true}>
           {bloom.enabled ?
             <Bloom
               intensity={bloom.intensity}

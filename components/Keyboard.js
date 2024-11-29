@@ -1,9 +1,9 @@
-import { Plane, Text, useGLTF } from '@react-three/drei';
+import { Html, Plane, Text, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Color, FrontSide, MeshStandardMaterial } from 'three';
 
-const MODEL = '/models/keyboard_0001-v1.glb';
+const MODEL = '/models/key_rect_opt.glb';
 
 const Model = (props) => {
   const { updateKeyMap, onDocumentKey, nodes, materials, keys, backlit, group, theme } = props;
@@ -95,9 +95,9 @@ const Model = (props) => {
 
   useEffect(() => {
     addEventListener('keydown', updateKeyMap);
-    addEventListener('keyup', updateKeyMap);
-
     addEventListener('keydown', onDocumentKey);
+
+    addEventListener('keyup', updateKeyMap);
     addEventListener('keyup', onDocumentKey);
     return () => {
       removeEventListener('keydown', updateKeyMap);
@@ -322,7 +322,6 @@ export default function Keyboard(props) {
   }
 
   const group = useRef();
-
   const keyMap = {};
 
   const keys = [
@@ -339,11 +338,17 @@ export default function Keyboard(props) {
 
   useEffect(() => {
     dispatchEvent(new Event('rendered'));
-    document.addEventListener('touchstart', onDocumentKey);
-    document.addEventListener('touchend', onDocumentKey);
+
+    addEventListener('touchstart', updateKeyMap);
+    addEventListener('touchstart', onDocumentKey);
+    addEventListener('touchend', updateKeyMap);
+    addEventListener('touchend', onDocumentKey);
+
     return () => {
-      document.removeEventListener('touchstart', onDocumentKey);
-      document.removeEventListener('touchend', onDocumentKey);
+      removeEventListener('touchstart', updateKeyMap);
+      removeEventListener('touchstart', onDocumentKey);
+      removeEventListener('touchend', updateKeyMap);
+      removeEventListener('touchend', onDocumentKey);
     };
   }, []);
 
@@ -388,7 +393,10 @@ export default function Keyboard(props) {
       completed: false,
       letters: new Set(['f', 'u', 'c', 'k', 'y', 'm']),
       midway: (value) => value.current === 'fuck',
-      complete: (value) => (value.current === 'fuckym' || value.current === 'fuckmy') && (keyMap['m'] && keyMap['y']),
+      complete: (value) => {
+        console.log({ current: value.current });
+        return value.current.startsWith('fuck') && (keyMap['m'] && keyMap['y'])
+      },
       assign: (value, currentChar) => value.current ? value.current + currentChar : currentChar,
       reset: (value) => value.current?.length > 4 && !value.current.startsWith('fuck')
     },
@@ -468,6 +476,7 @@ export default function Keyboard(props) {
     } else {
       keyMap[currentChar] = false;
     }
+
   }
 
   const onDocumentKey = (e) => {
@@ -520,10 +529,8 @@ export default function Keyboard(props) {
     <>
       <Model backlit={backlit} onDocumentKey={onDocumentKey} updateKeyMap={updateKeyMap} theme={theme} group={group} nodes={nodes} materials={materials} keys={keys} />
       <group rotation={[-5, 0.4, 4.3]}>
-        {/* <directionalLight ref={dirLight} intensity={1} position={[-10, 20, 4]} /> */}
         <directionalLight args={[1, 1, 1]} position={[0, -10, -10]} intensity={2} ref={dirLight1} color={'cyan'} />
         <directionalLight args={[1, 1, 1]} position={[0, -10, 10]} intensity={4} ref={dirLight} color={'hotpink'} />
-        {/* <pointLight intensity={1} position={[-20, -20, 10]} color={'red'} /> */}ƒ
       </group>
 
     </>

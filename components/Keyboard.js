@@ -76,10 +76,10 @@ const Model = (props) => {
       text: getTextMaterial({ color: 'black' }),
       invertText: getInvertTextMaterial({ color: 'black' }),
       bottom_base: getBottomBaseMaterial({ color: '#F2BFCA' }),
-      base: getBaseMaterial({ color: '#D68D96' }),
-      key: getKeyMaterial({ color: '#D9A1C8' }),
+      base: getBaseMaterial({ color: '#f7dce7' }),
+      key: getKeyMaterial({ color: '#f7dce7' }),
       key_orange: getKeyOrangeMaterial({ color: 'white' }),
-      key_red: getKeyRedMaterial({ color: 'violet' }),
+      key_red: getKeyRedMaterial({ color: '#fdc8ef' }),
     },
     blackops: {
       backlit: { color: '#ec6f00', emissive: '#ec6f00', emissiveIntensity: 4 },

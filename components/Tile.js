@@ -13,11 +13,10 @@ const Slider = ({ isOn, toggleSwitch }) => {
             <motion.div className="handle" layout transition={spring} />
         </div>
     );
-
 }
 
 const Tile = forwardRef(({ sound, setSound, backlit, setBacklit }, ref) => {
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(true);
     const [challenges, setChallenges] = useState([]);
 
     useEffect(() => {

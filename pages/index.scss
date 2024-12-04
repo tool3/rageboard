@@ -462,6 +462,10 @@ input + label {
   padding: 10px;
   font-size: 10px;
   z-index: 2;
+  background: url('/images/brush.svg');
+  background-repeat: no-repeat;
+  background-size: 100% 50%;
+  background-position: 100%;
 
   a {
     all: unset;
@@ -513,6 +517,8 @@ input + label {
 
 .overlay {
   z-index: 9;
+  backdrop-filter: blur(10px);
+  background: transparent;
 
   .title-wrapper {
     display: flex;

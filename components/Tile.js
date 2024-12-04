@@ -77,6 +77,12 @@ const Tile = forwardRef(({ sound, setSound, backlit, setBacklit }, ref) => {
                                         <Slider collapsed={collapsed} toggleSwitch={setBacklit} isOn={backlit} />
                                     </label>
                                 </div>
+                                <div className="control">
+                                    theme
+                                    <label className="switch">
+                                        <Slider collapsed={collapsed} toggleSwitch={setBacklit} isOn={backlit} />
+                                    </label>
+                                </div>
                             </div>
                         </motion.div>
                     </motion.div>

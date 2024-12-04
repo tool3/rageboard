@@ -46,7 +46,8 @@ const Tile = forwardRef(({ sound, setSound, backlit, setBacklit }, ref) => {
         <div className="tile-wrapper">
             <motion.div initial={{ height: '250px' }} animate={{ height: collapsed ? "0px" : "250px" }} transition={spring} className={tileClassName}>
                 <div className={headerClassName} onClick={() => setCollapsed(!collapsed)}>
-                    <div>RAGE BOARD</div>
+                    <div>RAGEBOARD</div>
+                    {/* <div>レイジボード</div> */}
                 </div>
                 <motion.div layout style={{ overflow: collapsed ? 'hidden' : 'visible' }}>
                     <motion.div layout transition={spring} style={{ padding: '1rem', pointerEvents: 'all' }} className={contentClassName} >
@@ -80,7 +81,7 @@ const Tile = forwardRef(({ sound, setSound, backlit, setBacklit }, ref) => {
                                 <div className="control">
                                     theme
                                     <label className="switch">
-                                        <Slider collapsed={collapsed} toggleSwitch={setBacklit} isOn={backlit} />
+                                        <div  className="them"/>
                                     </label>
                                 </div>
                             </div>

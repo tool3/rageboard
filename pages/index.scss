@@ -1,3 +1,14 @@
+@import url("https://rsms.me/inter/inter.css");
+@font-face {
+  font-family: "Grotesque";
+  src: url("/fonts/BasementGrotesque-Black_v1.202.woff") format("woff");
+}
+
+@font-face {
+  font-family: "GeistMono";
+  src: url("/fonts/GeistMono-Regular.woff2") format("woff2");
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -11,11 +22,6 @@ canvas {
   height: 100vh;
 }
 
-@import url("https://rsms.me/inter/inter.css");
-@font-face {
-  font-family: "Grotesque";
-  src: url("../public/fonts/BasementGrotesque-Black_v1.202.woff") format("woff");
-}
 * {
   box-sizing: border-box;
 }
@@ -376,7 +382,8 @@ body {
       gap: 10px;
       background-color: #181c20;
       border-radius: 10px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, "Roboto Mono", monospace;
+      // font-family: ui-monospace, SFMono-Regular, Menlo, "Roboto Mono", monospace;
+      font-family: GeistMono, ui-monospace, SFMono-Regular, Menlo, "Roboto Mono", monospace;
       font-size: 11px;
       color: #8c92a4;
       padding: 1rem;
@@ -462,10 +469,10 @@ input + label {
   padding: 10px;
   font-size: 10px;
   z-index: 2;
-  background: url('/images/brush.svg');
+  background: url("/images/brush.svg");
   background-repeat: no-repeat;
   background-size: 100% 50%;
-  background-position: 100%;
+  background-position: 0% 55%;
 
   a {
     all: unset;
@@ -525,6 +532,20 @@ input + label {
     flex-direction: column;
     align-items: flex-start;
   }
+}
+
+.banner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: flex-end;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  font-size: 5rem;
+  z-index: 2;
+  
 }
 
 @keyframes fade-in {

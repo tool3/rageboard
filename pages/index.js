@@ -17,6 +17,7 @@ import SpaceSound from '../components/sounds/space.mp3';
 import Victory from '../components/sounds/victory.mp3';
 import Tile from '../components/Tile';
 import { Bloom, EffectComposer } from '@react-three/postprocessing';
+import Banner from '../components/Banner';
 
 function Loader() {
   const { progress } = useProgress();
@@ -34,7 +35,7 @@ function Loader() {
   return (
     <Html style={style} center className='overlay'>
       <div className="title-wrapper">
-        <div className="title">RAGE BOARD</div>
+        <div className="title">RAGEBOARD</div>
         <div className="loading">{progress.toFixed(2)} % loaded</div>
       </div>
     </Html>
@@ -132,6 +133,8 @@ export default function IndexPage() {
       <Leva hidden={!active} />
       <FPS fps={fps} />
       <Debug active={active} setActive={setActive} />
+
+      
       <Credits />
 
       <Tile backlit={backlit} setBacklit={setBacklit} sound={sounds} setSound={setSoundOn} />

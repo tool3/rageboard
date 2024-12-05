@@ -17,6 +17,7 @@ const Slider = ({ isOn, toggleSwitch }) => {
 
 const Tile = forwardRef(({ sound, setSound, backlit, setBacklit }, ref) => {
     const [collapsed, setCollapsed] = useState(true);
+    const [clickedOnce, setClickedOnce] = useState(false);
     const [challenges, setChallenges] = useState([]);
 
     useEffect(() => {
@@ -28,7 +29,7 @@ const Tile = forwardRef(({ sound, setSound, backlit, setBacklit }, ref) => {
     }, [challenges])
 
     const contentClassName = collapsed ? 'tile-content' : 'tile-content';
-    const headerClassName = collapsed ? 'tile-header' : 'tile-header';
+    const headerClassName = collapsed ? 'tile-header' : 'tile-header'
     const tileClassName = collapsed ? 'tile transparent' : 'tile';
 
     const chals = challenges?.map(name => {
@@ -42,10 +43,15 @@ const Tile = forwardRef(({ sound, setSound, backlit, setBacklit }, ref) => {
         damping: 30
     };
 
+    const onClick = () => {
+        setCollapsed(!collapsed);
+        setClickedOnce(true);
+    }
+
     return (
         <div className="tile-wrapper">
             <motion.div initial={{ height: '250px' }} animate={{ height: collapsed ? "0px" : "250px" }} transition={spring} className={tileClassName}>
-                <div className={headerClassName} onClick={() => setCollapsed(!collapsed)}>
+                <div className={headerClassName + (clickedOnce ? '' : ' pulse')} onClick={onClick}>
                     <div>RAGEBOARD</div>
                     {/* <div>レイジボード</div> */}
                 </div>

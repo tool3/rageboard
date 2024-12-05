@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Color, FrontSide, MeshStandardMaterial } from 'three';
 
-const MODEL = '/models/key_rect_opt.glb';
+const MODEL = '/models/keyboard_main.glb';
 
 const Model = (props) => {
   const { updateKeyMap, onDocumentKey, nodes, materials, keys, backlit, group, theme } = props;
@@ -138,7 +138,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Cube.geometry}
               material={themes[theme].base}
-              position={[-0.03, -3.15, 0.05]}
+              position={[-0.03, 0, 0.05]}
             />
             {theme !== 'default' ? (
               <>
@@ -159,7 +159,7 @@ const Model = (props) => {
             receiveShadow
             geometry={nodes.Cube001.geometry}
             material={themes[theme].bottom_base}
-            position={[-0.03, -4.21, 0.05]}
+            position={[0, 0, 0]}
           />
           <mesh
             name="Key_T"
@@ -174,7 +174,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Text.geometry}
               material={themes[theme].invertText}
-              position={[0, 4.4555, 0]}
+              position={[0, 0, 0]}
             />
           </mesh>
           <mesh
@@ -190,7 +190,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Text001.geometry}
               material={themes[theme].invertText}
-              position={[0, 4.4555, 0]}
+              position={[0, 0, 0]}
             />
           </mesh>
           <mesh
@@ -206,7 +206,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Text002.geometry}
               material={themes[theme].invertText}
-              position={[0, 4.4555, 0]}
+              position={[0, 0, 0]}
             />
           </mesh>
           <mesh
@@ -222,7 +222,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Text003.geometry}
               material={themes[theme].invertText}
-              position={[0, 4.4555, 0]}
+              position={[0, 0, 0]}
             />
           </mesh>
           <mesh
@@ -238,7 +238,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Text004.geometry}
               material={themes[theme].invertText}
-              position={[0, 4.4555, 0]}
+              position={[0, 0, 0]}
             />
           </mesh>
           <mesh
@@ -254,7 +254,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Text005.geometry}
               material={themes[theme].text}
-              position={[0, 4.4555, 0]}
+              position={[0, 0, 0]}
             />
           </mesh>
           <mesh
@@ -270,7 +270,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Text006.geometry}
               material={themes[theme].text}
-              position={[0, 4.4555, 0]}
+              position={[0, 0, 0]}
             />
           </mesh>
           <mesh
@@ -286,7 +286,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Text007.geometry}
               material={themes[theme].text}
-              position={[0, 4.4555, 0]}
+              position={[0, 0, 0]}
             />
           </mesh>
           <mesh
@@ -302,7 +302,7 @@ const Model = (props) => {
               receiveShadow
               geometry={nodes.Text008.geometry}
               material={themes[theme].text}
-              position={[0, 4.4555, 0]}
+              position={[0, 0, 0]}
             />
           </mesh>
         </group>

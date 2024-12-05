@@ -372,6 +372,19 @@ body {
       &:hover {
         cursor: pointer;
       }
+
+      &.pulse {
+        animation: pulse-glow 2s forwards infinite;
+      }
+
+      @keyframes pulse-glow {
+        0% {
+          box-shadow: 0 0 0 0 orangered;
+        }
+        100% {
+          box-shadow: 0 0 0 10px rgba(52, 152, 219, 0);
+        }
+      }
     }
 
     .tile-content {
@@ -383,7 +396,8 @@ body {
       background-color: #181c20;
       border-radius: 10px;
       // font-family: ui-monospace, SFMono-Regular, Menlo, "Roboto Mono", monospace;
-      font-family: GeistMono, ui-monospace, SFMono-Regular, Menlo, "Roboto Mono", monospace;
+      font-family: GeistMono, ui-monospace, SFMono-Regular, Menlo, "Roboto Mono",
+        monospace;
       font-size: 11px;
       color: #8c92a4;
       padding: 1rem;
@@ -545,7 +559,6 @@ input + label {
   height: 100%;
   font-size: 5rem;
   z-index: 2;
-  
 }
 
 @keyframes fade-in {

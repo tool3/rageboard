@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Color, FrontSide, MeshStandardMaterial } from 'three';
 
-const MODEL = '/models/keyboard_main.glb';
+const MODEL = '/models/keyboard_opt_text.glb';
 
 const Model = (props) => {
   const { updateKeyMap, onDocumentKey, nodes, materials, keys, backlit, group, theme } = props;

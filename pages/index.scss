@@ -1,7 +1,10 @@
-@import url("https://rsms.me/inter/inter.css");
 @font-face {
   font-family: "Grotesque";
   src: url("/fonts/BasementGrotesque-Black_v1.202.woff") format("woff");
+}
+@font-face {
+  font-family: "Technotype";
+  src: url("/fonts/Technotype34-Regular.otf") format("otf");
 }
 
 @font-face {
@@ -455,6 +458,11 @@ body {
     justify-content: space-between;
     align-items: center;
   }
+
+  .control_btn {
+    font-family: "Technotype";
+    text-transform: uppercase;
+  }
 }
 
 input:checked + label {
@@ -514,26 +522,61 @@ input + label {
 
 .switcher {
   width: 50px;
-  height: 25px;
+  height: 26px;
   background-color: rgba(255, 255, 255, 0.4);
   display: flex;
   justify-content: flex-start;
-  border-radius: 50px;
-  padding: 5px;
+  border-radius: 3px;
+  padding: 3px;
+  padding-right: 0px;
   cursor: pointer;
   transition: 0.2s ease-in-out;
+
+
+  &:after {
+    content: "O";
+    width: 4px;
+    border-radius: 2px;
+    color: white;
+    font-size: 1rem;
+    display: block;
+    position: relative;
+    left: 18px;
+    top: 0px;
+  }
 }
 
 .switcher[data-ison="true"] {
   justify-content: flex-end;
   background-color: orangered;
+
+  &:before {
+    content: "";
+    width: 3px;
+    height: 14px;
+    border-radius: 2px;
+    background-color: white;
+    display: inline-block;
+    position: relative;
+    right: 20px;
+    top: 3px;
+  }
+
+  &:after {
+    content: "";
+  }
+  
 }
+
 
 .handle {
   width: 15px;
-  height: 15px;
+  height: 20px;
   background-color: white;
-  border-radius: 40px;
+  border-radius: 3px;
+
+
+
 }
 
 .overlay {

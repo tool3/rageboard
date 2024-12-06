@@ -151,7 +151,7 @@ const Model = (props) => {
                 <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI, 0, Math.PI]} position={[0, 1, -5.93]}>4 1234 5+8</Text>
               </>
             ) : null}
-            {backlit ? <Plane rotation={[Math.PI / 2, Math.PI, 0]} position={[-0.06, 2.53, 0.1]} material={new MeshStandardMaterial({ ...themes[theme].backlit })} args={[13.3, 10.2]} /> : null}
+            {backlit ? <Plane rotation={[Math.PI / 2, Math.PI, 0]} position={[.3, -.4, 0.95]} material={new MeshStandardMaterial({ ...themes[theme].backlit })} args={[13.3, 10.2]} /> : null}
           </group>
           <mesh
             name="Cube001"

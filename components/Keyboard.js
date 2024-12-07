@@ -1,4 +1,4 @@
-import { Html, Plane, Text, useGLTF } from '@react-three/drei';
+import { Plane, Text, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Color, FrontSide, MeshStandardMaterial } from 'three';
@@ -314,6 +314,7 @@ const Model = (props) => {
 export default function Keyboard(props) {
   const { theme, backlit, playSound: playSounds, sound } = props;
   const { nodes, materials } = useGLTF(MODEL, true);
+  const isMobile = useRef(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator?.userAgent));
 
   const playSound = (key) => {
     if (sound.current) {
@@ -521,10 +522,10 @@ export default function Keyboard(props) {
 
   const dirLight = useRef(null);
   const dirLight1 = useRef(null);
-
+  const position = [0, isMobile.current ? 5 : 0, 0];
   return (
     <>
-      <Model backlit={backlit} onDocumentKey={onDocumentKey} updateKeyMap={updateKeyMap} theme={theme} group={group} nodes={nodes} materials={materials} keys={keys} />
+      <Model position={position} backlit={backlit} onDocumentKey={onDocumentKey} updateKeyMap={updateKeyMap} theme={theme} group={group} nodes={nodes} materials={materials} keys={keys} />
       <group rotation={[-5, 0.4, 4.3]}>
         <directionalLight args={[1, 1, 1]} position={[0, -10, -10]} intensity={2} ref={dirLight1} color={'cyan'} />
         <directionalLight args={[1, 1, 1]} position={[0, -10, 10]} intensity={4} ref={dirLight} color={'hotpink'} />

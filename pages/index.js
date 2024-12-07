@@ -134,7 +134,7 @@ export default function IndexPage() {
       <FPS fps={fps} />
       <Debug active={active} setActive={setActive} />
 
-      
+
       <Credits />
 
       <Tile backlit={backlit} setBacklit={setBacklit} sound={sounds} setSound={setSoundOn} />

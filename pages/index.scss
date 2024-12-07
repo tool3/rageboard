@@ -528,7 +528,6 @@ input + label {
   justify-content: flex-start;
   border-radius: 3px;
   padding: 3px;
-  padding-right: 0px;
   cursor: pointer;
   transition: 0.2s ease-in-out;
 
@@ -563,7 +562,7 @@ input + label {
   }
 
   &:after {
-    content: "";
+    display: none;
   }
   
 }
@@ -574,9 +573,6 @@ input + label {
   height: 20px;
   background-color: white;
   border-radius: 3px;
-
-
-
 }
 
 .overlay {

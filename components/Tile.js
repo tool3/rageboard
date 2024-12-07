@@ -4,8 +4,8 @@ import { motion } from "motion/react"
 const Slider = ({ isOn, toggleSwitch }) => {
     const spring = {
         type: "spring",
-        stiffness: 400,
-        damping: 30,
+        stiffness: 1000,
+        damping: 40,
     };
 
     return (

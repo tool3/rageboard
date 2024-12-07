@@ -541,12 +541,12 @@ input + label {
     display: block;
     position: relative;
     left: 18px;
-    top: 0px;
   }
 }
 
 .switcher[data-ison="true"] {
   justify-content: flex-end;
+  align-items: center;
   background-color: orangered;
 
   &:before {
@@ -558,7 +558,6 @@ input + label {
     display: inline-block;
     position: relative;
     right: 20px;
-    top: 3px;
   }
 
   &:after {

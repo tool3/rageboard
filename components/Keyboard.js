@@ -2,6 +2,7 @@ import { Plane, Text, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Color, FrontSide, MeshStandardMaterial } from 'three';
+import ExplosionConfetti from './Confetti';
 
 const MODEL = '/models/keyboard_opt_text.glb';
 
@@ -314,6 +315,7 @@ const Model = (props) => {
 export default function Keyboard(props) {
   const { theme, backlit, playSound: playSounds, sound } = props;
   const { nodes, materials } = useGLTF(MODEL, true);
+  const [completed, setCompleted] = useState(false);
   const isMobile = useRef(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator?.userAgent));
 
   const playSound = (key) => {
@@ -323,7 +325,16 @@ export default function Keyboard(props) {
   }
 
   const group = useRef();
+  const dirLight = useRef(null);
+  const dirLight1 = useRef(null);
+  const position = [0, isMobile.current ? 5 : 0, 0];
   const keyMap = {};
+
+  const word = { value: useRef(), completed: false };
+  const me = { value: useRef(), completed: false };
+  const bye = { value: useRef(), completed: false };
+  const takeoff = { value: useRef(), completed: false };
+  const nomood = { value: useRef(), completed: false };
 
   const keys = [
     useRef(nodes.F_Key),
@@ -336,57 +347,6 @@ export default function Keyboard(props) {
     useRef(nodes.This_key),
     useRef(nodes.Everything_key)
   ];
-
-  useEffect(() => {
-    dispatchEvent(new Event('rendered'));
-
-    addEventListener('touchstart', updateKeyMap);
-    addEventListener('touchstart', onDocumentKey);
-    addEventListener('touchend', updateKeyMap);
-    addEventListener('touchend', onDocumentKey);
-
-    return () => {
-      removeEventListener('touchstart', updateKeyMap);
-      removeEventListener('touchstart', onDocumentKey);
-      removeEventListener('touchend', updateKeyMap);
-      removeEventListener('touchend', onDocumentKey);
-    };
-  }, []);
-
-  function wiggle() {
-    gsap.to(group.current.rotation, {
-      z: 4.08,
-      ease: 'power3',
-      repeat: 5,
-      delay: 0,
-      yoyo: true,
-      duration: 0.04
-    });
-  }
-
-  const getSplitKey = (e, isSpace) => {
-    const part = e.code.split('Key');
-    const code = isSpace ? 'Space' : `Key_${part[1]}`
-    return code;
-  }
-
-  const getKeyPress = (keys, prop) => {
-    return keys.find(k => {
-      const [, char] = k.current.name === 'Space' ? [, 'space'] : k.current.name.split('_');
-      return k.current.name === prop || char.toLowerCase() === prop.toLowerCase();
-    })
-  }
-
-  const getCurrentChar = (e) => {
-    return e.code ? e.code.replace('Key', '').toLowerCase() : e.target?.innerText?.toLowerCase();
-  }
-
-  const word = { value: useRef(), completed: false };
-  const me = { value: useRef(), completed: false };
-  const bye = { value: useRef(), completed: false };
-  const takeoff = { value: useRef(), completed: false };
-  const nomood = { value: useRef(), completed: false };
-
   const eggRefs = [word, me, bye, takeoff, nomood];
 
   const easterEggs = {
@@ -433,6 +393,51 @@ export default function Keyboard(props) {
   }
 
 
+  useEffect(() => {
+    dispatchEvent(new Event('rendered'));
+
+    addEventListener('touchstart', updateKeyMap);
+    addEventListener('touchstart', onDocumentKey);
+    addEventListener('touchend', updateKeyMap);
+    addEventListener('touchend', onDocumentKey);
+
+    return () => {
+      removeEventListener('touchstart', updateKeyMap);
+      removeEventListener('touchstart', onDocumentKey);
+      removeEventListener('touchend', updateKeyMap);
+      removeEventListener('touchend', onDocumentKey);
+    };
+  }, []);
+
+  function wiggle() {
+    gsap.to(group.current.rotation, {
+      z: 4.08,
+      ease: 'power3',
+      repeat: 5,
+      delay: 0,
+      yoyo: true,
+      duration: 0.04
+    });
+  }
+
+  const getSplitKey = (e, isSpace) => {
+    const part = e.code.split('Key');
+    const code = isSpace ? 'Space' : `Key_${part[1]}`
+    return code;
+  }
+
+  const getKeyPress = (keys, prop) => {
+    return keys.find(k => {
+      const [, char] = k.current.name === 'Space' ? [, 'space'] : k.current.name.split('_');
+      return k.current.name === prop || char.toLowerCase() === prop.toLowerCase();
+    })
+  }
+
+  const getCurrentChar = (e) => {
+    return e.code ? e.code.replace('Key', '').toLowerCase() : e.target?.innerText?.toLowerCase();
+  }
+
+
   const allCompleted = () => Object.values(eggRefs).every(e => e.completed);
 
   const easterEgg = (name, ref, currentChar) => {
@@ -457,6 +462,7 @@ export default function Keyboard(props) {
 
         const completed = allCompleted();
         if (completed) {
+          setCompleted(true);
           playSound('cheering');
         }
       }
@@ -520,9 +526,7 @@ export default function Keyboard(props) {
     }
   };
 
-  const dirLight = useRef(null);
-  const dirLight1 = useRef(null);
-  const position = [0, isMobile.current ? 5 : 0, 0];
+
   return (
     <>
       <Model position={position} backlit={backlit} onDocumentKey={onDocumentKey} updateKeyMap={updateKeyMap} theme={theme} group={group} nodes={nodes} materials={materials} keys={keys} />
@@ -530,6 +534,19 @@ export default function Keyboard(props) {
         <directionalLight args={[1, 1, 1]} position={[0, -10, -10]} intensity={2} ref={dirLight1} color={'cyan'} />
         <directionalLight args={[1, 1, 1]} position={[0, -10, 10]} intensity={4} ref={dirLight} color={'hotpink'} />
       </group>
+      <ExplosionConfetti
+        isExploding={completed}
+        // isExploding={true}
+        amount={100}
+        rate={10}
+        radius={15}
+        areaWidth={3}
+        areaHeight={1}
+        fallingHeight={20}
+        fallingSpeed={8}
+        colors={['orangered', 'white', 'orange']}
+        enableShadows={false}
+      />
 
     </>
   )

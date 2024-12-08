@@ -518,6 +518,8 @@ input + label {
 
 .challenges {
   display: flex;
+  position: relative;
+  left: -10px;
 
   .challenge {
     width: 50px;

@@ -1,5 +1,5 @@
-import { forwardRef, useEffect, useState } from "react";
-import { motion } from "motion/react"
+import { motion } from "motion/react";
+import { useEffect, useState } from "react";
 
 const Slider = ({ isOn, toggleSwitch }) => {
     const spring = {

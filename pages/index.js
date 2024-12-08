@@ -143,10 +143,7 @@ export default function IndexPage() {
       <Leva hidden={!active} />
       <FPS fps={fps} />
       <Debug active={active} setActive={setActive} />
-
-
       <Credits />
-
       <Tile setTheme={setTheme} backlit={backlit} setBacklit={setBacklit} sound={sounds} setSound={setSoundOn} />
 
       <Suspense fallback={null}>
@@ -158,17 +155,17 @@ export default function IndexPage() {
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
         camera={{ frustumCulled: true, fov: 50, position: [20, -5, -20], zoom: 25, }}>
-
+        <color attach="background" args={[background]} />
         <Suspense fallback={<Loader />}>
-          <color attach="background" args={[background]} />
 
           {perf ? <Perf align="top-right" /> : null}
 
           <Keyboard playSound={playSound} sound={sound} backlit={backlit} theme={theme} />
           <Environment files="./textures/small_harbour_sunset_1k.hdr" resolution={340} />
-        </Suspense>
-        <OrbitControls dampingFactor={0.3} minZoom={10} maxZoom={100} target={[0, 0, 0]} />
 
+        </Suspense>
+
+        <OrbitControls dampingFactor={0.3} minZoom={10} maxZoom={100} target={[0, 0, 0]} />
         <EffectComposer multisampling={0} stencilBuffer={true}>
           {bloom.enabled ?
             <Bloom

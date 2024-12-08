@@ -65,14 +65,14 @@ const Tile = ({ sound, setSound, backlit, setBacklit, setTheme }) => {
 
     return (
         <div className="tile-wrapper">
-            <motion.div initial={{ height: '250px' }} animate={{ height: collapsed ? "0px" : "250px" }} transition={spring} className={tileClassName}>
+            <motion.div initial={{ height: '0px' }} animate={{ height: collapsed ? "0px" : "250px" }} transition={spring} className={tileClassName}>
                 <div className={headerClassName + (clickedOnce ? '' : ' pulse')} onClick={onClick}>
                     <div>RAGEBOARD</div>
                     {/* <div>レイジボード</div> */}
                 </div>
                 <motion.div style={{ overflow: collapsed ? 'hidden' : 'visible' }}>
                     <motion.div style={{ padding: '1.5rem', pointerEvents: 'all' }} className={contentClassName} >
-                        <motion.div transition={{ duration: 0 }} animate={{ opacity: collapsed ? 0 : 1 }} initial={{ opacity: 0 }} style={{ height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }} >
+                        <motion.div className={'tile-content-inner'} animate={{ opacity: collapsed ? 0 : 1 }} initial={{ opacity: 0 }}>
                             <div className="instructions">
                                 <div><kbd>shift</kbd> <kbd>d</kbd> for debugger</div>
                                 <div>click & drag to view model</div>

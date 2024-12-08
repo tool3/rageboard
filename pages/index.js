@@ -116,7 +116,7 @@ export default function IndexPage() {
 
 
   useEffect(() => {
-    setTheme({ theme: 'metal' });
+    setTheme({ theme: 'default' });
   }, []);
 
   const bloom = useControls('bloom', {

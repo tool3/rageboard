@@ -70,9 +70,9 @@ const Tile = ({ sound, setSound, backlit, setBacklit, setTheme }) => {
                     <div>RAGEBOARD</div>
                     {/* <div>レイジボード</div> */}
                 </div>
-                <motion.div layout style={{ overflow: collapsed ? 'hidden' : 'visible' }}>
-                    <motion.div layout transition={spring} style={{ padding: '1.5rem', pointerEvents: 'all' }} className={contentClassName} >
-                        <motion.div animate={{ opacity: collapsed ? 0 : 1 }} initial={{ opacity: 0 }} style={{ height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }} >
+                <motion.div style={{ overflow: collapsed ? 'hidden' : 'visible' }}>
+                    <motion.div style={{ padding: '1.5rem', pointerEvents: 'all' }} className={contentClassName} >
+                        <motion.div layoutDependency={collapsed} animate={{ opacity: collapsed ? 0 : 1 }} initial={{ opacity: 0 }} style={{ height: '200px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }} >
                             <div className="instructions">
                                 <div><kbd>shift</kbd> <kbd>d</kbd> for debugger</div>
                                 <div>click & drag to view model</div>

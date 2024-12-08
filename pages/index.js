@@ -3,7 +3,7 @@ import { Canvas } from '@react-three/fiber';
 import { Howl } from 'howler';
 import { Leva, useControls } from 'leva';
 import { Perf } from 'r3f-perf';
-import React, { Suspense, useCallback, useRef, useState } from 'react';
+import React, { Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import Credits from '../components/Credit';
 import Debug from '../components/Debug';
 import Keyboard from '../components/Keyboard';
@@ -52,6 +52,7 @@ export default function IndexPage() {
   const sound = useRef(true);
   const [sounds, setSounds] = useState(true);
   const [backlit, setBacklit] = useState(false);
+  // const [theme, setTheme] = useState('default');
 
 
   const tracks = {
@@ -92,12 +93,16 @@ export default function IndexPage() {
     }),
   };
 
-  const { fps, perf, background, theme } = useControls({
+  const { fps, perf, background } = useControls({
     fps: { value: false, color: 'red' },
     perf: false,
     background: '#655b5b',
+
+  });
+
+  const [{ theme }, setTheme] = useControls(() => ({
     theme: {
-      value: 'default',
+      theme: 'default',
       options: {
         default: 'default',
         uniform: 'uniform',
@@ -107,7 +112,12 @@ export default function IndexPage() {
         blackops: 'blackops',
       },
     }
-  });
+  }));
+
+
+  useEffect(() => {
+    setTheme({ theme: 'metal' });
+  }, []);
 
   const bloom = useControls('bloom', {
     enabled: true,
@@ -137,7 +147,7 @@ export default function IndexPage() {
 
       <Credits />
 
-      <Tile backlit={backlit} setBacklit={setBacklit} sound={sounds} setSound={setSoundOn} />
+      <Tile setTheme={setTheme} backlit={backlit} setBacklit={setBacklit} sound={sounds} setSound={setSoundOn} />
 
       <Suspense fallback={null}>
         <MobileKeyboard backlit={backlit} theme={theme} />

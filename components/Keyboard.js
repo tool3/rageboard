@@ -127,7 +127,7 @@ const Model = (props) => {
     });
   }, []);
 
-  return (keys.length && keys.every(k => k.current !== undefined)) ? (
+  return (keys.length && keys.every(k => k.current !== null)) ? (
     <>
       <group ref={group} {...props} dispose={null} rotation={[-5, 0.4, 4.3]}>
         <group name="Scene">
@@ -142,13 +142,13 @@ const Model = (props) => {
             />
             {theme !== 'default' ? (
               <>
-                <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI / 2, 0, Math.PI]} position={[0, 0.27, 0]}>4432</Text>
+                <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI / 2, 0, Math.PI]} position={[0, -2.6, 0]}>4432</Text>
 
-                <Text fontSize={0.1} color={'lightgray'} rotation={[0, -Math.PI / 2, 0]} position={[-7.52, 1, 0]}>1234 6+7</Text>
-                <Text fontSize={0.1} color={'lightgray'} rotation={[0, Math.PI / 2, 0]} position={[7.45, 1, 0]}>9556</Text>
+                <Text fontSize={0.1} color={'lightgray'} rotation={[0, -Math.PI / 2, 0]} position={[-7.2, -1.5, 0]}>1234 6+7</Text>
+                <Text fontSize={0.1} color={'lightgray'} rotation={[0, Math.PI / 2, 0]} position={[7.8, -1.5, 0]}>9556</Text>
 
-                <Text fontSize={0.1} color={'lightgray'} rotation={[0, 0, 0]} position={[0, 1, 6.05]}>7x13</Text>
-                <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI, 0, Math.PI]} position={[0, 1, -5.93]}>4 1234 5+8</Text>
+                <Text fontSize={0.1} color={'lightgray'} rotation={[0, 0, 0]} position={[0, -2, 6.89]}>7x13</Text>
+                <Text fontSize={0.1} color={'lightgray'} rotation={[Math.PI, 0, Math.PI]} position={[0, -2, -5.08]}>4 1234 5+8</Text>
               </>
             ) : null}
             {backlit ? <Plane rotation={[Math.PI / 2, Math.PI, 0]} position={[.3, -.4, 0.95]} material={new MeshStandardMaterial({ ...themes[theme].backlit })} args={[13.3, 10.2]} /> : null}

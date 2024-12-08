@@ -34,7 +34,7 @@ const Tile = ({ sound, setSound, backlit, setBacklit, setTheme }) => {
 
     const chals = challenges?.map(name => {
         const className = `challenge ${name}`;
-        return <motion.img initial={{ scale: 0 }} whileTap={{ scale: 2 }} whileHover={{ scale: 2 }} animate={{ scale: 1 }} src={`/images/challenges/svgs/${name}.svg`} className={className} key={name} />
+        return <motion.img initial={{ scale: 0 }} whileTap={{ scale: 2 }} whileHover={{ scale: 2 }} animate={{ scale: 1 }} src={`/images/challenges/${name}.png`} className={className} key={name} />
     });
 
     const spring = {
@@ -99,12 +99,12 @@ const Tile = ({ sound, setSound, backlit, setBacklit, setTheme }) => {
                                         <Slider collapsed={collapsed} toggleSwitch={setBacklit} isOn={backlit} />
                                     </label>
                                 </div>
-                                <div className="control">
+                                {/* <div className="control">
                                     theme
                                     <label className="switch select">
                                         {themeOptions}
                                     </label>
-                                </div>
+                                </div> */}
                             </div>
                         </motion.div>
                     </motion.div>

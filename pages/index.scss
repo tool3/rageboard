@@ -254,8 +254,8 @@ body {
         color: white;
       }
       &.third button {
-        background-color: #a51909;
-        border-color: #a51909;
+        background-color: #d64120;
+        border-color: #d64120;
         color: white;
       }
 
@@ -512,6 +512,8 @@ input + label {
   .challenge {
     width: 50px;
     height: 50px;
+    backdrop-filter: none;
+  
 
     &:hover {
       cursor: zoom-in;
@@ -592,7 +594,7 @@ input + label {
   .base {
     // background-color: white;
     border-radius: 3px;
-    
+
     .select-item {
       display: none;
       margin-top: 10px;
@@ -625,7 +627,7 @@ input + label {
       }
 
       &.metal {
-        background-color: red;
+        background-color: #580816;
         border-radius: 3px;
 
         &:after {
@@ -691,7 +693,7 @@ input + label {
         &:after {
           display: block;
           border-radius: 3px;
-          background-color: orangered;
+          background-color: #ffdc81;
           width: 100%;
           height: 100%;
           content: "";

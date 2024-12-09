@@ -17,3 +17,10 @@ export default function Layout({ children }) {
         <body>{children}</body>
     </html>
 }
+
+export const metadata = {
+    title: 'rageboard',
+    description: 'RAGEBOARD',
+    metadataBase: 'https://rageboard.vercel.app',
+  }
+   

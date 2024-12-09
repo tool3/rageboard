@@ -5,9 +5,3 @@ function MyApp({ Component, pageProps }) {
 }
 
 export default MyApp
-
-export const metadata = {
-  title: 'rageboard',
-  description: 'RAGEBOARD',
-  metadataBase: new URL('https://rageboard.vercel.app'),
-}

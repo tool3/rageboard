@@ -21,6 +21,5 @@ export default function Layout({ children }) {
 export const metadata = {
     title: 'rageboard',
     description: 'RAGEBOARD',
-    metadataBase: 'https://rageboard.vercel.app',
-  }
-   
+    metadataBase: new URL('https://rageboard.vercel.app'),
+}

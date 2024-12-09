@@ -8,7 +8,7 @@ export default function Layout({ children }) {
             <title>Rage Board</title>
             <meta name="description" content="rage keyboard made with threejs and blender" />
             <meta name="author" content="Tal Hayut" />
-            <meta property="og:image" content="https://rageboard.vercel.app/images/rageboard.png" />
+            <meta property="og:image" content="https://rageboard.vercel.app/images/rageboard-min.png" />
             <meta property="og:image:type" content="image/png" />
             <meta property="og:image:width" content="1920" />
             <meta property="og:image:height" content="1080" />

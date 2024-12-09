@@ -2,7 +2,7 @@ import { Plane, Text, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Color, FrontSide, MeshStandardMaterial } from 'three';
-import ExplosionConfetti from './Confetti';
+import ExplosionConfetti from './Confetti3D';
 
 const MODEL = '/models/keyboard_opt_text.glb';
 
@@ -463,6 +463,7 @@ export default function Keyboard(props) {
         const completed = allCompleted();
         if (completed) {
           setCompleted(true);
+          dispatchEvent(new Event('challengesCompleted'));
           playSound('cheering');
         }
       }
@@ -540,10 +541,10 @@ export default function Keyboard(props) {
         amount={100}
         rate={10}
         radius={15}
-        areaWidth={3}
+        areaWidth={10}
         areaHeight={1}
         fallingHeight={20}
-        fallingSpeed={8}
+        fallingSpeed={5}
         colors={['orangered', 'white', 'orange']}
         enableShadows={false}
       />

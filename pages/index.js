@@ -97,7 +97,6 @@ export default function IndexPage() {
     fps: { value: false, color: 'red' },
     perf: false,
     background: '#655b5b',
-
   });
 
   const [{ theme }, setTheme] = useControls(() => ({
@@ -155,14 +154,14 @@ export default function IndexPage() {
         dpr={[1, 2]}
         gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
         camera={{ frustumCulled: true, fov: 50, position: [20, -5, -20], zoom: 25, }}>
+
         <color attach="background" args={[background]} />
+
+
         <Suspense fallback={<Loader />}>
-
           {perf ? <Perf align="top-right" /> : null}
-
           <Keyboard playSound={playSound} sound={sound} backlit={backlit} theme={theme} />
           <Environment files="./textures/small_harbour_sunset_1k.hdr" resolution={340} />
-
         </Suspense>
 
         <OrbitControls dampingFactor={0.3} minZoom={10} maxZoom={100} target={[0, 0, 0]} />

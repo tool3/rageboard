@@ -32,11 +32,6 @@ const Tile = ({ sound, setSound, backlit, setBacklit, setTheme }) => {
     const headerClassName = collapsed ? 'tile-header' : 'tile-header'
     const tileClassName = collapsed ? 'tile transparent' : 'tile';
 
-    const chals = challenges?.map(name => {
-        const className = `challenge ${name}`;
-        return <motion.img initial={{ scale: 0 }} whileTap={{ scale: 2 }} whileHover={{ scale: 2 }} animate={{ scale: 1 }} src={`/images/challenges/${name}.png`} className={className} key={name} />
-    });
-
     const spring = {
         type: "spring",
         stiffness: 700,
@@ -48,20 +43,18 @@ const Tile = ({ sound, setSound, backlit, setBacklit, setTheme }) => {
         setClickedOnce(true);
     }
 
-    const themes = {
-        default: {},
-        uniform: {},
-        metal: {},
-        hack: {},
-        kawaii: {},
-        blackops: {},
-    }
-
-    const themeOptions = Object.keys(themes).map((theme, i) => {
-        const first = i === 0;
-        const className = `select-item ${first ? 'current' : ''} ${theme}`;
-        return <div className="base" onClick={() => { setTheme({ theme }) }} key={i}><motion.div className={className} /></div>
+    const chals = challenges?.map(name => {
+        const className = `challenge ${name}`;
+        return <motion.img initial={{ scale: 0 }} whileTap={{ scale: 2 }} whileHover={{ scale: 2 }} animate={{ scale: 1 }} src={`/images/challenges/${name}.png`} className={className} key={name} />
     });
+
+    useEffect(() => {
+        addEventListener('challengesCompleted', () => { setCollapsed(true) });
+
+        return () => {
+            removeEventListener('challengesCompleted', () => { setCollapsed(true) });
+        }
+    }, [])
 
     return (
         <div className="tile-wrapper">

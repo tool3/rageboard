@@ -17,7 +17,6 @@ import SpaceSound from '../components/sounds/space.mp3';
 import Victory from '../components/sounds/victory.mp3';
 import Tile from '../components/Tile';
 import { Bloom, EffectComposer } from '@react-three/postprocessing';
-import Banner from '../components/Banner';
 
 function Loader() {
   const { progress } = useProgress();

@@ -9,8 +9,10 @@ export default function Layout({ children }) {
             <meta name="description" content="rage keyboard made with threejs and blender" />
             <meta name="author" content="Tal Hayut" />
             <meta property="og:image" content="https://rageboard.vercel.app/images/rageboard.png" />
+            <meta property="og:image:type" content="image/png" />
             <meta property="og:image:width" content="1920" />
             <meta property="og:image:height" content="1080" />
+            <meta property="og:description" content="RAGEBOARD" />
         </Head>
         <GoogleAnalytics gaId={'G-50Y8D0TG3M'} />
         <body>{children}</body>

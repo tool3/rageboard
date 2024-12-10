@@ -283,8 +283,8 @@ body {
       }
 
       &.backlit button {
-        border-color: #d5f396;
-        box-shadow: 0 0 7px 0 #d5f396;
+        border-color: lime;
+        box-shadow: 0 0 7px 0 lime;
       }
     }
 
@@ -313,22 +313,22 @@ body {
       &.first button {
         background-color: #02060e;
         border-color: #02060e;
-        color: #ffdc81;
+        color: #FFF121;
       }
       &.second button {
         background-color: #02060e;
         border-color: #02060e;
-        color: #ffdc81;
+        color: #FFF121;
       }
       &.third button {
         background-color: #02060e;
         border-color: #02060e;
-        color: #ffdc81;
+        color: #FFF121;
       }
 
       &.backlit button {
-        border-color: #ffdc81;
-        box-shadow: 0 0 7px 0 #ffdc81;
+        border-color: #FFF121;
+        box-shadow: 0 0 7px 0 #FFF121;
       }
     }
   }

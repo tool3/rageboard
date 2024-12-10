@@ -1,5 +1,5 @@
 
-// import { GoogleAnalytics } from '@next/third-parties/google';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            {/* <GoogleAnalytics gaId={'G-50Y8D0TG3M'} /> */}
+            <GoogleAnalytics gaId={'G-50Y8D0TG3M'} />
 
             <body>{children}</body>
         </html>

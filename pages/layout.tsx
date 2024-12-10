@@ -1,3 +1,5 @@
+
+import React from 'react'
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { NextSeo } from 'next-seo';
 
@@ -11,10 +13,10 @@ const metadata = {
 const Header = () => {
     return (
         <NextSeo
+            themeColor='#FF6422'
             title={metadata.title}
             description={metadata.description}
             canonical="https://rageboard.vercel.app"
-            useAppDir={true}
             twitter={{
                 site: "rageboard.vercel.app",
                 cardType: "summary_large_image"

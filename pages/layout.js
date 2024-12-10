@@ -35,11 +35,11 @@ const Header = () => {
                 },
                 {
                     name: "og:image:width",
-                    content: "1280"
+                    content: "1920"
                 },
                 {
                     name: "og:image:height",
-                    content: "700"
+                    content: "1080"
                 },
                 {
                     name: "theme-color",

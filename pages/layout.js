@@ -52,7 +52,7 @@ const Header = () => {
                 description: metadata.description,
                 images: [
                     {
-                        url: "https://rageboard.vercel.app/images/opengraph-image.png",
+                        url: "https://rageboard.vercel.app/images/rageboard_min.png",
                         width: 1920,
                         height: 1080,
                         alt: "RAGEBOARD Logo",

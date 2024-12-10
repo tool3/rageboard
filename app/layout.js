@@ -1,5 +1,6 @@
 
 import { GoogleAnalytics } from '@next/third-parties/google';
+import Script from 'next/script';
 
 export const metadata = {
   title: {
@@ -27,6 +28,21 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>{children}</body>
       <GoogleAnalytics gaId={'G-50Y8D0TG3M'} />
+      <Script
+        async
+        defer
+        src={`https://www.googletagmanager.com/gtag/js?id=G-50Y8D0TG3M`}
+        strategy="lazyOnload"
+      />
+      <Script async defer id="google-analytics" strategy="lazyOnload">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){window.dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'G-50Y8D0TG3M');
+        `}
+      </Script>
     </html>
   )
 }

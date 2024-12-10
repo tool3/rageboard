@@ -1,14 +1,14 @@
 
-import { GoogleAnalytics } from '@next/third-parties/google';
+// import { GoogleAnalytics } from '@next/third-parties/google';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: {
-        default: 'rageboard-gallery | talhayut',
+        default: 'rageboard | talhayut',
         template: '%s | talhayut'
     },
     metadataBase: new URL('https://rageboard.vercel.app'),
-    description: `rageboard gallery`,
+    description: `rageboard`,
     icons: [
         {
             rel: 'apple-touch-icon',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     manifest: '/manifest.webmanifest',
     twitter: {
         card: 'summary_large_image',
-        title: 'RAGEBOARD gallery',
+        title: 'RAGEBOARD',
         creator: 'talhayut',
         siteId: 'talhayut'
     }
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <GoogleAnalytics gaId={'G-50Y8D0TG3M'} />
+            {/* <GoogleAnalytics gaId={'G-50Y8D0TG3M'} /> */}
 
             <body>{children}</body>
         </html>

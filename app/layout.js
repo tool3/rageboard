@@ -14,7 +14,6 @@ export const metadata = {
       url: '/apple-touch-icon.png'
     }
   ],
-  manifest: '/manifest.webmanifest',
   twitter: {
     card: 'summary_large_image',
     title: 'RAGEBOARD',

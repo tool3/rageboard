@@ -16,7 +16,7 @@ const Slider = ({ isOn, toggleSwitch }) => {
     );
 }
 
-const Tile = ({ sound, setSound, backlit, setBacklit, setTheme }) => {
+const Tile = ({ sound, setSound, backlit, setBacklit }) => {
     const [collapsed, setCollapsed] = useState(true);
     const [clickedOnce, setClickedOnce] = useState(false);
     const [challenges, setChallenges] = useState([]);

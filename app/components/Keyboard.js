@@ -1,4 +1,6 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+'use client';
+
+import React, { useEffect, useRef, useState } from 'react';
 import { Plane, Text, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
 import { Color, FrontSide, MeshStandardMaterial } from 'three';
@@ -8,9 +10,9 @@ const MODEL = '/models/keyboard_opt_text.glb';
 
 const Model = (props) => {
   const { updateKeyMap, onDocumentKey, nodes, materials, keys, backlit, group, theme } = props;
-  const [Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space] = keys;
+  const { Key_F, Key_U, Key_C, Key_K, Key_O, Key_Y, Key_M, Key_T, Space } = keys;
 
-  const getMaterial = (baseMaterial) => (props) => useMemo(() => {
+  const getMaterial = (baseMaterial) => (props) => {
     const { color, emissive, emissiveIntensity, roughness, metalness } = props || {};
     const newMaterial = baseMaterial.clone();
 
@@ -21,7 +23,7 @@ const Model = (props) => {
     if (metalness !== undefined) newMaterial.metalness = metalness;
 
     return newMaterial;
-  }, []);
+  };
 
   const getTextMaterial = getMaterial(materials.text);
   const getInvertTextMaterial = getMaterial(materials.text);
@@ -31,7 +33,7 @@ const Model = (props) => {
   const getKeyOrangeMaterial = getMaterial(materials.key_orange);
   const getKeyRedMaterial = getMaterial(materials.key_red);
 
-  const themes = {
+  const themeRef = useRef({
     default: {
       backlit: { color: 'white', emissive: 'white', emissiveIntensity: 4 },
       text: getTextMaterial({ color: 'black' }),
@@ -92,7 +94,9 @@ const Model = (props) => {
       key_orange: getKeyOrangeMaterial({ color: '#1a1d25', metalness: 1, roughness: 0 }),
       key_red: getKeyRedMaterial({ metalness: 1, roughness: 0, color: '#1a1d25' }),
     }
-  }
+  });
+
+  const themes = themeRef.current;
 
   useEffect(() => {
     addEventListener('keydown', updateKeyMap);
@@ -128,7 +132,7 @@ const Model = (props) => {
     });
   }, []);
 
-  return (keys.length && keys.every(k => k.current !== null)) ? (
+  return (
     <>
       <group ref={group} {...props} dispose={null} rotation={[-5, 0.4, 4.3]}>
         <group name="Scene">
@@ -166,7 +170,7 @@ const Model = (props) => {
             name="Key_T"
             castShadow
             receiveShadow
-            geometry={Key_T.current.geometry}
+            geometry={nodes.This_key.geometry}
             ref={Key_T}
             material={themes[theme].key_orange}>
             <mesh
@@ -182,7 +186,7 @@ const Model = (props) => {
             name="Key_M"
             castShadow
             receiveShadow
-            geometry={Key_M.current.geometry}
+            geometry={nodes.Me_Key.geometry}
             ref={Key_M}
             material={themes[theme].key_orange}>
             <mesh
@@ -198,7 +202,7 @@ const Model = (props) => {
             name="Key_Y"
             castShadow
             receiveShadow
-            geometry={Key_Y.current.geometry}
+            geometry={nodes.You_Key.geometry}
             ref={Key_Y}
             material={themes[theme].key_orange}>
             <mesh
@@ -214,7 +218,7 @@ const Model = (props) => {
             name="Space"
             castShadow
             receiveShadow
-            geometry={Space.current.geometry}
+            geometry={nodes.Everything_key.geometry}
             ref={Space}
             material={themes[theme].key_red}>
             <mesh
@@ -230,7 +234,7 @@ const Model = (props) => {
             name="Key_O"
             castShadow
             receiveShadow
-            geometry={Key_O.current.geometry}
+            geometry={nodes.Off_Key.geometry}
             ref={Key_O}
             material={themes[theme].key_orange}>
             <mesh
@@ -246,7 +250,7 @@ const Model = (props) => {
             name="Key_K"
             castShadow
             receiveShadow
-            geometry={Key_K.current.geometry}
+            geometry={nodes.K_Key.geometry}
             ref={Key_K}
             material={themes[theme].key}>
             <mesh
@@ -262,7 +266,7 @@ const Model = (props) => {
             name="Key_C"
             castShadow
             receiveShadow
-            geometry={Key_C.current.geometry}
+            geometry={nodes.C_key.geometry}
             ref={Key_C}
             material={themes[theme].key}>
             <mesh
@@ -278,7 +282,7 @@ const Model = (props) => {
             name="Key_U"
             castShadow
             receiveShadow
-            geometry={Key_U.current.geometry}
+            geometry={nodes.U_Key.geometry}
             ref={Key_U}
             material={themes[theme].key}>
             <mesh
@@ -294,7 +298,7 @@ const Model = (props) => {
             name="Key_F"
             castShadow
             receiveShadow
-            geometry={Key_F.current.geometry}
+            geometry={nodes.F_Key.geometry}
             ref={Key_F}
             material={themes[theme].key}>
             <mesh
@@ -309,20 +313,35 @@ const Model = (props) => {
         </group>
       </group>
     </>
-  ) : null;
+  );
 }
 
 export default function Keyboard(props) {
   const { theme, backlit, playSound: playSounds, sound } = props;
   const { nodes, materials } = useGLTF(MODEL, true);
+  const [keys, setKeys] = useState({
+    Key_F: useRef(nodes.F_Key),
+    Key_U: useRef(nodes.U_Key),
+    Key_C: useRef(nodes.C_key),
+    Key_K: useRef(nodes.K_Key),
+    Key_O: useRef(nodes.Off_Key),
+    Key_Y: useRef(nodes.You_Key),
+    Key_M: useRef(nodes.Me_Key),
+    Key_T: useRef(nodes.This_key),
+    Space: useRef(nodes.Everything_key)
+  })
   const [completed, setCompleted] = useState(false);
   const isMobile = useRef(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator?.userAgent));
 
   const playSound = (key) => {
-    if (sound.current) {
+    if (sound) {
       playSounds(key);
     }
   }
+
+  useEffect(() => {
+    setKeys(keys);
+  }, [nodes]);
 
   const group = useRef();
   const dirLight = useRef(null);
@@ -336,17 +355,6 @@ export default function Keyboard(props) {
   const takeoff = { value: useRef(), completed: false };
   const nomood = { value: useRef(), completed: false };
 
-  const keys = [
-    useRef(nodes.F_Key),
-    useRef(nodes.U_Key),
-    useRef(nodes.C_key),
-    useRef(nodes.K_Key),
-    useRef(nodes.Off_Key),
-    useRef(nodes.You_Key),
-    useRef(nodes.Me_Key),
-    useRef(nodes.This_key),
-    useRef(nodes.Everything_key)
-  ];
   const eggRefs = [word, me, bye, takeoff, nomood];
 
   const easterEggs = {
@@ -427,7 +435,7 @@ export default function Keyboard(props) {
   }
 
   const getKeyPress = (keys, prop) => {
-    return keys.find(k => {
+    return Object.values(keys).find(k => {
       const [, char] = k.current.name === 'Space' ? [, 'space'] : k.current.name.split('_');
       return k.current.name === prop || char.toLowerCase() === prop.toLowerCase();
     })
@@ -436,7 +444,6 @@ export default function Keyboard(props) {
   const getCurrentChar = (e) => {
     return e.code ? e.code.replace('Key', '').toLowerCase() : e.target?.innerText?.toLowerCase();
   }
-
 
   const allCompleted = () => Object.values(eggRefs).every(e => e.completed);
 
@@ -498,7 +505,7 @@ export default function Keyboard(props) {
 
     const chars = ['f', 'u', 'c', 'k', 'o', 'y', 'm', 't', 'space'];
 
-    const keysPressed = new Set(keys.map(k => k.current.name));
+    const keysPressed = new Set(Object.values(keys).map(k => k.current.name));
     const validChars = new Set(chars);
 
     const validPress = (key) => keysPressed.has(key) || validChars.has(key);

@@ -49,13 +49,20 @@ function FPS({ fps }) {
 }
 
 export default function Page() {
-    const [active, setActive] = useState(false);
-
-    const sound = useRef(true);
+    // const sound = useRef(true);
     const [sounds, setSounds] = useState(true);
     const [backlit, setBacklit] = useState(false);
-    // const [theme, setTheme] = useState('default');
+    const [active, setActive] = useState(false);
 
+
+    useEffect(() => {
+        addEventListener('debug', () => setActive(true))
+        addEventListener('debugClose', () => setActive(false))
+        return () => {
+            removeEventListener('debug', () => setActive(true))
+            addEventListener('debugClose', () => setActive(false))
+        }
+    }, [])
 
     const tracks = {
         key1: new Howl({
@@ -128,13 +135,12 @@ export default function Page() {
     }, { collapsed: true, order: 1 })
 
     const setSoundOn = useCallback(() => {
-        sound.current = !sound.current;
         setSounds(!sounds);
-    }, [sound.current])
+    }, [])
 
 
     function playSound(key) {
-        if (sound) {
+        if (sounds) {
             tracks[key].play();
         }
     }
@@ -143,13 +149,12 @@ export default function Page() {
         <>
             <Leva hidden={!active} />
             <FPS fps={fps} />
-            <Debug active={active} setActive={setActive} />
+            <Debug />
             <Credits />
-            <Tile setTheme={setTheme} backlit={backlit} setBacklit={setBacklit} sound={sounds} setSound={setSoundOn} />
+            <Tile backlit={backlit} setBacklit={setBacklit} sound={sounds} setSound={setSoundOn} />
 
-            <Suspense fallback={null}>
-                <MobileKeyboard backlit={backlit} theme={theme} />
-            </Suspense>
+            <MobileKeyboard backlit={backlit} theme={theme} />
+
 
             <Canvas
                 orthographic
@@ -159,23 +164,26 @@ export default function Page() {
 
                 <color attach="background" args={[background]} />
 
-
                 <Suspense fallback={<Loader />}>
-                    {perf ? <Perf align="top-right" /> : null}
-                    <Keyboard playSound={playSound} sound={sound} backlit={backlit} theme={theme} />
-                    <Environment files="./textures/small_harbour_sunset_1k.hdr" resolution={340} />
-                </Suspense>
 
-                <OrbitControls dampingFactor={0.3} minZoom={10} maxZoom={100} target={[0, 0, 0]} />
-                <EffectComposer multisampling={0} stencilBuffer={true}>
-                    {bloom.enabled ?
-                        <Bloom
-                            intensity={bloom.intensity}
-                            luminanceThreshold={bloom.luminanceThreshold}
-                            luminanceSmoothing={bloom.luminanceSmoothing}
-                            height={1024} /> :
-                        null}
-                </EffectComposer>
+                    {perf ? <Perf align="top-right" /> : null}
+                    <Suspense fallback={null}>
+                        <Keyboard playSound={playSound} sound={sounds} backlit={backlit} theme={theme} />
+                    </Suspense>
+                    <Environment files="./textures/small_harbour_sunset_1k.hdr" resolution={340} />
+
+
+                    <OrbitControls dampingFactor={0.3} minZoom={10} maxZoom={100} target={[0, 0, 0]} />
+                    <EffectComposer multisampling={0} stencilBuffer={true}>
+                        {bloom.enabled ?
+                            <Bloom
+                                intensity={bloom.intensity}
+                                luminanceThreshold={bloom.luminanceThreshold}
+                                luminanceSmoothing={bloom.luminanceSmoothing}
+                                height={1024} /> :
+                            null}
+                    </EffectComposer>
+                </Suspense>
             </Canvas>
         </>
     );

@@ -107,6 +107,7 @@ function Head() {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
+            <Head />
             <GoogleAnalytics gaId={'G-50Y8D0TG3M'} />
             <body>{children}</body>
         </html>

@@ -1,29 +1,78 @@
 import { GoogleAnalytics } from '@next/third-parties/google';
+import { NextSeo } from 'next-seo';
 import Head from "next/head";
 
+export const metadata = {
+    title: "RAGEBOARD",
+    description: "RAGEBOARD",
+    url: "https://rageboard.vercel.app",
+};
+
+
+const Header = () => {
+    return (
+        <NextSeo
+            title={metadata.title}
+            description={metadata.description}
+            canonical="https://rageboard.vercel.app"
+            useAppDir={true}
+            twitter={{
+                site: "rageboard.vercel.app",
+                cardType: "summary_large_image"
+            }}
+            additionalMetaTags={[
+                {
+                    property: "keywords",
+                    content:
+                        "threejs, blender, 3d, glsl, react-three-fiber"
+                },
+                {
+                    name: "viewport",
+                    content: "width=device-width, initial-scale=1, maximum-scale=5"
+                },
+                {
+                    name: "apple-mobile-web-app-capable",
+                    content: "yes"
+                },
+                {
+                    name: "og:image:width",
+                    content: "1280"
+                },
+                {
+                    name: "og:image:height",
+                    content: "700"
+                },
+                {
+                    name: "theme-color",
+                    content: "#FF6422"
+                }
+            ]}
+            openGraph={{
+                url: "https://rageboard.vercel.app",
+                title: metadata.title,
+                description: metadata.description,
+                images: [
+                    {
+                        url: "https://rageboard.vercel.app/images/opengraph-image.png",
+                        width: 1920,
+                        height: 1080,
+                        alt: "RAGEBOARD Logo",
+                        type: "image/png"
+                    }
+                ],
+                siteName: "ybh-law"
+            }}
+        />
+    )
+}
 
 export default function Layout({ children }) {
     return (
         <html lang="en">
-            <Head>
-                <title>Rage Board</title>
-                <meta name="description" content="rage keyboard made with threejs and blender" />
-                <meta name="author" content="Tal Hayut" />
-                <meta property="og:description" content="RAGEBOARD" />
-                <meta property="og:url" content="https://rageboard.vercel.app" />
-                <meta property="og:type" content="website" />
-                <meta property="og:title" content="RAGEBOARD" />
-            </Head>
+            <Header />
             <GoogleAnalytics gaId={'G-50Y8D0TG3M'} />
+
             <body>{children}</body>
         </html>
     )
-}
-
-export function generateMetadata() {
-    return {
-        title: 'rageboard',
-        description: 'RAGEBOARD',
-        metadataBase: new URL('https://rageboard.vercel.app'),
-    }
 }

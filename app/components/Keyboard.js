@@ -1,6 +1,6 @@
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Plane, Text, useGLTF } from '@react-three/drei';
 import gsap from 'gsap';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Color, FrontSide, MeshStandardMaterial } from 'three';
 import ExplosionConfetti from './Confetti3D';
 

@@ -1,8 +1,7 @@
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { NextSeo } from 'next-seo';
-import Head from "next/head";
 
-export const metadata = {
+const metadata = {
     title: "RAGEBOARD",
     description: "RAGEBOARD",
     url: "https://rageboard.vercel.app",

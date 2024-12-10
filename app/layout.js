@@ -3,7 +3,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 
 export const metadata = {
   title: {
-    default: 'RAGEBOARD by talhayut',
+    default: 'RAGEBOARD by Tal Hayut',
     template: '%s | talhayut'
   },
   metadataBase: new URL('https://rageboard.vercel.app'),
@@ -18,8 +18,8 @@ export const metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'RAGEBOARD',
-    creator: 'talhayut',
-    siteId: 'talhayut'
+    creator: 'Tal Hayut',
+    siteId: 'rageboard'
   }
 }
 

@@ -3,7 +3,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 
 export const metadata = {
   title: {
-    default: 'rageboard | talhayut',
+    default: 'RAGEBOARD by talhayut',
     template: '%s | talhayut'
   },
   metadataBase: new URL('https://rageboard.vercel.app'),
